@@ -1,0 +1,90 @@
+// Animation Browser Compatibility Mixins
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }
+    @-ms-keyframes #{$animation-name} {
+        @content;
+    }
+    @-o-keyframes #{$animation-name} {
+        @content;
+    }
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}
+
+@mixin animation($animation, $onScrollAnimate: false) {
+    -webkit-animation: #{$animation};
+    -moz-animation: #{$animation};
+    -ms-animation: #{$animation};
+    -o-animation: #{$animation};
+    animation: #{$animation};
+
+    @if $onScrollAnimate {
+        /* Pause the animation */
+        animation-play-state: paused;
+        /* Bind the animation to scroll */
+        animation-delay: calc(var(--scroll) * -1s);
+        /* These last 2 properites clean up overshoot weirdness */
+        animation-iteration-count: 1;
+        animation-fill-mode: both;
+    }
+}
+
+@mixin animations($animate...) {
+    $max: length($animate);
+    $animations: '';
+
+    @for $i from 1 through $max {
+        $animations: #{$animations + nth($animate, $i)};
+
+        @if $i < $max {
+            $animations: #{$animations + ", "};
+        }
+    }
+    -webkit-animation: $animations;
+    -moz-animation:    $animations;
+    -ms-animation:     $animations;
+    -o-animation:      $animations;
+    animation:         $animations;
+}
+
+// Transition Browser Compatibility Mixins
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+@mixin transition-property($property...) {
+    -moz-transition-property:    $property;
+    -o-transition-property:      $property;
+    -webkit-transition-property: $property;
+    transition-property:         $property;
+}
+
+@mixin transition-duration($duration...) {
+    -moz-transition-property:    $duration;
+    -o-transition-property:      $duration;
+    -webkit-transition-property: $duration;
+    transition-property:         $duration;
+}
+
+@mixin transition-timing-function($timing...) {
+    -moz-transition-timing-function:    $timing;
+    -o-transition-timing-function:      $timing;
+    -webkit-transition-timing-function: $timing;
+    transition-timing-function:         $timing;
+}
+
+@mixin transition-delay($delay...) {
+    -moz-transition-delay:    $delay;
+    -o-transition-delay:      $delay;
+    -webkit-transition-delay: $delay;
+    transition-delay:         $delay;
+}

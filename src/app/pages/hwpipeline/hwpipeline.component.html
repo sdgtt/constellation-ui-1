@@ -1,0 +1,384 @@
+<div class="hwpipeline-container">
+    <div class="first-section">
+        <div class="row">
+            <div class="col-2">
+                <div class="page-title">Kuiper Linux CI</div>
+            </div>
+            <div class="col-10">
+                <div class="page-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </div>
+            </div>
+        </div>
+
+        <!-- <span class="hwplDescription">
+            <span class="hwpipeline-learn-more" [popover]="hwpipelineTemplate" 
+              [placement]="'bottom left'" triggers="click"><i class="fas fa-question-circle"></i></span>  
+          </span> -->
+    </div>
+    <div class="second-section">
+        <div class="row">
+            <div class="col-12">
+                <div class="latest-summary">Latest Build Summary</div>
+            </div>
+        </div>
+        <div class="jenkins-details">
+            <!-- <div class="row">
+                <div class="col-6">
+                    <div class="form-group form-inline">
+                        <label class="col-form-label">
+                            Jenkins Project Name
+                        </label>
+                        <div class="col-form-control">
+                            <select formControlName="website" class="form-control">
+                                <option disabled>Select Website</option>
+                                <option>Choose Website</option>
+                                <option *ngFor="let web of websiteList">{{web}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label class="col-form-label">
+                            Jenkins Build No.
+                        </label>
+                        <div class="col-form-control">
+                            <label class="col-form-label-output">
+                                1002
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label class="col-form-label">
+                            Total Boards
+                        </label>
+                        <div class="col-form-control">
+                            <label class="col-form-label">
+                                2
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label class="col-form-label">
+                            Online
+                        </label>
+                        <div class="col-form-control">
+                            <label class="col-form-label">
+                                26
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group form-inline">
+                        <label class="col-form-label">
+                            Artifactory source branch
+                        </label>
+                        <div class="col-form-control">
+                            <label class="col-form-label">
+                                boot_partition_master
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group form-inline">
+                        <label class="col-form-label">
+                            HDL Commit
+                        </label>
+                        <div class="col-form-control">
+                            <label class="col-form-label">
+                                158c10df3
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        <table class="jenkins-table">
+            <tr class="t-row">
+                <td class="field">Jenkins Project Name</td>
+                <td class="select-output">
+                    <select formControlName="website" class="select-dropdown">
+                    <option disabled>Select Website</option>
+                    <option *ngFor="let web of websiteList">{{web}}</option>
+                    </select>
+                </td>
+                <td class="spacer"></td>
+                <td class="field">Artifactory source branch</td>
+                <td class="output">boot_partition_master</td>
+            </tr>
+            <tr class="t-row">
+                <td class="field">Jenkins Build No.</td>
+                <td class="output">1002</td>
+                <td class="spacer"></td>
+                <td class="field">HDL Commit</td>
+                <td class="output">158c10df3</td>
+            </tr>
+            <tr class="t-row">
+                <td class="field">Total Boards</td>
+                <td class="output">  </td>
+                <td class="spacer"></td>
+                <td class="field">Linux Commit</td>
+                <td class="output">c3774bd67a17</td>
+                <td class="field">Status <span class="info-icon" [popover]="statusDetails" 
+                    [placement]="'bottom left'" triggers="mouseenter:mouseleave" ><i class="fas fa-info-circle"></i></span></td>
+            </tr>
+            <tr class="t-row">
+                <td class="field">Online</td>
+                <td class="output">26</td>
+                <td class="spacer"></td>
+                <td class="field">Passing</td>
+                <td class="output">6</td>
+            </tr>
+        </table>
+        </div>
+        <div class="jenkins-table">
+            <table class="jenkins-result-table">
+                <thead>
+                    <tr>
+                        <th class="table-head">Job Date</th>
+                        <th class="table-head">Board</th>
+                        <th class="table-head" >Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Passed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-09-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">zynq-zc706-adv7511-fmcdaq2</td>
+                        <td class="table-output" >
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Online.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Failed.png" /></a></span>
+                            <span class="status-icon"><a type="button" (click)="openModal(template)"><img src="assets/Dmesg.png" /></a></span>                       
+                        </td>
+                    </tr>
+                    
+                </tbody>
+
+               
+            </table>
+        </div>
+
+    </div>
+</div>
+<ng-template #statusDetails>
+    <div class="status-details">
+        <table class="status-details-table">
+            <thead>
+                <tr>
+                    <th class="status-head">Online</th>
+                    <th class="status-head">Offline</th>
+                    <th class="status-head" >Dmesg</th>
+                    <th class="status-head">Passed</th>
+                    <th class="status-head" >Failed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="status-icon-table"><img src="assets/Online.png" /></td>
+                    <td class="status-icon-table"><img src="assets/Offline.png" /></td>
+                    <td class="status-icon-table"><img src="assets/Passed.png" /></td>
+                    <td class="status-icon-table"><img src="assets/Failed.png" /></td>
+                    <td class="status-icon-table"><img src="assets/Dmesg.png" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</ng-template>
+<ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Board:  {{board}}</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Failure reason: pytest failure 4
+    </div>
+  </ng-template>

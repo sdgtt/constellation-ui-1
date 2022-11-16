@@ -1,0 +1,49 @@
+<nav class="nav navbar-expand-lg navbar-bg ">
+  <div class="container-fluid custom-margin">
+    <div class="row">
+      <div class="col-4">
+        <span class="navbar-brand"><img src="assets/c_logo.png" /></span>
+      </div>
+      <div class="col-8">
+        <div class="nav-menu">
+          <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link"  routerLink="/hwpipeline">Kuiper Linux CI</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"  routerLink="/scorecard">Scorecard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Public CI</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/plugandtest">Plug and Test</a>
+            </li>
+            <li class="nav-item " dropdown>
+              <a class="nav-link" id="button-basic" dropdownToggle type="button" 
+                aria-controls="dropdown-basic">
+                Projects <span class="caret"></span>
+              </a>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                <li role="menuitem"><a class="dropdown-item" href="#">MCT</a></li>
+                <li role="menuitem"><a class="dropdown-item" href="#">HWT</a></li>
+              </ul>
+            </li>
+            <li class="nav-item " dropdown>
+              <a class="nav-link" id="button-basic" dropdownToggle type="button" 
+                aria-controls="dropdown-basic">
+                Projects <span class="caret"></span>
+              </a>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                <li role="menuitem"><a class="dropdown-item" href="#">PyADI-IIIO</a></li>
+                <li role="menuitem"><a class="dropdown-item" href="#">Transceiver Toolbox</a></li>
+                <li role="menuitem"><a class="dropdown-item" href="#">HSX Toolbox</a></li>
+              </ul>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
