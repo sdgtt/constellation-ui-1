@@ -9,9 +9,9 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
   templateUrl: './hwpipeline.component.html',
   styleUrls: ['./hwpipeline.component.scss']
 })
-export class HwpipelineComponent implements OnInit {
+export class KuiperLinucCIComponent implements OnInit {
   modalRef?: BsModalRef;
-  hwpipeline ="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex eacommodo consequat.";
+  kuiperlinux ="Kuiper Linux CI is a CI for continuous testing of Kuiper Linux on hardware. It is automatically triggered once a new boot partition is built and uploaded to artifactory. This page shows the latest test results summary of Kuiper Linux test stages.";
   selectedCity = null;
 
   defaultBindingsList = [

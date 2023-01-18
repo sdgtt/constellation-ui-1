@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 //Components
 import { NavigationComponent } from './templates/navigation/navigation.component';
-import { HwpipelineComponent } from './pages/hwpipeline/hwpipeline.component';
+import { KuiperLinucCIComponent } from './pages/hwpipeline/hwpipeline.component';
 import { ScorecardComponent } from './pages/scorecard/scorecard.component';
 
 //Modules
@@ -25,7 +25,7 @@ import { BoardComponent } from './pages/board/board.component';
   declarations: [
     AppComponent,
     NavigationComponent,
-    HwpipelineComponent,
+    KuiperLinucCIComponent,
     ScorecardComponent,
     PlugandtestComponent,
     BoardComponent
