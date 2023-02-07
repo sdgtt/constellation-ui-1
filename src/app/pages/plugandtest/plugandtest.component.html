@@ -87,6 +87,24 @@
                 </div>
             </div>
         </div> -->
-
+        <table class="jenkins-table">
+            <tr class="t-row">
+                <td class="field">Jenkins Project Name</td>
+                <td class="select-output">
+                    <select formControlName="website" class="select-dropdown">
+                    <option disabled>Select Website</option>
+                    <option *ngFor="let web of websiteList">{{web}}</option>
+                    </select>
+                </td>
+                <td class="spacer"></td>
+                <td class="field">Jenkins Project Name</td>
+                <td class="select-output">
+                    <select formControlName="website" class="select-dropdown">
+                    <option disabled>Select Website</option>
+                    <option *ngFor="let web of websiteList">{{web}}</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
