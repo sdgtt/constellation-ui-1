@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KuiperLinucCIComponent } from './hwpipeline.component';
+import { KuiperlinuxciComponent } from './kuiperlinuxci.component';
 
-describe('HwpipelineComponent', () => {
-  let component: KuiperLinucCIComponent;
-  let fixture: ComponentFixture<KuiperLinucCIComponent>;
+describe('KuiperlinuxciComponent', () => {
+  let component: KuiperlinuxciComponent;
+  let fixture: ComponentFixture<KuiperlinuxciComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KuiperLinucCIComponent ]
+      declarations: [ KuiperlinuxciComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KuiperLinucCIComponent);
+    fixture = TestBed.createComponent(KuiperlinuxciComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

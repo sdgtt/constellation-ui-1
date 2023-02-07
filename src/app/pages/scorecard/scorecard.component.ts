@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScorecardComponent implements OnInit {
 
+  scorecard ="The Scorecard generates the test results summary for the last 7 days, by default, to show trends of issues and failures of the test stages.";
+
   constructor() { }
 
   ngOnInit(): void {

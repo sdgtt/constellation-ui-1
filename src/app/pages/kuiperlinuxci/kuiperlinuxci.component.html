@@ -1,0 +1,642 @@
+<div class="kuiperlinuxci-container">
+    <div class="first-section">
+        <div class="row">
+            <div class="col-2">
+                <div class="page-title">Kuiper Linux CI</div>
+            </div>
+            <div class="col-10">
+                <div class="page-desc">{{kuiperlinux}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="second-section">
+        <div class="row">
+            <div class="col-12">
+                <div class="latest-summary">Latest Build Summary</div>
+            </div>
+        </div>
+        <div class="jenkins-details">
+            <table class="jenkins-table">
+                <tr class="t-row">
+                    <td class="field">Jenkins Project Name</td>
+                    <td class="select-output">
+                        <div class="btn-group" dropdown>
+                            <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                                    aria-controls="dropdown-animated">
+                              Select <span class="caret"></span>
+                            </button>
+                            <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
+                                role="menu" aria-labelledby="button-animated">
+                              <li role="menuitem"><a class="dropdown-item" *ngFor="let pboard of Projectboards">{{ pboard.jenkinsprojectname }}</a></li>
+                            </ul>
+                          </div>
+                        <!-- <ng-select (change)="changeFn(selection)" [(ngModel)]="selection" class="w-25 p-3" placeholder="{{'author' | translate}}" [clearable]="false" [searchable]="false">
+                            <ng-option>{{'author' | translate}}</ng-option>
+                            <ng-option>{{'title' | translate}}</ng-option>
+                            <ng-option>{{'date' | translate}}</ng-option>
+                    </ng-select> -->
+                        <!--Using ng-option and for loop-->
+                        <!-- <ng-select [(ngModel)]="selectedCar">
+                            <ng-option *ngFor="let car of cars" [value]="car.id">{{car.name}}</ng-option>
+                        </ng-select> -->
+                        <!-- <select formControlName="website" class="select-dropdown">
+                            <option disabled>Select Website</option>
+                            <option *ngFor="let web of websiteList">{{web}}</option>
+                        </select> -->
+                    </td>
+                    <td class="spacer"></td>
+                    <td class="field">Artifactory source branch</td>
+                    <td class="output">boot_partition_master</td>
+                </tr>
+                <tr class="t-row">
+                    <td class="field">Jenkins Build No.</td>
+                    <td class="output">1002</td>
+                    <td class="spacer"></td>
+                    <td class="field">HDL Commit</td>
+                    <td class="output">158c10df3</td>
+                </tr>
+                <tr class="t-row">
+                    <td class="field">Total Boards</td>
+                    <td class="output"> </td>
+                    <td class="spacer"></td>
+                    <td class="field">Linux Commit</td>
+                    <td class="output">c3774bd67a17</td>
+                    <td class="field">Status <span class="info-icon" [popover]="statusDetails"
+                            [placement]="'bottom left'" triggers="mouseenter:mouseleave"><i
+                                class="fas fa-info-circle"></i></span></td>
+                </tr>
+                <tr class="t-row">
+                    <td class="field">Online</td>
+                    <td class="output">26</td>
+                    <td class="spacer"></td>
+                    <td class="field">Passing</td>
+                    <td class="output">6</td>
+                </tr>
+            </table>
+        </div>
+        <div class="jenkins-table">
+            <table class="jenkins-result-table">
+                <thead>
+                    <tr>
+                        <th class="table-head">Job Date</th>
+                        <th class="table-head">Board</th>
+                        <th class="table-head">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Passed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlineFailedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Failed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Passed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlineDmesgTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Dmesg.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="offlineTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Offline.png" /></span>
+                                <span class="status-icon">
+                                    <!-- <img src="assets/Passed.png" /> -->
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Passed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlineFailedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Failed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Passed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlineDmesgTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Dmesg.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="offlineTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Offline.png" /></span>
+                                <span class="status-icon">
+                                    <!-- <img src="assets/Passed.png" /> -->
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Passed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlineFailedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Failed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Passed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlineDmesgTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Dmesg.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="offlineTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Offline.png" /></span>
+                                <span class="status-icon">
+                                    <!-- <img src="assets/Passed.png" /> -->
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Passed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlineFailedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Failed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Passed.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="onlineDmesgTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Online.png" /></span>
+                                <span class="status-icon">
+                                    <img src="assets/Dmesg.png" />
+                                </span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-output">2022-08-15 23:45:31</td>
+                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
+                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
+                        </td>
+                        <td class="table-output">
+                            <a type="button" containerClass="customClass" [tooltip]="offlineTooltip">
+                                <span class="status-icon">
+                                    <img src="assets/Offline.png" /></span>
+                                <span class="status-icon">
+                                    <!-- <img src="assets/Passed.png" /> -->
+                                </span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<!-- templates -->
+<ng-template #onlinePassedTooltip>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Board Details:</h4>
+            </div>
+            <div class="modal-body">
+                <div class="board-details">
+                    <div class="board-title">
+                        Board: <b>{{board}}</b>
+                    </div>
+                    <div class="board-power">
+                        Power: On
+                    </div>
+                    <div class="board-stat">
+                        Status: Passed
+                    </div>
+                    <div class="board-reason">
+                        No Failure encountered
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+<ng-template #onlineFailedTooltip>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Board Details:</h4>
+            </div>
+            <div class="modal-body">
+                <div class="board-details">
+                    <div class="board-title">
+                        Board: <b>{{board}}</b>
+                    </div>
+                    <div class="board-power">
+                        Power: On
+                    </div>
+                    <div class="board-stat">
+                        Status: Failed
+                    </div>
+                    <div class="board-reason">
+                        Reason: Pytest failure 4
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #offlineTooltip>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Board Details:</h4>
+            </div>
+            <div class="modal-body">
+                <div class="board-details">
+                    <div class="board-title">
+                        Board: <b>{{board}}</b>
+                    </div>
+                    <div class="board-power">
+                        Power: Offline
+                    </div>
+                    <div class="board-stat">
+                        Status: Failed
+                    </div>
+                    <div class="board-reason">
+                        Reason: Exception: u-boot not reached
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #onlineDmesgTooltip>
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Board Details:</h4>
+            </div>
+            <div class="modal-body">
+                <div class="board-details">
+                    <div class="board-title">
+                        Board: <b>{{board}}</b>
+                    </div>
+                    <div class="board-power">
+                        Power: Offline
+                    </div>
+                    <div class="board-stat">
+                        Status: Failed
+                    </div>
+                    <div class="board-reason">
+                        Reason: Linux dmesg error 2
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #statusDetails>
+    <div class="status-details">
+        <table class="status-details-table">
+            <thead>
+                <tr>
+                    <th class="status-head">Online</th>
+                    <th class="status-head">Offline</th>
+                    <th class="status-head">Dmesg</th>
+                    <th class="status-head">Passed</th>
+                    <th class="status-head">Failed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="status-icon-table"><img src="assets/Online.png" /></td>
+                    <td class="status-icon-table"><img src="assets/Offline.png" /></td>
+                    <td class="status-icon-table"><img src="assets/Passed.png" /></td>
+                    <td class="status-icon-table"><img src="assets/Failed.png" /></td>
+                    <td class="status-icon-table"><img src="assets/Dmesg.png" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</ng-template>
+
+<!-- <bsModals> -->
+<!-- <div bsModal #onlinePassedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-sizes-name2">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Board Details:</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Close"
+                    (click)="onlinePassedModal.hide()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="board-details">
+                    <div class="board-title">
+                        Board: <b>{{board}}</b>
+                    </div>
+                    <div class="board-power">
+                        Power: On
+                    </div>
+                    <div class="board-stat">
+                        Status: Passed
+                    </div>
+                    <div class="board-reason">
+                        No Failure encountered
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div bsModal #offlineModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-sizes-name2">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Board Details:</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Close"
+                    (click)="onlinePassedModal.hide()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="board-details">
+                    <div class="board-title">
+                        Board: <b>{{board}}</b>
+                    </div>
+                    <div class="board-power">
+                        Power: Off
+                    </div>
+                    <div class="board-stat">
+                        Status: Failed
+                    </div>
+                    <div class="board-reason">
+                        Reason: Exception: u-boot not reached
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div bsModal #passedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-sizes-name2">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Board Details:</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Close"
+                    (click)="passedModal.hide()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="board-details">
+                    <div class="board-title">
+                        Board: <b>{{board}}</b>
+                    </div>
+                    <div class="board-stat">
+                        Status: Passed
+                    </div>
+                    <div class="board-reason">
+                        No Failure encountered
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div bsModal #failedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="dialog-sizes-name2">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Board Details:</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Close"
+                    (click)="passedModal.hide()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="board-details">
+                    <div class="board-title">
+                        Board: <b>{{board}}</b>
+                    </div>
+                    <div class="board-stat">
+                        Status: Failed
+                    </div>
+                    <div class="board-reason">
+                        Failure reason: Pytest failure 4
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div bsModal #dmesgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name2">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title pull-left">Board Details:</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Close"
+                    (click)="passedModal.hide()">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="board-details">
+                    <div class="board-title">
+                        Board: <b>{{board}}</b>
+                    </div>
+                    <div class="board-stat">
+                        Status: Failed
+                    </div>
+                    <div class="board-reason">
+                        Failure reason: Linux dmesg error 2
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

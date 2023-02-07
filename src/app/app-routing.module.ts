@@ -2,16 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 //components
-import { KuiperLinucCIComponent } from './pages/hwpipeline/hwpipeline.component';
+import { KuiperlinuxciComponent } from './pages/kuiperlinuxci/kuiperlinuxci.component';
 import { ScorecardComponent } from './pages/scorecard/scorecard.component';
 import { PlugandtestComponent } from './pages/plugandtest/plugandtest.component';
-import { BoardComponent } from './pages/board/board.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/hwpipeline', pathMatch: 'full' },
+  { path: '', redirectTo: '/kuiperlinuxci', pathMatch: 'full' },
   {
-    path: 'hwpipeline',
-    component: KuiperLinucCIComponent,
+    path: 'kuiperlinuxci',
+    component: KuiperlinuxciComponent,
   },
   {
     path: 'scorecard',
@@ -20,10 +19,6 @@ export const routes: Routes = [
   {
     path: 'plugandtest',
     component: PlugandtestComponent,
-  },
-  {
-    path: 'board',
-    component: BoardComponent,
   }];
 
 @NgModule({
