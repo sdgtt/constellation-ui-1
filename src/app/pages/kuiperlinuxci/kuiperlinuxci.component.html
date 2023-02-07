@@ -19,9 +19,9 @@
             <table class="jenkins-table">
                 <tr class="t-row">
                     <td class="field">Jenkins Project Name</td>
-                    <td class="select-output">
-                        <div class="btn-group" dropdown>
-                            <button id="button-animated" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                    <td class="output">
+                        <!-- <div class="btn-group" dropdown>
+                            <button id="button-animated" dropdownToggle type="button" class="drop-btn dropdown-toggle"
                                     aria-controls="dropdown-animated">
                               Select <span class="caret"></span>
                             </button>
@@ -29,20 +29,11 @@
                                 role="menu" aria-labelledby="button-animated">
                               <li role="menuitem"><a class="dropdown-item" *ngFor="let pboard of Projectboards">{{ pboard.jenkinsprojectname }}</a></li>
                             </ul>
-                          </div>
-                        <!-- <ng-select (change)="changeFn(selection)" [(ngModel)]="selection" class="w-25 p-3" placeholder="{{'author' | translate}}" [clearable]="false" [searchable]="false">
-                            <ng-option>{{'author' | translate}}</ng-option>
-                            <ng-option>{{'title' | translate}}</ng-option>
-                            <ng-option>{{'date' | translate}}</ng-option>
-                    </ng-select> -->
-                        <!--Using ng-option and for loop-->
-                        <!-- <ng-select [(ngModel)]="selectedCar">
-                            <ng-option *ngFor="let car of cars" [value]="car.id">{{car.name}}</ng-option>
-                        </ng-select> -->
-                        <!-- <select formControlName="website" class="select-dropdown">
-                            <option disabled>Select Website</option>
-                            <option *ngFor="let web of websiteList">{{web}}</option>
-                        </select> -->
+                          </div> -->
+                          <!-- <select [(ngModel)]="selectedLevel" (change)="selected()">
+                            <option *ngFor="let item of data" [ngValue]="item">{{item.name}}</option>
+                          </select>
+                          {{selectedLevel | json}} -->
                     </td>
                     <td class="spacer"></td>
                     <td class="field">Artifactory source branch</td>

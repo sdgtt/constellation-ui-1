@@ -13,11 +13,11 @@ export class BoardsService {
   private options = { withCredentials: true };
   constructor(private http: HttpClient) { }
 
-   getJenkinBoardName(jenkins_pname: string): Observable<Projectboards>{
+  getJenkinBoardName(jenkins_pname: string): Observable<any>{
     var httpUrl = environment.apiUrl + '/api/board/' + jenkins_pname;
     return this.http.get<Projectboards>(httpUrl, this.options);
   }
-  getBoards(boardname: string): Observable<Projectboards>{
+  getBoards(boardname: string): Observable<any>{
     var httpUrl = environment.apiUrl + '/api/board/' + boardname;
     return this.http.get<Projectboards>(httpUrl, this.options);
   }

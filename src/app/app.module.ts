@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule} from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 import { BrowserModule, } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
-// import { NgSelectModule } from '@ng-select/ng-select';
-
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 //Components
 import { NavigationComponent } from './templates/navigation/navigation.component';
@@ -22,8 +20,6 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { PlugandtestComponent } from './pages/plugandtest/plugandtest.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,9 +31,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    // NgSelectModule,
+    HttpClientModule ,
     CommonModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
