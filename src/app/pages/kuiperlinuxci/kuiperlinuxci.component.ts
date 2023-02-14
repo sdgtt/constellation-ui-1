@@ -1,12 +1,14 @@
 import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
-
-import { Projectboards } from 'src/app/models/projectboards.model';
-import { Boards } from 'src/app/models/boards.model';
-
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
+
+//models
+import { Boards } from 'src/app/models/boards.model';
+
+//services
 import { BoardsService } from 'src/app/services/boards.service';
+import { toArray } from 'rxjs';
 
 
 @Component({
@@ -16,36 +18,19 @@ import { BoardsService } from 'src/app/services/boards.service';
   providers: [{ provide: BsDropdownConfig, useValue: { isAnimated: true, autoClose: true } }]
 })
 export class KuiperlinuxciComponent implements OnInit {
-  @Input() name: string;
-
   modalRef: BsModalRef;
   modalTempRef: BsModalRef;
 
   kuiperlinux ="Kuiper Linux CI is a CI for continuous testing of Kuiper Linux on hardware. It is automatically triggered once a new boot partition is built and uploaded to artifactory. This page shows the latest test results summary of Kuiper Linux test stages.";
 
-  pboards: Projectboards;
   boards: Boards;
-  board = 'zynq-zc706-adv7511-fmcdaq2';
+  jenkinpname: any;
+  allBoards: any;
+  sampleboard = 'sample';
 
-  // Projectboards = [
-  //   { jenkinsprojectname: 'HW_tests/HW_test_multiconfig 1', jenkinsbuildno: 1002, artifactorysourcebranch:'boot_partition_master',hdlcommit:'158c10df3',linuxcommit:'c3774bd67a17', onlineboards: 30},
-  //   { jenkinsprojectname: 'HW_tests/HW_test_multiconfig 2', jenkinsbuildno: 1003, artifactorysourcebranch:'boot_partition_master',hdlcommit:'158df10ds3',linuxcommit:'dfswg342nfj2', onlineboards: 10},
-  // ];
-  
-  Boards = [
-    {jenkinsjobdate: '2022-08-15 23:45:31', boardname:'zynq-zc706-adv7511-fmcdaq2'},
-    {jenkinsjobdate: '2023-08-15 23:45:31', boardname:'zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos'},
 
-  ];
-  selectedLevel: any;
-  data:Array<Object> = [
-      {id: 0, name: "name1"},
-      {id: 1, name: "name2"}
-  ];
 
-  selected(){
-    alert(this.selectedLevel.name)
-  }
+
 
 
   constructor(
@@ -58,13 +43,30 @@ export class KuiperlinuxciComponent implements OnInit {
     this.modalRef = this.modalService.show(template,{ class: 'gray modal-lg' });
   }
 
-  
-  ngOnInit(): void {
-    this.boardsService.getBoards("zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos").subscribe(data => {
+  JenkinProjectDetails() {
+    this.boardsService.getBootFolder("HW_tests/HW_test_multiconfig").subscribe(data => {
       console.log(data);
       data['hits'].forEach((element: any) => {
         console.log(element['jenkins_project_name']);
+        Boards.jenkins_project_name = (element['jenkins_project_name']);
+
       });
+    });
+  }
+
+  ngOnInit(): void {
+    this.boardsService.getAll("HW_tests/HW_test_multiconfig").subscribe(data => {
+      // console.log(data);
+      data['hits'].forEach((element: any) => {
+        this.jenkinpname = this.boards = (element['jenkins_project_name']);      
+        // this.allBoards = (element['boot_folder_name']);  
+
+      });
+      data['hits'].forEach((e:any) => {
+        this.allBoards = Array.of(e['boot_folder_name']);  
+        console.log(this.allBoards);
+      });
+
     });
   }
 
