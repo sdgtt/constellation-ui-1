@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { KuiperlinuxciComponent } from './pages/kuiperlinuxci/kuiperlinuxci.component';
 import { ScorecardComponent } from './pages/scorecard/scorecard.component';
 import { PlugandtestComponent } from './pages/plugandtest/plugandtest.component';
+import { SelectedboardComponent } from './pages/selectedboard/selectedboard.component'
 
 export const routes: Routes = [
   { path: '', redirectTo: '/kuiperlinuxci', pathMatch: 'full' },
@@ -19,6 +20,10 @@ export const routes: Routes = [
   {
     path: 'plugandtest',
     component: PlugandtestComponent,
+  },
+  {
+    path: 'selectedboard',
+    component: SelectedboardComponent,
   }];
 
 @NgModule({

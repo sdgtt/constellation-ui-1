@@ -19,6 +19,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { PlugandtestComponent } from './pages/plugandtest/plugandtest.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { SelectedboardComponent } from './pages/selectedboard/selectedboard.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     NavigationComponent,
     ScorecardComponent,
     PlugandtestComponent,
-    KuiperlinuxciComponent
+    KuiperlinuxciComponent,
+    SelectedboardComponent
   ],
   imports: [
     BrowserModule,
