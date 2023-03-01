@@ -19,11 +19,11 @@ export class BoardsService {
     return this.http.get<Boards>(httpUrl);
   }
   getAll(jenkinpname: any): Observable<any>{
-    var httpUrl = environment.apiUrl + '/api/?jenkins_project_name=' + jenkinpname;
+    var httpUrl = environment.apiUrl + '/api/?jenkins_project_name=' + jenkinpname + '&size=100';
     return this.http.get<Boards>(httpUrl);
   }
   getBoardCount(num: number): Observable<any>{
-    var httpUrl = environment.apiUrl + '/api/?size/' + num;
+    var httpUrl = environment.apiUrl + '/api/?size=100';
     return this.http.get<Boards>(httpUrl);
   }
 

@@ -24,14 +24,9 @@ export class KuiperlinuxciComponent implements OnInit {
   kuiperlinux ="Kuiper Linux CI is a CI for continuous testing of Kuiper Linux on hardware. It is automatically triggered once a new boot partition is built and uploaded to artifactory. This page shows the latest test results summary of Kuiper Linux test stages.";
 
   boards: Boards;
-  jenkinpname: any;
-  allBoards: any;
+  jenkins_project_name: any;
+  boot_folder_name: any = [];
   sampleboard = 'sample';
-
-
-
-
-
 
   constructor(
     private modalService: BsModalService,
@@ -55,18 +50,15 @@ export class KuiperlinuxciComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //add loading
     this.boardsService.getAll("HW_tests/HW_test_multiconfig").subscribe(data => {
-      // console.log(data);
       data['hits'].forEach((element: any) => {
-        this.jenkinpname = this.boards = (element['jenkins_project_name']);      
-        // this.allBoards = (element['boot_folder_name']);  
-
+        Boards.jenkins_project_name = (element['jenkins_project_name']);
+      this.jenkins_project_name = Boards.jenkins_project_name;  
+        Boards.boot_folder_name = (element['boot_folder_name']);
+        this.boot_folder_name.push(Boards.boot_folder_name);
       });
-      data['hits'].forEach((e:any) => {
-        this.allBoards = Array.of(e['boot_folder_name']);  
-        console.log(this.allBoards);
-      });
-
+            // add loading = false end
     });
   }
 

@@ -19,7 +19,7 @@
             <table class="jenkins-table">
                 <tr class="t-row">
                     <td class="field">Jenkins Project Name</td>
-                    <td class="output">{{ jenkinpname }}
+                    <td class="output">{{ jenkins_project_name }}
                         <!-- <div class="btn-group" dropdown>
                             <button id="button-animated" dropdownToggle type="button" class="drop-btn dropdown-toggle"
                                     aria-controls="dropdown-animated">
@@ -75,21 +75,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let allBoard of allBoards" >
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/selectedboard" style="cursor: pointer;">
-                            {{ allBoard }}
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    <!-- </tr>
-                    <tr>
+                        <tr *ngFor="let boot of boot_folder_name" >
+                            <td class="table-output">2022-08-15 23:45:31</td>
+                            <td class="table-output" routerLink="/selectedboard" style="cursor: pointer;">
+                                {{ boot }}
+                            </td>
+                            <td class="table-output">
+                                <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
+                                    <span class="status-icon">
+                                        <img src="assets/Online.png" /></span>
+                                    <span class="status-icon">
+                                        <img src="assets/Passed.png" />
+                                    </span></a>
+                            </td>
+                         </tr>
+                    
+                    <!-- <tr>
                         <td class="table-output">2022-08-15 23:45:31</td>
                             zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
                         </td>
@@ -370,7 +371,7 @@
             <div class="modal-body">
                 <div class="board-details">
                     <div class="board-title">
-                        Board: <b>{{sampleboard}}</b>
+                        Board: <b>{{ boot_folder_name }}</b>
                     </div>
                     <div class="board-power">
                         Power: On
