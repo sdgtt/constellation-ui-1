@@ -14,16 +14,16 @@ export class BoardsService {
   constructor(private http: HttpClient) { }
 
  
-  getBootFolder(bootFolder: string): Observable<any>{
-    var httpUrl = environment.apiUrl + '/api/board/' + bootFolder;
+  getBootFolder(boardname: string, ): Observable<any>{
+    var httpUrl = environment.apiUrl + '/api/board/' + boardname;
     return this.http.get<Boards>(httpUrl);
   }
   getAll(jenkinpname: any): Observable<any>{
-    var httpUrl = environment.apiUrl + '/api/?jenkins_project_name=' + jenkinpname + '&size=100';
+    var httpUrl = environment.apiUrl + '/api/?jenkins_project_name=' + jenkinpname + '&size=50';
     return this.http.get<Boards>(httpUrl);
   }
-  getBoardCount(num: number): Observable<any>{
-    var httpUrl = environment.apiUrl + '/api/?size=100';
+  getBoards(): Observable<any>{
+    var httpUrl = environment.apiUrl + '/api/boards';
     return this.http.get<Boards>(httpUrl);
   }
 

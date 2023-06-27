@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+
 
 import { BrowserModule, } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,6 +22,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { PlugandtestComponent } from './pages/plugandtest/plugandtest.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SelectedboardComponent } from './pages/selectedboard/selectedboard.component';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +47,7 @@ import { SelectedboardComponent } from './pages/selectedboard/selectedboard.comp
     ModalModule.forRoot()
 
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

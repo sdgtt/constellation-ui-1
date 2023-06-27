@@ -37,14 +37,14 @@
                     </td>
                     <td class="spacer"></td>
                     <td class="field">Artifactory source branch</td>
-                    <td class="output">boot_partition_master</td>
+                    <td class="output">{{ source_adjacency_matrix }}</td>
                 </tr>
                 <tr class="t-row">
                     <td class="field">Jenkins Build No.</td>
-                    <td class="output">1002</td>
+                    <td class="output">{{ jenkins_build_number }}</td>
                     <td class="spacer"></td>
                     <td class="field">HDL Commit</td>
-                    <td class="output">158c10df3</td>
+                    <td class="output">{{ hdl_hash }}</td>
                 </tr>
                 <tr class="t-row">
                     <td class="field">Total Boards</td>
@@ -75,10 +75,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                        <tr *ngFor="let boot of boot_folder_name" >
-                            <td class="table-output">2022-08-15 23:45:31</td>
+                        <!-- <tr *ngFor="let boot of boot_folder_name; let i = index" > -->
+                            <tr *ngFor="let bd of boardDetail?.hits" >
+                            <td class="table-output" >{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
                             <td class="table-output" routerLink="/selectedboard" style="cursor: pointer;">
-                                {{ boot }}
+                              {{ bd.boot_folder_name }}
                             </td>
                             <td class="table-output">
                                 <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
@@ -631,3 +632,5 @@
         </div>
     </div>
 </div> -->
+<script src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1561436720/particles.js"></script>
+<script src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1561436735/app.js"></script>
