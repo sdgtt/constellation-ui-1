@@ -16,52 +16,38 @@
             </div>
         </div>
         <div class="jenkins-details">
-            <table class="jenkins-table">
+            <table class="jenkins-table-details">
                 <tr class="t-row">
                     <td class="field">Jenkins Project Name</td>
-                    <td class="output">{{ jenkins_project_name }}
-                        <!-- <div class="btn-group" dropdown>
-                            <button id="button-animated" dropdownToggle type="button" class="drop-btn dropdown-toggle"
-                                    aria-controls="dropdown-animated">
-                              Select <span class="caret"></span>
-                            </button>
-                            <ul id="dropdown-animated" *dropdownMenu class="dropdown-menu"
-                                role="menu" aria-labelledby="button-animated">
-                              <li role="menuitem"><a class="dropdown-item" *ngFor="let pboard of Projectboards">{{ pboard.jenkinsprojectname }}</a></li>
-                            </ul>
-                          </div> -->
-                          <!-- <select [(ngModel)]="selectedLevel" (change)="selected()">
-                            <option *ngFor="let item of data" [ngValue]="item">{{item.name}}</option>
-                          </select>
-                          {{selectedLevel | json}} -->
+                    <td class="output">{{ this.jenkins_project_name }}
                     </td>
                     <td class="spacer"></td>
                     <td class="field">Artifactory source branch</td>
-                    <td class="output">{{ source_adjacency_matrix }}</td>
+                    <td class="output">{{ this.source_adjacency_matrix }}</td>
                 </tr>
                 <tr class="t-row">
                     <td class="field">Jenkins Build No.</td>
-                    <td class="output">{{ jenkins_build_number }}</td>
+                    <td class="output">{{ this.jenkins_build_number }}</td>
                     <td class="spacer"></td>
-                    <td class="field">HDL Commit</td>
-                    <td class="output">{{ hdl_hash }}</td>
+                    <td class="field">Passing</td>
+                    <td class="output">{{ this.passingBoards }}</td>
+                    
                 </tr>
                 <tr class="t-row">
-                    <td class="field">Total Boards</td>
-                    <td class="output"> </td>
+                    <td class="field">HDL Commit</td>
+                    <td class="output">{{ this.hdl_hash }}</td>
                     <td class="spacer"></td>
                     <td class="field">Linux Commit</td>
-                    <td class="output">c3774bd67a17</td>
+                    <td class="output">{{ this.linux_hash }}</td>
                     <td class="field">Status <span class="info-icon" [popover]="statusDetails"
                             [placement]="'bottom left'" triggers="mouseenter:mouseleave"><i
                                 class="fas fa-info-circle"></i></span></td>
                 </tr>
                 <tr class="t-row">
                     <td class="field">Online</td>
-                    <td class="output">26</td>
+                    <td class="output">{{ this.onlineBoards }}</td>
                     <td class="spacer"></td>
-                    <td class="field">Passing</td>
-                    <td class="output">6</td>
+                    
                 </tr>
             </table>
         </div>
@@ -72,290 +58,36 @@
                         <th class="table-head">Job Date</th>
                         <th class="table-head">Board</th>
                         <th class="table-head">Status</th>
+                        <th class="table-head">Power</th>
+
                     </tr>
                 </thead>
                 <tbody>
                         <!-- <tr *ngFor="let boot of boot_folder_name; let i = index" > -->
-                            <tr *ngFor="let bd of boardDetail?.hits" >
+                            <tr *ngFor="let bd of this.dataAggregates" >
                             <td class="table-output" >{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
                             <td class="table-output" routerLink="/selectedboard" style="cursor: pointer;">
-                              {{ bd.boot_folder_name }}
-                            </td>
-                            <td class="table-output">
+                              {{ bd.boot_folder_name }}</td>
+                            <td class="table-output" >{{ bd.linux_prompt_reached }} {{ bd.uboot_reached }}</td>
+                            <td class="table-output"> 
+                               {{ this.pstatus }} {{bstatus}} {{ bdstatus}}
+                               <ng-container *ngIf="isBoardOnline()">
                                 <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
                                     <span class="status-icon">
-                                        <img src="assets/Online.png" /></span>
-                                    <span class="status-icon">
-                                        <img src="assets/Passed.png" />
-                                    </span></a>
+                                        <img [src]="this.picon" />
+                                    </span>
+                                </a>
+                               </ng-container>
+                                
+                               <ng-template *ngIf="this.bstatusArrayToDisplay[2] ;  '' " >
+                                <span class="status-icon">
+                                    <img [src]="this.bdicon" />
+                                </span>
+                                </ng-template> 
+                      
                             </td>
                          </tr>
-                    
-                    <!-- <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlineFailedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Failed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlineDmesgTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Dmesg.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="offlineTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Offline.png" /></span>
-                                <span class="status-icon">
-                                     <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlineFailedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Failed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlineDmesgTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Dmesg.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/selectedboard" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="offlineTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Offline.png" /></span>
-                                <span class="status-icon">
-                                     <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlineFailedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Failed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlineDmesgTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Dmesg.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="offlineTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Offline.png" /></span>
-                                <span class="status-icon">
-                                     <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlineFailedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Failed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="onlineDmesgTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Online.png" /></span>
-                                <span class="status-icon">
-                                    <img src="assets/Dmesg.png" />
-                                </span></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-output">2022-08-15 23:45:31</td>
-                        <td class="table-output" routerLink="/board" style="cursor: pointer;">
-                            zynqmp-zcu102-rev10-adrv9002-rx2tx2-vcmos
-                        </td>
-                        <td class="table-output">
-                            <a type="button" containerClass="customClass" [tooltip]="offlineTooltip">
-                                <span class="status-icon">
-                                    <img src="assets/Offline.png" /></span>
-                                <span class="status-icon">
-                                     <img src="assets/Passed.png" />
-                                </span></a>
-                        </td>
-                    </tr> -->
+     
                 </tbody>
             </table>
         </div>
@@ -371,17 +103,14 @@
             </div>
             <div class="modal-body">
                 <div class="board-details">
-                    <div class="board-title">
-                        Board: <b>{{ boot_folder_name }}</b>
-                    </div>
-                    <div class="board-power">
-                        Power: On
+                    <div class="board-power" *ngFor="let i of this.pstatusArrayToDisplay">
+                        {{ i }}
                     </div>
                     <div class="board-stat">
-                        Status: Passed
+                      Status: {{ this.boot_folder_name}}
                     </div>
                     <div class="board-reason">
-                        No Failure encountered
+                        
                     </div>
                 </div>
             </div>
@@ -447,11 +176,7 @@
             </div>
             <div class="modal-body">
                 <div class="board-details">
-                    <div class="board-title">
-                        Board: <b>{{sampleboard}}</b>
-                    </div>
                     <div class="board-power">
-                        Power: Offline
                     </div>
                     <div class="board-stat">
                         Status: Failed

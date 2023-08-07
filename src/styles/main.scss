@@ -5,17 +5,11 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    // color: #707070;
     color: #F0F0F0;
-    // background-color: #F0F0F0;
     width: 100%;
     height: 100vh;
     position: relative;
-    // // background-image: url(../assets/cons_bg.png);
-    // display: flex; 
-    // justify-content: center;
-    // align-items: center;
-    // overflow: hidden;
+
 }
 
 .custom-margin {
@@ -24,10 +18,8 @@ body {
 
 }
 
-
-
-  .video-wrapper {
-    position: relative;
+.video-wrapper {
+    // position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -35,14 +27,16 @@ body {
 
     video {
         object-fit: cover;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         height: 100vh;
         width: 100%;
-      }
-  }
-  .navbar-bg {
+        z-index: -1;
+    }
+}
+
+.navbar-bg {
     position: fixed;
     top: 0px;
     z-index: 1;
@@ -56,10 +50,11 @@ body {
     .navbar-brand {
         padding: 0;
         line-height: 0;
+        background-color: rgba(0, 0, 0, 0.8);
 
         img {
             padding-top: 5px;
-            height: 70px;
+            height: 75px;
             width: auto;
         }
     }
@@ -73,11 +68,12 @@ body {
             background-color: rgba(0, 0, 0, 0.8);
             border-radius: 5px;
 
-
         }
 
         .nav>li>a:focus,
-        .nav>li>a:hover {
+        .nav>li>a:hover,
+        .nav>li>a:active
+         {
             border-radius: 5px;
             background-color: rgba(255, 255, 255, 0.4);
             outline: none;
@@ -85,7 +81,8 @@ body {
 
         .nav .open>a,
         .nav .open>a:focus,
-        .nav .open>a:hover {
+        .nav .open>a:hover,
+        .nav .open>a:active {
             border-radius: 5px;
             background-color: rgba(255, 255, 255, 0.4);
             outline: none;
@@ -96,6 +93,7 @@ body {
         }
     }
 }
+
 .content-container {
     margin-top: 120px;
 
@@ -106,9 +104,8 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
-        border-radius: 10px;
     padding: 0 10px 0 10px;
-
+    
     .first-section {
         text-align: left;
         margin-bottom: 20px;
@@ -137,7 +134,7 @@ body {
             padding: 10px 68px;
             font-size: 17px;
 
-            .jenkins-table {
+            .jenkins-table-details {
                 width: 100%;
 
                 td {
@@ -172,141 +169,27 @@ body {
         .jenkins-table {
             font-size: 18px;
             text-align: left;
+            height: 540px;
+            width: 100%;
+            overflow: auto;
+            display: inline-block;
+            max-height: 540px;
 
             .jenkins-result-table {
-                border: 1px solid #7070703B;
-                border-radius: 5px;
-                box-shadow: 8px 3px 14px #00000024;
+                border-top: 1px solid #E5E5E5;
                 width: 100%;
 
                 .table-head {
-                    border-bottom: 1px solid #E5E5E5;
+                    border-bottom: 1px solid #7070703B;
                     padding: 20px 80px;
                     font-weight: 400;
                 }
-
-                .table-output {
-                    padding: 15px 80px;
-
-                    .status-icon {
-                        padding-right: 5px;
-                        cursor: pointer;
-
-                    }
-                }
-            }
-        }
-    }
-
-
-
-    .tooltip .tooltip-inner {
-        background-color: #ffffff;
-        max-width: none;
-        font-size: 13px;
-        color: #333333 !important;
-        font-weight: 600;
-    }
-
-    .bs-tooltip-auto[x-placement^=top] .arrow::before,
-    .bs-tooltip-top .arrow::before {
-        border-top-color: #ffffff !important;
-        border-bottom-color: #ffffff;
-    }
-
-    .modal-backdrop.fade {
-        opacity: 0.5;
-    }
-
-    .modal-open .modal {
-        opacity: 1;
-    }
-
-}
-
-.scorecard-container {
-    width: 100%;
-    height: 100%;
-    overflow-y: hidden;
-    /* Hide vertical scrollbar */
-
-
-    .first-section {
-        text-align: left;
-        margin-bottom: 20px;
-
-        .page-title {
-            font-size: 26px;
-            font-weight: 600;
-
-        }
-
-        .page-desc {
-            font-size: 15px;
-
-        }
-    }
-
-    .second-section {
-        text-align: left;
-
-        .test-summary {
-            font-size: 23px;
-            font-weight: 500;
-        }
-
-        .jenkins-details {
-            padding: 10px 68px;
-            font-size: 17px;
-
-            .jenkins-table {
-                width: 100%;
-
-                td {
-                    padding: 7px;
-                }
-
-                .field {
-                    font-weight: 500;
-
-                    .info-icon {
-                        color: #E5E5E5;
-                        cursor: pointer;
-                    }
-                }
-
-                .select-dropdown {
-                    border: 1px solid #707070;
-                    width: 365px;
-                    color: #707070;
+                tbody>tr:hover {
+                    // border-radius: 20px;
+                    background-color: rgba(141, 141, 141, 0.166);
                     outline: none;
-                    border-radius: 10px;
-                    padding-left: 10px;
+                    cursor: pointer;
                 }
-
-                .spacer {
-                    padding-left: 50px;
-                }
-            }
-
-        }
-
-        .jenkins-table {
-            font-size: 18px;
-            text-align: left;
-
-            .jenkins-result-table {
-                border: 1px solid #7070703B;
-                border-radius: 5px;
-                box-shadow: 8px 3px 14px #00000024;
-                width: 100%;
-
-                .table-head {
-                    border-bottom: 1px solid #E5E5E5;
-                    padding: 20px 80px;
-                    font-weight: 400;
-                }
-
                 .table-output {
                     padding: 15px 80px;
 
@@ -316,6 +199,8 @@ body {
 
                     }
                 }
+
+                
             }
         }
     }
@@ -323,7 +208,7 @@ body {
 
 
     .tooltip .tooltip-inner {
-        background-color: #ffffff;
+        // background-color: #ffffff;
         max-width: none;
         font-size: 13px;
         color: #333333 !important;
@@ -346,124 +231,270 @@ body {
 
 }
 
-.plugandtest-container {
-    width: 100%;
-    height: 100%;
-
-    .first-section {
-        text-align: left;
-        margin-bottom: 20px;
-
-        .page-title {
-            font-size: 26px;
-            font-weight: 600;
-
-        }
-
-        .page-desc {
-            font-size: 15px;
-
-        }
-    }
-
-    .second-section {
-        text-align: left;
-
-        .test-summary {
-            font-size: 23px;
-            font-weight: 500;
-        }
-
-        .jenkins-details {
-            padding: 10px 68px;
-            font-size: 17px;
-
-            .jenkins-table {
-                width: 100%;
-
-                td {
-                    padding: 7px;
-                }
-
-                .field {
-                    font-weight: 500;
-
-                    .info-icon {
-                        color: #E5E5E5;
-                        cursor: pointer;
-                    }
-                }
-
-                .select-dropdown {
-                    border: 1px solid #707070;
-                    width: 365px;
-                    color: #707070;
-                    outline: none;
-                    border-radius: 10px;
-                    padding-left: 10px;
-                }
-
-                .spacer {
-                    padding-left: 50px;
-                }
-            }
-
-        }
-
-        .jenkins-table {
-            font-size: 18px;
-            text-align: left;
-
-            .jenkins-result-table {
-                border: 1px solid #7070703B;
-                border-radius: 5px;
-                box-shadow: 8px 3px 14px #00000024;
-                width: 100%;
-
-                .table-head {
-                    border-bottom: 1px solid #E5E5E5;
-                    padding: 20px 80px;
-                    font-weight: 400;
-                }
-
-                .table-output {
-                    padding: 15px 80px;
-
-                    .status-icon {
-                        padding-right: 5px;
-                        cursor: pointer;
-
-                    }
-                }
-            }
-        }
-    }
+// .scorecard-container {
+//     width: 100%;
+//     height: 100%;
+//     overflow-y: hidden;
+//     /* Hide vertical scrollbar */
 
 
+//     .first-section {
+//         text-align: left;
+//         margin-bottom: 20px;
 
-    .tooltip .tooltip-inner {
-        background-color: #ffffff;
-        max-width: none;
-        font-size: 13px;
-        color: #333333 !important;
-        font-weight: 600;
-    }
+//         .page-title {
+//             font-size: 26px;
+//             font-weight: 600;
 
-    .bs-tooltip-auto[x-placement^=top] .arrow::before,
-    .bs-tooltip-top .arrow::before {
-        border-top-color: #ffffff !important;
-        border-bottom-color: #ffffff;
-    }
+//         }
 
-    .modal-backdrop.fade {
-        opacity: 0.5;
-    }
+//         .page-desc {
+//             font-size: 15px;
 
-    .modal-open .modal {
-        opacity: 1;
-    }
+//         }
+//     }
+
+//     .second-section {
+//         text-align: left;
+
+//         .test-summary {
+//             font-size: 23px;
+//             font-weight: 500;
+//         }
+
+//         .jenkins-details {
+//             padding: 10px 68px;
+//             font-size: 17px;
+
+//             .jenkins-table {
+//                 width: 100%;
+
+//                 td {
+//                     padding: 7px;
+//                 }
+
+//                 .field {
+//                     font-weight: 500;
+
+//                     .info-icon {
+//                         color: #E5E5E5;
+//                         cursor: pointer;
+//                     }
+//                 }
+
+//                 .select-dropdown {
+//                     border: 1px solid #707070;
+//                     width: 365px;
+//                     color: #707070;
+//                     outline: none;
+//                     border-radius: 10px;
+//                     padding-left: 10px;
+//                 }
+
+//                 .spacer {
+//                     padding-left: 50px;
+//                 }
+//             }
+
+//         }
+
+//         .jenkins-table {
+//             font-size: 18px;
+//             text-align: left;
+
+//             .jenkins-result-table {
+//                 border: 1px solid #7070703B;
+//                 border-radius: 5px;
+//                 box-shadow: 8px 3px 14px #00000024;
+//                 width: 100%;
+
+//                 .table-head {
+//                     border-bottom: 1px solid #E5E5E5;
+//                     padding: 20px 80px;
+//                     font-weight: 400;
+//                 }
+
+//                 .table-output {
+//                     padding: 15px 80px;
+
+//                     .status-icon {
+//                         padding-right: 5px;
+//                         cursor: pointer;
+
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+
+
+//     .tooltip .tooltip-inner {
+//         background-color: #ffffff;
+//         max-width: none;
+//         font-size: 13px;
+//         color: #333333 !important;
+//         font-weight: 600;
+//     }
+
+//     .bs-tooltip-auto[x-placement^=top] .arrow::before,
+//     .bs-tooltip-top .arrow::before {
+//         border-top-color: #ffffff !important;
+//         border-bottom-color: #ffffff;
+//     }
+
+//     .modal-backdrop.fade {
+//         opacity: 0.5;
+//     }
+
+//     .modal-open .modal {
+//         opacity: 1;
+//     }
+
+// }
+
+// .plugandtest-container {
+//     width: 100%;
+//     height: 100%;
+
+//     .first-section {
+//         text-align: left;
+//         margin-bottom: 20px;
+
+//         .page-title {
+//             font-size: 26px;
+//             font-weight: 600;
+
+//         }
+
+//         .page-desc {
+//             font-size: 15px;
+
+//         }
+//     }
+
+//     .second-section {
+//         text-align: left;
+
+//         .test-summary {
+//             font-size: 23px;
+//             font-weight: 500;
+//         }
+
+//         .jenkins-details {
+//             padding: 10px 68px;
+//             font-size: 17px;
+
+//             .jenkins-table {
+//                 width: 100%;
+
+//                 td {
+//                     padding: 7px;
+//                 }
+
+//                 .field {
+//                     font-weight: 500;
+
+//                     .info-icon {
+//                         color: #E5E5E5;
+//                         cursor: pointer;
+//                     }
+//                 }
+
+//                 .select-dropdown {
+//                     border: 1px solid #707070;
+//                     width: 365px;
+//                     color: #707070;
+//                     outline: none;
+//                     border-radius: 10px;
+//                     padding-left: 10px;
+//                 }
+
+//                 .spacer {
+//                     padding-left: 50px;
+//                 }
+//             }
+
+//         }
+
+//         .jenkins-table {
+//             font-size: 18px;
+//             text-align: left;
+
+//             .jenkins-result-table {
+//                 border: 1px solid #7070703B;
+//                 border-radius: 5px;
+//                 box-shadow: 8px 3px 14px #00000024;
+//                 width: 100%;
+
+//                 .table-head {
+//                     border-bottom: 1px solid #E5E5E5;
+//                     padding: 20px 80px;
+//                     font-weight: 400;
+//                 }
+
+//                 .table-output {
+//                     padding: 15px 80px;
+
+//                     .status-icon {
+//                         padding-right: 5px;
+//                         cursor: pointer;
+
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+
+
+//     .tooltip .tooltip-inner {
+//         background-color: #ffffff;
+//         max-width: none;
+//         font-size: 13px;
+//         color: #333333 !important;
+//         font-weight: 600;
+//     }
+
+//     .bs-tooltip-auto[x-placement^=top] .arrow::before,
+//     .bs-tooltip-top .arrow::before {
+//         border-top-color: #ffffff !important;
+//         border-bottom-color: #ffffff;
+//     }
+
+//     .modal-backdrop.fade {
+//         opacity: 0.5;
+//     }
+
+//     .modal-open .modal {
+//         opacity: 1;
+//     }
+
+// }
+
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 1px grey;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 5px;
 
 }
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+}
+
 
 .glowing {
     position: relative;
@@ -472,32 +503,33 @@ body {
     margin: -150px;
     transform-origin: right;
     animation: colorChange 5s linear infinite;
-  }
-  
-  .glowing:nth-child(even) {
+}
+
+.glowing:nth-child(even) {
     transform-origin: left;
-  }
-  
-  @keyframes colorChange {
+}
+
+@keyframes colorChange {
     0% {
-      filter: hue-rotate(0deg);
-      transform: rotate(0deg);
+        filter: hue-rotate(0deg);
+        transform: rotate(0deg);
     }
+
     100% {
-      filter: hue-rotate(360deg);
-      transform: rotate(360deg);
+        filter: hue-rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
-  
-  .glowing span {
+}
+
+.glowing span {
     position: absolute;
     top: calc(80px * var(--i));
     left: calc(80px * var(--i));
     bottom: calc(80px * var(--i));
     right: calc(80px * var(--i));
-  }
-  
-  .glowing span::before {
+}
+
+.glowing span::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -506,69 +538,71 @@ body {
     height: 15px;
     background: #f00;
     border-radius: 50%;
-  }
-  
-  .glowing span:nth-child(3n + 1)::before {
-    background: rgba(134,255,0,1);
-    box-shadow: 0 0 20px rgba(134,255,0,1),
-      0 0 40px rgba(134,255,0,1),
-      0 0 60px rgba(134,255,0,1),
-      0 0 80px rgba(134,255,0,1),
-      0 0 0 8px rgba(134,255,0,.1);
-  }
-  
-  .glowing span:nth-child(3n + 2)::before {
-    background: rgba(255,214,0,1);
-    box-shadow: 0 0 20px rgba(255,214,0,1),
-      0 0 40px rgba(255,214,0,1),
-      0 0 60px rgba(255,214,0,1),
-      0 0 80px rgba(255,214,0,1),
-      0 0 0 8px rgba(255,214,0,.1);
-  }
-  
-  .glowing span:nth-child(3n + 3)::before {
-    background: rgba(0,226,255,1);
-    box-shadow: 0 0 20px rgba(0,226,255,1),
-      0 0 40px rgba(0,226,255,1),
-      0 0 60px rgba(0,226,255,1),
-      0 0 80px rgba(0,226,255,1),
-      0 0 0 8px rgba(0,226,255,.1);
-  }
-  
-  .glowing span:nth-child(3n + 1) {
+}
+
+.glowing span:nth-child(3n + 1)::before {
+    background: rgba(134, 255, 0, 1);
+    box-shadow: 0 0 20px rgba(134, 255, 0, 1),
+        0 0 40px rgba(134, 255, 0, 1),
+        0 0 60px rgba(134, 255, 0, 1),
+        0 0 80px rgba(134, 255, 0, 1),
+        0 0 0 8px rgba(134, 255, 0, .1);
+}
+
+.glowing span:nth-child(3n + 2)::before {
+    background: rgba(255, 214, 0, 1);
+    box-shadow: 0 0 20px rgba(255, 214, 0, 1),
+        0 0 40px rgba(255, 214, 0, 1),
+        0 0 60px rgba(255, 214, 0, 1),
+        0 0 80px rgba(255, 214, 0, 1),
+        0 0 0 8px rgba(255, 214, 0, .1);
+}
+
+.glowing span:nth-child(3n + 3)::before {
+    background: rgba(0, 226, 255, 1);
+    box-shadow: 0 0 20px rgba(0, 226, 255, 1),
+        0 0 40px rgba(0, 226, 255, 1),
+        0 0 60px rgba(0, 226, 255, 1),
+        0 0 80px rgba(0, 226, 255, 1),
+        0 0 0 8px rgba(0, 226, 255, .1);
+}
+
+.glowing span:nth-child(3n + 1) {
     animation: animate 10s alternate infinite;
-  }
-  
-  .glowing span:nth-child(3n + 2) {
+}
+
+.glowing span:nth-child(3n + 2) {
     animation: animate-reverse 3s alternate infinite;
-  }
-  
-  .glowing span:nth-child(3n + 3) {
-    animation: animate 8s alternate infinite; 
-  }
-  
-  @keyframes animate {
+}
+
+.glowing span:nth-child(3n + 3) {
+    animation: animate 8s alternate infinite;
+}
+
+@keyframes animate {
     0% {
-      transform: rotate(180deg);
+        transform: rotate(180deg);
     }
+
     50% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
+
     100% {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
-  
-  @keyframes animate-reverse {
+}
+
+@keyframes animate-reverse {
     0% {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-    
+
     50% {
-      transform: rotate(180deg);
+        transform: rotate(180deg);
     }
-    
+
     100% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
-  }
+}
