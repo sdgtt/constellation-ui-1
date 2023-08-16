@@ -19,7 +19,7 @@ body {
 }
 
 .video-wrapper {
-    // position: relative;
+    position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -329,29 +329,30 @@ body {
 
 
 
-//     .tooltip .tooltip-inner {
-//         background-color: #ffffff;
-//         max-width: none;
-//         font-size: 13px;
-//         color: #333333 !important;
-//         font-weight: 600;
-//     }
+    .tooltip .tooltip-inner {
+        background-color: #ffffff;
+        max-width: none;
+        font-size: 13px;
+        color: #333333 !important;
+        font-weight: 600;
+        width: 500px;
+    }
 
-//     .bs-tooltip-auto[x-placement^=top] .arrow::before,
-//     .bs-tooltip-top .arrow::before {
-//         border-top-color: #ffffff !important;
-//         border-bottom-color: #ffffff;
-//     }
+    .bs-tooltip-auto[x-placement^=top] .arrow::before,
+    .bs-tooltip-top .arrow::before {
+        border-top-color: #ffffff !important;
+        border-bottom-color: #ffffff;
+    }
 
-//     .modal-backdrop.fade {
-//         opacity: 0.5;
-//     }
+    .modal-backdrop.fade {
+        opacity: 0.5;
+    }
 
-//     .modal-open .modal {
-//         opacity: 1;
-//     }
+    .modal-open .modal {
+        opacity: 1;
+    }
 
-// }
+
 
 // .plugandtest-container {
 //     width: 100%;
