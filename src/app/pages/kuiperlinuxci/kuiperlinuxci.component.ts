@@ -24,7 +24,7 @@ import { on } from 'events';
 //   name: 'trim'
 // })
 export class KuiperlinuxciComponent implements OnInit {
-  [x: string]: any;
+
   modalRef: BsModalRef;
   modalTempRef: BsModalRef;
 
@@ -44,54 +44,74 @@ export class KuiperlinuxciComponent implements OnInit {
   linux_prompt_reached: boolean = true;
   uboot_reached: boolean = true;
 
-  dmesg_errors_found: any;
-  dmesg_warnings_found: any;
-  drivers_enumerated: any;
-  drivers_missing: any;
+  dmesg_errors_found: number;
+  dmesg_warnings_found: number;
+  drivers_enumerated: number;
+  drivers_missing: number;
   last_failing_stage: any;
   last_failing_stage_failure: any;
-  matlab_errors: any;
-  matlab_failures: any;
-  matlab_skipped: any;
-  matlab_tests: any;
-  pytest_errors: any;
-  pytest_failures: any;
-  pytest_skipped: any;
-  pytest_tests: any;
+  matlab_errors: number;
+  matlab_failures: number;
+  matlab_skipped: number;
+  matlab_tests: number;
+  pytest_errors: number;
+  pytest_failures: number;
+  pytest_skipped: number;
+  pytest_tests: number;
   currentLatestBuildNumber: number;
 
   dataAggregates: any[] = [];
   latestData: any = {};
+  boardDetail: any[];
 
   imagePath = 'assets/'
   pstatusIcon = ['Online.png', 'Offline.png'];
-  bstatusIcon = ['Passed.png', 'nebula_error.png', 'linux_dmesg_errors.png', 'pytest_failure.png'];
+  bstatusIcon = ['Passed.png', 'nebula.svg', 'linux.svg', 'python.svg'];
   latestBootFolders: string[] = [];
   sortOrder: 'asc' | 'desc' = 'desc'; // Initialize the sorting order
 
   latestBoards: any[] = [];
-  onlineStat: any;
-  passStat: any;
-  boardstatus: string;
-  onlineBoards: number = 0;
-  passingBoards: number;
-  result: any;
-  failreasonstatus: any;
 
+  passingBoardsCount: number = 0;
+  onlineBoardsCount: number = 0;
 
+  statusMessages: string[] = [];
+  status: string[] = [];  
+  icon: string[] = []; 
 
+  latestBoardData: any;
   constructor(
     private modalService: BsModalService,
     private boardsService: BoardsService,
     private datePipe: DatePipe,
   ) { }
 
-
-
   ngOnInit(): void {
-    // this.fetchFromHits();
-    //this.fetchBoardDetails();
     this.fetchDataAggregates();
+  }
+  fetchDataAggregates() {
+    this.boardsService.getDataAggregates().subscribe((aggregatesTop: any[]) => {
+      this.dataAggregates = aggregatesTop.map(aggr => aggr[Object.keys(aggr)[0]]);
+      const latest = this.dataAggregates.reduce((latestData, bd) => {
+        if (!latestData.jenkins_job_date || bd.jenkins_job_date > latestData.jenkins_job_date) {
+          latestData.jenkins_job_date = bd.jenkins_job_date;
+          latestData.jenkins_project_name = bd.jenkins_project_name;
+          latestData.boot_folder_name = bd.boot_folder_name;
+          latestData.jenkins_build_number = bd.jenkins_build_number;
+          latestData.source_adjacency_matrix = bd.source_adjacency_matrix;
+          latestData.hdl_hash = this.removeNextText(bd.hdl_hash);
+          latestData.linux_hash = this.removeNextText(bd.linux_hash);
+        }
+        return latestData;
+      }, {} as any);
+
+      this.latestData = latest;
+      this.onlineBoardsCount = this.countOnlineBoards(this.dataAggregates);
+      this.passingBoardsCount = this.countPassingBoards(this.dataAggregates);
+
+      console.log(this.passingBoardsCount);
+
+    });
 
   }
   removeNextText(h: string): string {
@@ -104,80 +124,6 @@ export class KuiperlinuxciComponent implements OnInit {
       return '';
     }
   }
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { class: 'gray modal-lg' });
-  }
-
-
-  // fetchDataAggregates() {
-  //   this.boardsService.getDataAggregates().subscribe((aggregatesTop: any[]) => {
-  //     // Process or store the retrieved data aggregates as per your requirements
-  //     this.dataAggregates = [];
-  //     aggregatesTop.forEach(aggr => {
-  //       var key = Object.keys(aggr)[0];
-  //       this.dataAggregates.push(aggr[key]);
-
-
-  //       this.dataAggregates.forEach((element: any) => {
-  //         Boards.jenkins_project_name = (element['jenkins_project_name']);
-  //         Boards.jenkins_build_number = (element['jenkins_build_number']);
-  //         Boards.boot_folder_name = (element['boot_folder_name']);
-  //         Boards.source_adjacency_matrix = (element['source_adjacency_matrix']);
-  //         Boards.hdl_hash = (element['hdl_hash']);
-  //         Boards.linux_hash = (element['linux_hash']);
-
-  //         Boards.dmesg_errors_found = (element['dmesg_errors_found']);
-  //         Boards.dmesg_warnings_found = (element['dmesg_warnings_found']);
-  //         Boards.drivers_enumerated = (element['drivers_enumerated']);
-  //         Boards.drivers_missing = (element['drivers_missing']);
-  //         Boards.last_failing_stage = (element['last_failing_stage']);
-  //         Boards.last_failing_stage_failure = (element['last_failing_stage_failure']);
-  //         Boards.matlab_errors = (element['matlab_errors']);
-  //         Boards.matlab_failures = (element['matlab_failures']);
-  //         Boards.matlab_skipped = (element['matlab_skipped']);
-  //         Boards.matlab_tests = (element['matlab_tests']);
-  //         Boards.pytest_errors = (element['pytest_errors ']);
-  //         Boards.pytest_failures = (element['pytest_failures ']);
-  //         Boards.pytest_skipped = (element['pytest_skipped']);
-  //         Boards.pytest_tests = (element['pytest_tests']);
-
-  //         this.jenkins_project_name = Boards.jenkins_project_name;
-  //         this.jenkins_build_number = Boards.jenkins_build_number;
-  //         this.hdl_hash = this.removeNextText(Boards.hdl_hash);
-  //         this.linux_hash = this.removeNextText(Boards.linux_hash);
-  //         this.source_adjacency_matrix = Boards.source_adjacency_matrix;
-  //         this.boot_folder_name = Boards.boot_folder_name;
-  //         this.linux_prompt_reached = Boards.linux_prompt_reached;
-  //         this.uboot_reached = Boards.uboot_reached;
-
-  //         this.dmesg_errors_found = Boards.dmesg_errors_found;
-  //         this.dmesg_warnings_found = Boards.dmesg_warnings_found;
-  //         this.drivers_enumerated = Boards.drivers_enumerated;
-  //         this.drivers_missing = Boards.drivers_missing;
-  //         this.last_failing_stage = Boards.last_failing_stage;
-  //         this.last_failing_stage_failure = Boards.last_failing_stage_failure;
-  //         this.matlab_errors = Boards.matlab_errors;
-  //         this.matlab_failures = Boards.matlab_failures;
-  //         this.matlab_skipped = Boards.matlab_skipped;
-  //         this.matlab_tests = Boards.matlab_tests;
-  //         this.pytest_errors = Boards.pytest_errors;
-  //         this.pytest_failures = Boards.pytest_failures;
-  //         this.pytest_skipped = Boards.pytest_skipped;
-  //         this.pytest_tests = Boards.pytest_tests;
-
-  //       })
-
-  //     });
-
-  //     // console.log('boot_folder_name: ' + this.boot_folder_name + '\n Status: ' +  this.bstatus, this.bdstatus + '\n  result: ' +
-  //     //   this.picon, this.bicon);
-
-  //     // console.log('Total Online Boards: ', onlineCount); // Log the total count of online boards
-
-  //   });
-
-  // }
   sortDataAggregates() {
     this.dataAggregates.sort((a, b) => {
       const dateA = new Date(a.jenkins_job_date).getTime();
@@ -193,188 +139,110 @@ export class KuiperlinuxciComponent implements OnInit {
   isBoardOnline(bd: any): { status: string, icon: string } {
 
     if (bd.uboot_reached && bd.linux_prompt_reached) {
-      // this.onlineBoards++;
-      this.onlineStat = "Online"
-      console.log('icon', this.imagePath + this.pstatusIcon[0], this.onlineBoards);
-      return { status: 'Online', icon: this.imagePath + this.pstatusIcon[0] };
+      return {
+        status: 'Online',
+        icon: this.imagePath + this.pstatusIcon[0]
+      };
     }
-    if (!bd.uboot_reached && bd.linux_prompt_reached) {
-      this.onlineStat = "Offline - uboot not reached";
-      console.log('icon', this.imagePath + this.pstatusIcon[1]);
-      return { status: 'Offline', icon: this.imagePath + this.pstatusIcon[1] };
+    else {
+      return {
+        status: 'Offline',
+        icon: this.imagePath + this.pstatusIcon[1]
+      };
     }
-    if (bd.uboot_reached && !bd.linux_prompt_reached) {
-      this.onlineStat = "Offline - linux prompt not reached";
-      console.log('icon', this.imagePath + this.pstatusIcon[1]);
-      return { status: 'Offline', icon: this.imagePath + this.pstatusIcon[1] };
-    }
-    else{
-      return { status: 'Offline', icon: this.imagePath + this.pstatusIcon[1] };
-    }
+
   }
-
-  isBoardPassed(bd: any): { status: string, icon: string } {
-    // bstatusIcon = ['Passed.png', 'nebula_error.png', 'linux_dmesg_errors.png', 'pytest_failure.png'];
-
-    // if (this.isBoardOnline(bd).status == 'Online') {
-      // if(bd.boot_folder_name == 'Pluto'){
-      //   if (
-      //     bd.drivers_enumerated == 0 &&
-      //     bd.drivers_missing == 0 &&
-      //     bd.matlab_errors == 0 &&
-      //     bd.matlab_failures == 0 &&
-      //     bd.matlab_skipped == 0 &&
-      //     bd.matlab_tests == 0 &&
-      //     bd.pytest_errors == 0 &&
-      //     bd.pytest_failures == 0 &&
-      //     bd.pytest_skipped == 0 &&
-      //     bd.pytest_tests == 0 &&
-      //     bd.dmesg_errors_found == 0 &&
-      //     bd.dmesg_warnings_found == 0
-      //   ) {
-      //     console.log('board ', bd.boot_folder_name, 'icon', this.imagePath + this.bstatusIcon[0]);
-      //     this.result = "Pass";
-      //     this.failreasonstatus = "No errors encountered";
-      //     return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[0] };
-      //   }
-      //   if (bd.dmesg_errors_found != "0") {
-      //     console.log('icon', this.imagePath + this.bstatusIcon[2]);
-      //     this.result = "Fail";
-      //     this.failreasonstatus = "linux dmesg errors " + bd.dmesg_errors_found;
-      //     return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[2] };
-      //   }
-      //   if (bd.drivers_missing != "0") {
-      //     this.result = "Fail";
-      //     this.failreasonstatus = "linux drivers missing " + bd.drivers_missing;
-      //     console.log('icon', this.imagePath + this.bstatusIcon[2]);
-      //     return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[2] };
-      //   }
-      //   if (!bd.linux_prompt_reached) {
-      //     this.result = "Fail";
-      //     this.failreasonstatus = [];
-      //     this.failreasonstatus = "Linux prompt not reached";
-      //     console.log('icon', this.imagePath + this.bstatusIcon[2]);
-      //     return { status: this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[2] };
-      //   }
-      //   if (!bd.uboot_reached) {
-      //     this.result = "Fail";
-      //     this.failreasonstatus = "u-boot not reached";
-      //     console.log('icon', this.imagePath + this.bstatusIcon[1]);
-      //     return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[1] };
-      //   }
-      //   if (bd.last_failing_stage_failure != "NA") {
-      //     this.result = "Fail";
-      //     this.failreasonstatus = [];
-      //     this.failreasonstatus = 'Stage Failure: '+ bd.last_failing_stage_failure;
-      //     console.log('icon', this.imagePath + this.bstatusIcon[1]);
-      //     return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[1] };
-      //   }
-      // }
-      if (bd.linux_prompt_reached == true &&
-        bd.uboot_reached == true &&
-        bd.drivers_enumerated == 0 &&
-        bd.drivers_missing == 0 &&
-        bd.matlab_errors == 0 &&
-        bd.matlab_failures == 0 &&
-        bd.matlab_skipped == 0 &&
-        bd.matlab_tests == 0 &&
-        bd.pytest_errors == 0 &&
-        bd.pytest_failures == 0 &&
-        bd.pytest_skipped == 0 &&
-        bd.pytest_tests == 0 &&
+  isBoardPassed(bd: any): void {
+    const statusMessages: string[] = [];
+    const status: string[] = [];
+    const icon: string[] = [];
+  
+    // if (boardOnline.status == 'Online') {
+      if (bd.drivers_enumerated != 0 &&
         bd.dmesg_errors_found == 0 &&
-        bd.dmesg_warnings_found == 0
-      ) {
-        console.log('board ', bd.boot_folder_name, 'icon', this.imagePath + this.bstatusIcon[0]);
-        this.result = "Pass";
-        this.failreasonstatus = "No errors encountered";
-        return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[0] };
+        bd.drivers_missing == 0 &&
+        bd.pytest_errors == 0 &&
+        bd.pytest_failures == 0) {
+        statusMessages.push(`No errors encountered`);
+        status.push(`pass`);
+        icon.push(this.imagePath + this.bstatusIcon[0]); // Push icon to the array
       }
-      if (bd.pytest_failures != "0") {
-        console.log('icon', this.imagePath + this.bstatusIcon[3]);
-        this.result = "Fail";
-        this.failreasonstatus = "pytest failure " + bd.pytest_failures;
-        return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[3] };
+      else if (bd.drivers_enumerated == 0) {
+        statusMessages.push(`Linux dmesg error(drivers enumerated): ${bd.drivers_enumerated}`);
+        status.push(`linux`);
+        icon.push(this.imagePath + this.bstatusIcon[2]);
+      } else if (bd.drivers_missing != 0) {
+        statusMessages.push(`Linux dmesg errors(drivers missing): ${bd.drivers_missing}`);
+        status.push(`linux`);
+        icon.push(this.imagePath + this.bstatusIcon[2]);
+      } else if (bd.dmesg_errors_found != 0) {
+        statusMessages.push(`Linux dmesg errors: ${bd.dmesg_errors_found}`);
+        status.push(`linux`);
+        icon.push(this.imagePath + this.bstatusIcon[2]);
+      } if (bd.pytest_errors != 0) {
+        statusMessages.push(`Pytest errors: ${bd.pytest_errors}`);
+        status.push(`pytest`);
+        icon.push(this.imagePath + this.bstatusIcon[3]);
+      } else if (bd.pytest_failures != 0) {
+        statusMessages.push(`Pytest failures: ${bd.pytest_failures}`);
+        status.push(`pytest`);
+        icon.push(this.imagePath + this.bstatusIcon[3]);
       }
-      if (bd.pytest_tests != "0") {
-        console.log('icon', this.imagePath + this.bstatusIcon[3]);
-        this.result = "Fail";
-        this.failreasonstatus = "pytest errors " + (bd.pytest_tests);
-        return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[3] };
+      else if (bd.last_failing_stage_failure != "NA") {
+        statusMessages.push(`Failing stage: ${bd.last_failing_stage_failure}`);
+        status.push(`nebula`);
+        icon.push(this.imagePath + this.bstatusIcon[1]);
       }
-      if (bd.dmesg_errors_found != "0") {
-        console.log('icon', this.imagePath + this.bstatusIcon[2]);
-        this.result = "Fail";
-        this.failreasonstatus = "linux dmesg errors " + bd.dmesg_errors_found;
-        return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[2] };
-      }
-      if (bd.drivers_missing != "0") {
-        this.result = "Fail";
-        this.failreasonstatus = "linux drivers missing " + bd.drivers_missing;
-        console.log('icon', this.imagePath + this.bstatusIcon[2]);
-        return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[2] };
-      }
-      if (!bd.linux_prompt_reached) {
-        this.result = "Fail";
-        this.failreasonstatus = [];
-        this.failreasonstatus = "Linux prompt not reached";
-        console.log('icon', this.imagePath + this.bstatusIcon[2]);
-        return { status: this.failreasonstatus, icon: " " };
-      }
-      if (!bd.uboot_reached) {
-        this.result = "Fail";
-        this.failreasonstatus = "u-boot not reached";
-        console.log('icon', this.imagePath + this.bstatusIcon[1]);
-        return { status:  this.failreasonstatus, icon: " " };
-      }
-      if (bd.last_failing_stage_failure != "NA") {
-        this.result = "Fail";
-        this.failreasonstatus = [];
-        this.failreasonstatus = bd.last_failing_stage_failure;
-        console.log('icon', this.imagePath + this.bstatusIcon[1]);
-        return { status:  this.failreasonstatus, icon: this.imagePath + this.bstatusIcon[1] };
-      }
-
-    // }
-
-
-
-    console.log('board ', bd.boot_folder_name, 'icon', this.imagePath + this.bstatusIcon[1]);
-    return { status: '', icon: this.imagePath + this.bstatusIcon };
-
+      // }
+  // if (boardOnline.status == 'Offline') {
+    if (!bd.linux_prompt_reached) {
+      statusMessages.push(`Linux prompt not reached`);
+      status.push(`nebula`);
+      //this.icon = this.imagePath + this.bstatusIcon[1];
+    }
+    else if (!bd.uboot_reached) {
+      statusMessages.push(`U-boot prompt not reached`);
+      status.push(`nebula`);
+      //this.icon = this.imagePath + this.bstatusIcon[1];
+    }    
+    if (status.length == 1 && icon.length == 1 && statusMessages.length == 1) {
+      this.statusMessages = statusMessages;
+      this.status = status;
+      this.icon = icon;
+      console.log(1,bd.boot_folder_name, this.statusMessages, this.icon, this.status);
+    }
+    else if (status.length >= 2 && icon.length >= 2 && this.statusMessages.length >= 2) {
+      this.statusMessages = [statusMessages.join('\n ')];
+      this.icon = [this.icon.join(', ')]; // Join icons with a comma if there are two or more
+      this.status = [this.status.join(', ')]; // Join icons with a comma if there are two or more
+      console.log(2, bd.boot_folder_name, this.statusMessages, this.icon, this.status);
   }
-  fetchDataAggregates() {
-    this.boardsService.getDataAggregates().subscribe((aggregatesTop: any[]) => {
-      this.dataAggregates = aggregatesTop.map(aggr => aggr[Object.keys(aggr)[0]]);
-
-
-      // Group data by boot_folder_name and find the latest jenkins_build_number for each group
-      //  const boardGroups: { [bootFolderName: string]: any } = {}; // Replace `any` with the appropriate type
-      //  this.dataAggregates.forEach(bd => {
-      //    if (!boardGroups[bd.boot_folder_name] || bd.jenkins_build_number > boardGroups[bd.boot_folder_name].jenkins_build_number) {
-      //      boardGroups[bd.boot_folder_name] = bd;
-      //    }
-      //   });
-      //   this.latestBoards = Object.values(boardGroups);
-
-      const latest = this.dataAggregates.reduce((latestData, bd) => {
-        if (!latestData.jenkins_job_date || bd.jenkins_job_date > latestData.jenkins_job_date) {
-          latestData.jenkins_job_date = bd.jenkins_job_date;
-          latestData.jenkins_project_name = bd.jenkins_project_name;
-          latestData.boot_folder_name = bd.boot_folder_name;
-          latestData.jenkins_build_number = bd.jenkins_build_number;
-          latestData.source_adjacency_matrix = bd.source_adjacency_matrix;
-          latestData.hdl_hash = this.removeNextText(bd.hdl_hash);
-          latestData.linux_hash = this.removeNextText(bd.linux_hash);
-        }
-        return latestData;
-      }, {} as any);
-
-      this.latestData = latest;
-    });
-
+  bd.status = status;
+  
   }
+  countPassingBoards(dataAggregates: any[]): number {
+    let passingBoards = 0;
+  
+    for (const bd of dataAggregates) {
+      this.isBoardPassed(bd); // Call isBoardPassed to calculate the board's status
+  
+      // Check if the status array contains 'pass'
+      if (bd.status && bd.status.includes('pass')) {
+        passingBoards++;
+      }
+    }
+  
+    return passingBoards;
+  }
+  countOnlineBoards(dataAggregates: any[]): number {
 
+    for (const bd of dataAggregates) {
+      const boardOnline = this.isBoardOnline(bd);
 
-
+      if (boardOnline.status == 'Online') {
+        this.onlineBoardsCount++;
+      }
+    }
+    return this.onlineBoardsCount++;
+  }
 }

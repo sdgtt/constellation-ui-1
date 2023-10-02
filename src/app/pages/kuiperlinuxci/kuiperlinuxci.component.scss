@@ -1,16 +1,17 @@
 :host ::ng-deep .popover {
   font-family: 'Poppins', sans-serif;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.9);
   color: #F0F0F0;
   width: auto;
-  max-width: 24vw;
+  // max-width: 24vw;
   height: auto;
   // transform: translate3d(119px, 47px, 0px) !important;
   // width: 525px;
-  transform: translate3d(1350px, 225px, 0px) !important;
+  // transform: translate3d(1350px, 225px, 0px) !important;
   // width: 643px;
   border: 1px solid #E5E5E5;
   border-radius: 5px;
+  
 
   .popover-body {
     color: #ffffff !important;
@@ -27,7 +28,7 @@
 
 .status-details {
   width: 380px;
-  font-size: 15px;
+  font-size: 14px;
   color: #ffffff !important;
   padding: 10px 0;
 

@@ -24,12 +24,16 @@ export class BoardsService {
     );
   }
   
-  getBootFolder(boardname: string, ): Observable<any>{
+  getBootFolder(boardname: string ): Observable<any>{
     var httpUrl = environment.apiUrl + '/api/board/' + boardname;
     return this.http.get<Boards>(httpUrl);
   }
   getAll(jenkinpname: any): Observable<any>{
-    var httpUrl = environment.apiUrl + '/api/?jenkins_project_name='+ jenkinpname + '&size=50';
+    var httpUrl = environment.apiUrl + '/api/?jenkins_project_name='+ jenkinpname;
+    return this.http.get<Boards>(httpUrl);
+  }
+  gethw(jenkinpname: any, bootpartition: string): Observable<any>{
+    var httpUrl = environment.apiUrl + '/api/?jenkins_project_name='+ jenkinpname + '/?source_adjacency_matrix='+bootpartition;
     return this.http.get<Boards>(httpUrl);
   }
   getBoards(): Observable<any>{
