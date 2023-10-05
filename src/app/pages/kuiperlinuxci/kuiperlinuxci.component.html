@@ -1,5 +1,5 @@
-<div class="kuiperlinuxci-container">
-    <div class="first-section">
+<div class="kuiperlinuxci-container ">
+    <div class="first-section  custom-margin">
         <div class="row">
             <div class="col-2">
                 <div class="page-title">Kuiper Linux CI</div>
@@ -9,7 +9,7 @@
             </div>
         </div>
     </div>
-    <div class="second-section">
+    <div class="second-section  custom-margin">
         <div class="row">
             <div class="col-12">
                 <div class="latest-summary">Latest Build Summary</div>
@@ -29,8 +29,12 @@
                     <td class="field">Latest Jenkins Build No.</td>
                     <td class="output">{{ latestData.jenkins_build_number }}</td>
                     <td class="spacer"></td>
-                    <td class="field">Passing</td>
-                    <td class="output">{{ this.passingBoardsCount  }}</td>
+                    <td class="field">Pass</td>
+                    <td class="output">{{ this.passingBoardsCount }}</td>
+                    <td class="field-fail">Fail Linux</td>
+                    <td class="output">{{ this.linuxBoardsCount }}</td>
+                    <td class="field-fail">Fail Pytest</td>
+                    <td class="output">{{ this.pytestBoardsCount }}</td>
 
                 </tr>
                 <tr class="t-row">
@@ -68,57 +72,59 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let bd of this.dataAggregates">
-                        <td class="table-output">{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss' }}</td>
-                        <td class="table-output" routerLink="/" style="cursor: pointer;">
+                    <tr *ngFor="let bd of this.dataAggregates" (click)="navigateToBoardPage(bd.boot_folder_name)">
+                        <td class="table-output-date">{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss' }}</td>
+                        <td class="table-output" routerLink="/selectedboard" style="cursor: pointer;">
                             {{ bd.boot_folder_name }} 
                             <!-- {{ bd.jenkins_build_number }} -->
                         </td>
                         <td class="table-output-icon">
                             <ng-container>
-                                <a type="button" containerClass="customClass" [tooltip]="boardTooltip">
+                                <a type="button" containerClass="customClass" [tooltip]="powerTooltip">
                                     <span class="status-icon" *ngIf="isBoardOnline(bd).status">
                                         <img [src]="isBoardOnline(bd).icon" />
                                     </span>
                                 </a>
                             </ng-container>
-                            <ng-container *ngIf="isBoardPassed(bd)">
-                               
-                            </ng-container>
                             <ng-container>
-                                <a type="button" containerClass="customClass" [tooltip]="boardTooltip"
-                                triggers="mouseenter:mouseonleave">
-                                    <span class="status-icon" *ngFor="let s of status; let i = index">
-                                        <img [src]="icon[i]" />
+                                <a type="button" containerClass="customClass" [tooltip]="testTooltip"
+                                trigger="mouseenter:mouseleave">
+                                    <span class="status-icon" >
+                                        <img *ngFor="let icon of isBoardPassed(bd); let i=index" [src]="bd.icon[i]"  alt="Image" />
                                     </span>
                                 </a>
                             </ng-container>
                         </td>
-                        <ng-template #boardTooltip>
+                        <ng-template #powerTooltip>
                             <div class="board-tooltip">
-                                <div class="row">
-                                    <div class="col-6">
+                                <div class="row" style="font-weight: 500;">
+                                    <div class="col-12">
                                         <div class="board-power">
                                             Power
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="board-result">
+                                            {{ isBoardOnline(bd).status }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #testTooltip>
+                            <div class="board-tooltip">
+                                <div class="row" style="font-weight: 500;">
+                                    <div class="col-12">
                                         <div class="power">
                                             Test Result
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
-                                        <div class="board-result">
-                                            {{ isBoardOnline(bd).status }}
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-
-                                        <ng-container>
-                                            {{ statusMessages }}
-                                        </ng-container>
+                                    <div class="col-12" [innerHTML]="statusMessages[0]">
+                                            {{ bd.statusMessages }}
                                     </div>
                                 </div>
                             </div>

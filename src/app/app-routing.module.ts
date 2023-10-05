@@ -22,7 +22,7 @@ export const routes: Routes = [
     component: PlugandtestComponent,
   },
   {
-    path: 'selectedboard',
+    path: 'selectedboard/:boardName',
     component: SelectedboardComponent,
   }];
 
@@ -30,4 +30,5 @@ export const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -1,1 +1,178 @@
-<p>selectedboard works!</p>
+<section class="boardHead-container">
+    <div class="board-head">
+        <div class="board-top custom-margin">
+            <div class="row ">
+                <div class="col-8">
+
+                    <div class="board-name"><span class="label-space"><i class="fa-solid fa-caret-left"></i></span>
+                        {{this.selectedBoard}}</div>
+                    <div class="board-label">Board Name</div>
+                </div>
+                <div class="col-4">
+                    <div class="test-labels">
+                        <div class="legacy-label">
+                            Test Legacy
+                        </div>
+                        <table class="legacy-labels">
+                            <thead>
+                               <tr>
+                                <td>Linux</td>
+                                <td>Pyadi</td>
+                               </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="icons">
+                                        <div class="d-error"></div> 
+                                        <div class="d-miss"></div> 
+                                    </td>
+                                    <td class="iconpy">
+                                        <div class="pass"></div>
+                                        <div class="fail"></div>  
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-icons"> 
+                                        <span class="d-text">Dmesg Error</span>
+                                        <span class="d-text">Drivers Missing</span>
+                                    </td>
+                                    <td class="text-icons">
+                                        <span class="pass-text">Pass</span>
+                                        <span class="fail-text">Fail</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="board-filtering">
+                <table class="board-filter-table">
+                    <tr class="t-row">
+                        <td class="filter-dropdown">
+                            <div class="filter-dd">
+                                <span class="label-space"><i class="fa-solid fa-filter"></i></span>
+                                <div class="btn-group" dropdown>
+                                  <button id="button-animated" dropdownToggle type="button" class="btnDrop dropdown-toggle" aria-controls="dropdown-animated">
+                                    {{ selectMenuItem || 'Select Element' }} <span class="caret"></span>
+                                  </button>
+                                  <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                                    <li role="menuitem">
+                                      <a class="dropdown-item"  (click)="selectMenuItem('jenkins_build_number')">jenkins_build_number</a>
+                                    </li>
+                                    <li role="menuitem">
+                                      <a class="dropdown-item"  (click)="selectMenuItem('jenkins_trigger')">jenkins_trigger</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              
+                        </td>
+                        <td class="filter-dropdown">
+                            <div class="filter-dd">
+                                <span class="label-space"><i class="fa-solid fa-filter"></i></span>
+                                <div class="btn-group" dropdown>
+                                  <button id="button-animated" dropdownToggle type="button" class="btnDrop dropdown-toggle" aria-controls="dropdown-animated">
+                                    {{ selectedMenuItem || 'Select Field' }} <span class="caret"></span>
+                                  </button>
+                                  <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                                    <li role="menuitem" >
+                                      <a class="dropdown-item" href="#"></a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                        </td>
+                        <td class="filter-go">
+                            <button type="button" class="btnGo">
+                                <i class="fa-solid fa-rocket"></i>
+                            </button>
+                            <button type="button" class="btnClear">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="board-details">
+            <table class="board-detail-table">
+                <thead>
+                    <tr>
+                        <th class="table-head">Job Date</th>
+                        <th class="table-head">Artifactory source branch</th>
+                        <th class="table-head">Trigger</th>
+                        <th class="table-head">HDL Commit</th>
+                        <th class="table-head">Linux Commit</th>
+                        <th class="table-head">U-boot Reached</th>
+                        <th class="table-head">Linux Booted </th>
+                        <th class="table-head">Linux Tests</th>
+                        <th class="table-head">Pyadi Tests</th>
+                        <th class="table-head">Build Number</th>
+                        <th class="table-head">Artifacts</th>
+                        <th class="table-head">Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let board of boardDetails.hits">
+                        <ng-container *ngIf="board.boot_folder_name === selectedBoard">
+                            <td class="table-output">{{board.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
+                            <td class="table-output">{{ board.source_adjacency_matrix }}</td>
+                            <td class="table-output">{{ extractNumber(board.jenkins_trigger) }}</td>
+                            <td class="table-output">{{ board.hdl_hash }}</td>
+                            <td class="table-output">{{ board.linux_hash }}</td>
+                            <td class="table-output">{{ board.uboot_reached }}</td>
+                            <td class="table-output">{{ board.linux_prompt_reached }}</td>
+                            <td class="table-linuxTest">
+                                <button type="button" class="btnDmesg">
+                                   {{board.dmesg_errors_found}}
+                                  </button>
+                                  <br>
+                                  <button type="button" class="btnDriver">
+                                    {{ board.drivers_missing }}
+                                  </button>  
+                            </td>
+                            <td class="table-output">
+                                <button type="button" class="btnPass">
+                                    3
+                                  </button>
+                                  <br>
+                                  <button type="button" class="btnFail">
+                                    45
+                                </button>
+                            </td>
+                            <td class="table-output">{{ board.jenkins_build_number }}</td>
+                            <td class="table-output">
+                                <span class="arti"><a type="button" containerClass="customClass" [tooltip]="uartTooltip"><i class="fa-solid fa-chart-line"></i></a></span>
+                                <span class="arti"><a type="button" containerClass="customClass" [tooltip]="diagnosticTooltip"><i class="fa-solid fa-file-pen"></i></a></span>
+                            </td> 
+                            <td class="table-output">{{board.boot_test_result}}</td>
+                        </ng-container>
+                        <ng-template #uartTooltip>
+                            <div class="board-tooltip" style="font-weight: 500;">
+                                <div class="row" >
+                                    <div class="col-12">
+                                        <div class="power">
+                                            UART BOOT LOG
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #diagnosticTooltip>
+                            <div class="board-tooltip" style="font-weight: 500;">
+                                <div class="row" >
+                                    <div class="col-12">
+                                        <div class="power">
+                                            ADI DIAGNOSTIC REPORT
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

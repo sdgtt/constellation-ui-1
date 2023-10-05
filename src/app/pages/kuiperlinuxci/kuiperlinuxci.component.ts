@@ -1,18 +1,14 @@
-import { Component, Input, OnInit, TemplateRef, Pipe, PipeTransform } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Component, OnInit,  } from '@angular/core';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
-import { DatePipe } from '@angular/common';
-import { Observable } from 'rxjs';
-
+import { Router } from '@angular/router';
 
 //models
 import { Boards } from 'src/app/models/boards.model';
 
 //services
 import { BoardsService } from 'src/app/services/boards.service';
-import { elementAt } from 'rxjs';
-import { on } from 'events';
+
 
 @Component({
   selector: 'app-kuiperlinuxci',
@@ -20,16 +16,13 @@ import { on } from 'events';
   styleUrls: ['./kuiperlinuxci.component.scss'],
   providers: [{ provide: BsDropdownConfig, useValue: { isAnimated: true, autoClose: true } }]
 })
-// @Pipe({
-//   name: 'trim'
-// })
+
 export class KuiperlinuxciComponent implements OnInit {
 
   modalRef: BsModalRef;
   modalTempRef: BsModalRef;
 
   kuiperlinux = "Kuiper Linux CI is a CI for continuous testing of Kuiper Linux on hardware. It is automatically triggered once a new boot partition is built and uploaded to artifactory. This page shows the latest test results summary of Kuiper Linux test stages.";
-  sampleboard = 'sample';
 
   boards: Boards;
   jenkins_project_name: any;
@@ -65,8 +58,8 @@ export class KuiperlinuxciComponent implements OnInit {
   boardDetail: any[];
 
   imagePath = 'assets/'
-  pstatusIcon = ['Online.png', 'Offline.png'];
-  bstatusIcon = ['Passed.png', 'nebula.svg', 'linux.svg', 'python.svg'];
+  pstatusIcon: string[] = ['assets/Online.png','assets/Offline.png'];
+  bstatusIcon: string[] = ['assets/Passed.png','assets/nebula.svg','assets/linux.svg','assets/python.svg'];
   latestBootFolders: string[] = [];
   sortOrder: 'asc' | 'desc' = 'desc'; // Initialize the sorting order
 
@@ -74,6 +67,8 @@ export class KuiperlinuxciComponent implements OnInit {
 
   passingBoardsCount: number = 0;
   onlineBoardsCount: number = 0;
+  linuxBoardsCount: number = 0;
+  pytestBoardsCount: number = 0;
 
   statusMessages: string[] = [];
   status: string[] = [];  
@@ -81,14 +76,15 @@ export class KuiperlinuxciComponent implements OnInit {
 
   latestBoardData: any;
   constructor(
-    private modalService: BsModalService,
     private boardsService: BoardsService,
-    private datePipe: DatePipe,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.fetchDataAggregates();
-  }
+   
+    }
+   
   fetchDataAggregates() {
     this.boardsService.getDataAggregates().subscribe((aggregatesTop: any[]) => {
       this.dataAggregates = aggregatesTop.map(aggr => aggr[Object.keys(aggr)[0]]);
@@ -108,11 +104,9 @@ export class KuiperlinuxciComponent implements OnInit {
       this.latestData = latest;
       this.onlineBoardsCount = this.countOnlineBoards(this.dataAggregates);
       this.passingBoardsCount = this.countPassingBoards(this.dataAggregates);
-
-      console.log(this.passingBoardsCount);
-
+      this.linuxBoardsCount = this.countLinuxErrors(this.dataAggregates);
+      this.pytestBoardsCount = this.countPytestErrors(this.dataAggregates);
     });
-
   }
   removeNextText(h: string): string {
     this.hash = h.split(' ');
@@ -140,24 +134,24 @@ export class KuiperlinuxciComponent implements OnInit {
 
     if (bd.uboot_reached && bd.linux_prompt_reached) {
       return {
-        status: 'Online',
-        icon: this.imagePath + this.pstatusIcon[0]
+        status: `Online`,
+        icon: this.pstatusIcon[0]
       };
     }
     else {
       return {
-        status: 'Offline',
-        icon: this.imagePath + this.pstatusIcon[1]
+        status: `Offline`,
+        icon: this.pstatusIcon[1]
       };
     }
 
   }
-  isBoardPassed(bd: any): void {
+  isBoardPassed(bd: any): string[] {
     const statusMessages: string[] = [];
     const status: string[] = [];
     const icon: string[] = [];
-  
-    // if (boardOnline.status == 'Online') {
+    const boardOnline = this.isBoardOnline(bd)
+     if (boardOnline.status == `Online`) {
       if (bd.drivers_enumerated != 0 &&
         bd.dmesg_errors_found == 0 &&
         bd.drivers_missing == 0 &&
@@ -165,59 +159,65 @@ export class KuiperlinuxciComponent implements OnInit {
         bd.pytest_failures == 0) {
         statusMessages.push(`No errors encountered`);
         status.push(`pass`);
-        icon.push(this.imagePath + this.bstatusIcon[0]); // Push icon to the array
+        icon.push(this.bstatusIcon[0]); // Push icon to the array
       }
-      else if (bd.drivers_enumerated == 0) {
-        statusMessages.push(`Linux dmesg error(drivers enumerated): ${bd.drivers_enumerated}`);
+      if (bd.drivers_enumerated == 0) {
+        statusMessages.push(`Linux dmesg (Drivers enumerated): ${bd.drivers_enumerated}`);
         status.push(`linux`);
-        icon.push(this.imagePath + this.bstatusIcon[2]);
-      } else if (bd.drivers_missing != 0) {
-        statusMessages.push(`Linux dmesg errors(drivers missing): ${bd.drivers_missing}`);
+        icon.push(this.bstatusIcon[2]);
+      } 
+      if (bd.drivers_missing != 0) {
+        statusMessages.push(`Linux dmesg (Drivers missing): ${bd.drivers_missing}`);
         status.push(`linux`);
-        icon.push(this.imagePath + this.bstatusIcon[2]);
-      } else if (bd.dmesg_errors_found != 0) {
-        statusMessages.push(`Linux dmesg errors: ${bd.dmesg_errors_found}`);
+        icon.push(this.bstatusIcon[2]);
+      } 
+      if (bd.dmesg_errors_found != 0) {
+        statusMessages.push(`Linux dmesg error/s: ${bd.dmesg_errors_found}`);
         status.push(`linux`);
-        icon.push(this.imagePath + this.bstatusIcon[2]);
-      } if (bd.pytest_errors != 0) {
-        statusMessages.push(`Pytest errors: ${bd.pytest_errors}`);
+        icon.push(this.bstatusIcon[2]);
+      } 
+      if (bd.pytest_errors != 0) {
+        statusMessages.push(`Pytest error/s: ${bd.pytest_errors}`);
         status.push(`pytest`);
         icon.push(this.imagePath + this.bstatusIcon[3]);
-      } else if (bd.pytest_failures != 0) {
-        statusMessages.push(`Pytest failures: ${bd.pytest_failures}`);
+      } 
+      if (bd.pytest_failures != 0) {
+        statusMessages.push(`Pytest failure/s: ${bd.pytest_failures}`);
         status.push(`pytest`);
-        icon.push(this.imagePath + this.bstatusIcon[3]);
+        icon.push(this.bstatusIcon[3]);
       }
-      else if (bd.last_failing_stage_failure != "NA") {
+      if (bd.last_failing_stage_failure != "NA") {
         statusMessages.push(`Failing stage: ${bd.last_failing_stage_failure}`);
         status.push(`nebula`);
         icon.push(this.imagePath + this.bstatusIcon[1]);
       }
-      // }
-  // if (boardOnline.status == 'Offline') {
+       }
+   else if (boardOnline.status == `Offline`) {
     if (!bd.linux_prompt_reached) {
       statusMessages.push(`Linux prompt not reached`);
       status.push(`nebula`);
       //this.icon = this.imagePath + this.bstatusIcon[1];
     }
-    else if (!bd.uboot_reached) {
+    if (!bd.uboot_reached) {
       statusMessages.push(`U-boot prompt not reached`);
       status.push(`nebula`);
       //this.icon = this.imagePath + this.bstatusIcon[1];
-    }    
-    if (status.length == 1 && icon.length == 1 && statusMessages.length == 1) {
+    }  
+  }  
+    if (statusMessages.length == 1 || status.length == 1 || icon.length == 1) {
       this.statusMessages = statusMessages;
       this.status = status;
       this.icon = icon;
-      console.log(1,bd.boot_folder_name, this.statusMessages, this.icon, this.status);
     }
-    else if (status.length >= 2 && icon.length >= 2 && this.statusMessages.length >= 2) {
-      this.statusMessages = [statusMessages.join('\n ')];
-      this.icon = [this.icon.join(', ')]; // Join icons with a comma if there are two or more
-      this.status = [this.status.join(', ')]; // Join icons with a comma if there are two or more
-      console.log(2, bd.boot_folder_name, this.statusMessages, this.icon, this.status);
+    else if (statusMessages.length > 1) {
+      this.statusMessages = [statusMessages.join('<br>')];
+      this.icon = icon; // Join icons with a comma if there are two or more
+      this.status = [status.join(', ')]; // Join icons with a comma if there are two or more
   }
-  bd.status = status;
+  bd.status = this.status;
+  bd.statusMessages = this.statusMessages;
+  bd.icon = this.icon;
+    return bd.icon;
   
   }
   countPassingBoards(dataAggregates: any[]): number {
@@ -227,12 +227,43 @@ export class KuiperlinuxciComponent implements OnInit {
       this.isBoardPassed(bd); // Call isBoardPassed to calculate the board's status
   
       // Check if the status array contains 'pass'
-      if (bd.status && bd.status.includes('pass')) {
+      if (bd.status && bd.status.includes(`pass`)) {
         passingBoards++;
+        console.log( "Pass " + passingBoards +" - " + bd.boot_folder_name);
+
       }
     }
   
     return passingBoards;
+  }
+  countLinuxErrors(dataAggregates: any[]): number {
+    let linuxBoards = 0;
+    
+    for (const bd of dataAggregates) {
+      this.isBoardPassed(bd); // Call isBoardPassed to calculate the board's status
+  
+      // Check if the status array contains 'pass'
+      if (bd.drivers_missing != 0 || bd.dmesg_errors_found != 0 || bd.drivers_enumerated == 0) {
+        linuxBoards++;
+        console.log("Linux " + linuxBoards +" - " + bd.boot_folder_name);
+
+      }
+    }
+    return linuxBoards;
+  }
+  countPytestErrors(dataAggregates: any[]): number {
+    let pytestBoards = 0;
+    for (const bd of dataAggregates) {
+      this.isBoardPassed(bd); // Call isBoardPassed to calculate the board's status
+  
+      // Check if the status array contains 'pass'
+      if (bd.pytest_errors != 0 || bd.pytest_failures != 0) {
+        pytestBoards++;
+        console.log("Pytest " + pytestBoards +" - " +bd.boot_folder_name);
+
+      }
+    }
+    return pytestBoards;
   }
   countOnlineBoards(dataAggregates: any[]): number {
 
@@ -245,4 +276,12 @@ export class KuiperlinuxciComponent implements OnInit {
     }
     return this.onlineBoardsCount++;
   }
+  navigateToBoardPage(boardName: string) {
+    // Assuming that 'boardId' is a unique identifier for each board.
+    // Use the Angular Router to navigate to the board page with the selected board ID.
+    this.router.navigate(['selectedboard', boardName]);
+  }
+   
+  
+  
 }
