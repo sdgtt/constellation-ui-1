@@ -22,7 +22,7 @@ export const routes: Routes = [
     component: PlugandtestComponent,
   },
   {
-    path: 'selectedboard/:boardName',
+    path: 'kuiperlinuxci/:boardName',
     component: SelectedboardComponent,
   }];
 

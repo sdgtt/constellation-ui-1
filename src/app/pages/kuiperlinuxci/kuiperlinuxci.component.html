@@ -5,7 +5,7 @@
                 <div class="page-title">Kuiper Linux CI</div>
             </div>
             <div class="col-10">
-                <div class="page-desc">{{kuiperlinux}}</div>
+                <div class="page-desc">{{kuiperlinuxci}}</div>
             </div>
         </div>
     </div>
@@ -29,27 +29,28 @@
                     <td class="field">Latest Jenkins Build No.</td>
                     <td class="output">{{ latestData.jenkins_build_number }}</td>
                     <td class="spacer"></td>
-                    <td class="field">Pass</td>
-                    <td class="output">{{ this.passingBoardsCount }}</td>
-                    <td class="field-fail">Fail Linux</td>
-                    <td class="output">{{ this.linuxBoardsCount }}</td>
-                    <td class="field-fail">Fail Pytest</td>
-                    <td class="output">{{ this.pytestBoardsCount }}</td>
-
+                    <td class="field">Linux Commit</td>
+                    <td class="output">{{ latestData.linux_hash }}</td>
+                    <td class="field">Status <span class="info-icon" [popover]="statusDetails"
+                            [placement]="'right top'"><i class="fas fa-info-circle"></i></span></td>
                 </tr>
                 <tr class="t-row">
                     <td class="field">HDL Commit</td>
                     <td class="output">{{ latestData.hdl_hash }}</td>
                     <td class="spacer"></td>
-                    <td class="field">Linux Commit</td>
-                    <td class="output">{{ latestData.linux_hash }}</td>
-                    <td class="field">Status <span class="info-icon" [popover]="statusDetails"
-                            [placement]="'bottom right'"><i class="fas fa-info-circle"></i></span></td>
-                </tr>
-                <tr class="t-row">
                     <td class="field">Online</td>
                     <td class="output">{{ this.onlineBoardsCount }}</td>
+                    
+                                        
+                </tr>
+                <tr class="t-row" style="border-top: 1px solid rgba(199, 199, 199, 0.5);">
+                    <td class="field-pass">Passed</td>
+                    <td class="output">{{ this.passingBoardsCount }}</td>
                     <td class="spacer"></td>
+                    <td class="field-fail">Pytest Failed</td>
+                    <td class="output">{{ this.pytestBoardsCount }}</td>
+                    <td class="field-fail">Linux Failed</td>
+                    <td class="output">{{ this.linuxBoardsCount }}</td>
 
                 </tr>
             </table>
@@ -74,7 +75,7 @@
                 <tbody>
                     <tr *ngFor="let bd of this.dataAggregates" (click)="navigateToBoardPage(bd.boot_folder_name)">
                         <td class="table-output-date">{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss' }}</td>
-                        <td class="table-output" routerLink="/selectedboard" style="cursor: pointer;">
+                        <td class="table-output" routerLink="/kuiperlinuxci" style="cursor: pointer;">
                             {{ bd.boot_folder_name }} 
                             <!-- {{ bd.jenkins_build_number }} -->
                         </td>
@@ -87,13 +88,13 @@
                                 </a>
                             </ng-container>
                             <ng-container>
-                                <a type="button" containerClass="customClass" [tooltip]="testTooltip"
-                                trigger="mouseenter:mouseleave">
+                                <a type="button" containerClass="customClass" [tooltip]="testTooltip">
                                     <span class="status-icon" >
-                                        <img *ngFor="let icon of isBoardPassed(bd); let i=index" [src]="bd.icon[i]"  alt="Image" />
+                                        <img class="stat-icon" *ngFor="let icon of isBoardPassed(bd); let i=index" [src]="bd.icon[i]"  alt="Image" [hidden]="isBoardOnline(bd).status == 'Offline'"/>
                                     </span>
                                 </a>
                             </ng-container>
+                      
                         </td>
                         <ng-template #powerTooltip>
                             <div class="board-tooltip">
@@ -108,6 +109,23 @@
                                     <div class="col-12">
                                         <div class="board-result">
                                             {{ isBoardOnline(bd).status }}
+                                            <ng-container *ngIf="isBoardOnline(bd).status == 'Offline'">
+                                                <br>
+                                                <div class="board-tooltip">
+                                                    <div class="row" style="font-weight: 500;">
+                                                        <div class="col-12">
+                                                            <div class="power">
+                                                                Test Result
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-12" [innerHTML]="statusMessages[0]" style="word-wrap: break-word; white-space: pre">
+                                                            •    {{ bd.statusMessages }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
                                         </div>
                                     </div>
                                 </div>
@@ -129,6 +147,7 @@
                                 </div>
                             </div>
                         </ng-template>
+                        
                     </tr>
                 </tbody>
             </table>
@@ -137,6 +156,7 @@
     </div>
 </div>
 <!-- templates -->
+
 <ng-template #statusDetails>
     <div class="status-details">
         <div class="row">

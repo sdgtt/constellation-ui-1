@@ -9,7 +9,7 @@ export class Boards {
   static is_hdl_release: boolean;
   static is_linux_release: boolean;
   static jenkins_agent: string;
-  static jenkins_build_number: number;
+  static jenkins_build_number: string;
   static jenkins_job_date: Date;
   static jenkins_project_name: any;
   static jenkins_trigger: any;
@@ -20,18 +20,18 @@ export class Boards {
   static linux_prompt_reached: boolean;
   static source_adjacency_matrix: any;
   static uboot_reached: boolean;
-  static dmesg_errors_found: any;
-  static dmesg_warnings_found: any;
-  static drivers_enumerated: any;
-  static drivers_missing: any;
-  static matlab_errors: any;
-  static matlab_failures: any;
-  static matlab_skipped: any;
-  static matlab_tests: any;
-  static pytest_errors: any;
-  static pytest_failures: any;
-  static pytest_skipped: any;
-  static pytest_tests: any;
+  static dmesg_errors_found: string;
+  static dmesg_warnings_found: string;
+  static drivers_enumerated: string;
+  static drivers_missing: string;
+  static matlab_errors: string;
+  static matlab_failures: string;
+  static matlab_skipped: string;
+  static matlab_tests: string;
+  static pytest_errors: string;
+  static pytest_failures: string;
+  static pytest_skipped: string;
+  static pytest_tests: string;
 
 
 }

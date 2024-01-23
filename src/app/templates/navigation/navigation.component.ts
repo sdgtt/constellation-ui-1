@@ -31,7 +31,7 @@ export class NavigationComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentUrl = event.urlAfterRedirects;
-        const navLinks = document.querySelectorAll('nav a');
+        const navLinks = document.querySelectorAll('nav-item');
         navLinks.forEach(link => {
           if (link.getAttribute('routerLink') === currentUrl) {
             link.classList.add('active');

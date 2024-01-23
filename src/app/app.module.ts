@@ -23,6 +23,9 @@ import { PlugandtestComponent } from './pages/plugandtest/plugandtest.component'
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SelectedboardComponent } from './pages/selectedboard/selectedboard.component';
 
+//Pipeline
+import { RemovePrefixPipe } from './pipelines/remove-prefix.pipe'
+
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { SelectedboardComponent } from './pages/selectedboard/selectedboard.comp
     ScorecardComponent,
     PlugandtestComponent,
     KuiperlinuxciComponent,
-    SelectedboardComponent
+    SelectedboardComponent,
+    RemovePrefixPipe
   ],
   imports: [
     BrowserModule,

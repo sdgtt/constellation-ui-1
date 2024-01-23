@@ -1,13 +1,20 @@
 .scorecard-container {
+    position: relative;
     width: 100%;
     height: 100%;
-    overflow-y: hidden;
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 0 10px 0 10px;
+    overflow: hidden;
+    top: 0;
+    
+    // overflow-y: hidden;
     /* Hide vertical scrollbar */
 
 
     .first-section {
         text-align: left;
         margin-bottom: 20px;
+        padding-top: 50px ;
 
         .page-title {
             font-size: 26px;
@@ -21,103 +28,6 @@
 
         }
     }
+   
 }
 
-//     .second-section {
-//         text-align: left;
-
-//         .test-summary {
-//             font-size: 23px;
-//             font-weight: 500;
-//         }
-
-//         .jenkins-details {
-//             padding: 10px 68px;
-//             font-size: 17px;
-
-//             .jenkins-table {
-//                 width: 100%;
-
-//                 td {
-//                     padding: 7px;
-//                 }
-
-//                 .field {
-//                     font-weight: 500;
-
-//                     .info-icon {
-//                         color: #E5E5E5;
-//                         cursor: pointer;
-//                     }
-//                 }
-
-//                 .select-dropdown {
-//                     border: 1px solid #707070;
-//                     width: 365px;
-//                     color: #707070;
-//                     outline: none;
-//                     border-radius: 10px;
-//                     padding-left: 10px;
-//                 }
-
-//                 .spacer {
-//                     padding-left: 50px;
-//                 }
-//             }
-
-//         }
-
-//         .jenkins-table {
-//             font-size: 18px;
-//             text-align: left;
-
-//             .jenkins-result-table {
-//                 border: 1px solid #7070703B;
-//                 border-radius: 5px;
-//                 box-shadow: 8px 3px 14px #00000024;
-//                 width: 100%;
-
-//                 .table-head {
-//                     border-bottom: 1px solid #E5E5E5;
-//                     padding: 20px 80px;
-//                     font-weight: 400;
-//                 }
-
-//                 .table-output {
-//                     padding: 15px 80px;
-
-//                     .status-icon {
-//                         padding-right: 5px;
-//                         cursor: pointer;
-
-//                     }
-//                 }
-//             }
-//         }
-//     }
-
-
-
-//     .tooltip .tooltip-inner {
-//         background-color: #ffffff;
-//         max-width: none;
-//         font-size: 13px;
-//         color: #333333 !important;
-//         font-weight: 600;
-//     }
-
-//     .bs-tooltip-auto[x-placement^=top] .arrow::before,
-//     .bs-tooltip-top .arrow::before {
-//         border-top-color: #ffffff !important;
-//         border-bottom-color: #ffffff;
-//     }
-
-//     .modal-backdrop.fade {
-//         opacity: 0.5;
-//     }
-
-//     .modal-open .modal {
-//         opacity: 1;
-//     }
-
-// }

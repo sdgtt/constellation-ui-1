@@ -2,101 +2,73 @@
     <div class="board-head">
         <div class="board-top custom-margin">
             <div class="row ">
-                <div class="col-8">
-
-                    <div class="board-name"><span class="label-space"><i class="fa-solid fa-caret-left"></i></span>
-                        {{this.selectedBoard}}</div>
+                <div class="col-12">
+                    <div class="board-name">
+                        <a class="back" routerLink="/kuiperlinuxci">
+                            <span class="label-space"><i class="fa-solid fa-caret-left"></i></span>
+                        </a>{{this.selectedBoard}}
+                    </div>
                     <div class="board-label">Board Name</div>
-                </div>
-                <div class="col-4">
-                    <div class="test-labels">
-                        <div class="legacy-label">
-                            Test Legacy
-                        </div>
-                        <table class="legacy-labels">
-                            <thead>
-                               <tr>
-                                <td>Linux</td>
-                                <td>Pyadi</td>
-                               </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="icons">
-                                        <div class="d-error"></div> 
-                                        <div class="d-miss"></div> 
-                                    </td>
-                                    <td class="iconpy">
-                                        <div class="pass"></div>
-                                        <div class="fail"></div>  
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-icons"> 
-                                        <span class="d-text">Dmesg Error</span>
-                                        <span class="d-text">Drivers Missing</span>
-                                    </td>
-                                    <td class="text-icons">
-                                        <span class="pass-text">Pass</span>
-                                        <span class="fail-text">Fail</span>
-                                    </td>
-                                </tr>
-                            </tbody>
+                    <div class="board-filtering">
+                        <table class="board-filter-table">
+                            <tr class="t-row">
+                                <td class="filter-dropdown">
+                                    <div class="filter-dd">
+                                        <span class="label-space"><i class="fa-solid fa-filter"></i></span>
+                                    
+                                        <!-- <div class="btn-group" dropdown>
+                                            <button id="button-animated" dropdownToggle type="button" class="btnDrop dropdown-toggle" aria-controls="dropdown-animated">
+                                              {{ filterField || 'Select Field' }} 
+                                              <span class="caret"></span>
+                                            </button>
+                                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                                              <li role="menuitem" >
+                                                <a class="dropdown-item" (click)="filterField('jenkins_build_number')">jenkins_build_number</a>
+                                              </li>
+                                              <li role="menuitem" >
+                                                  <a class="dropdown-item" (click)="filterField('jenkins_build_number')">jenkins_build_number</a>
+                                                </li>
+                                            </ul>
+                                          </div> -->
+                                    </div>
+                                      
+                                </td>
+                                <td class="filter-dropdown">
+                                    <div class="filter-dd">
+                                        <div class="btn-group" dropdown>
+                                          <button id="button-animated" dropdownToggle type="button" class="btnDrop dropdown-toggle" aria-controls="dropdown-animated">
+                                            {{ filterValue || 'Select Value' }} <span class="caret"></span>
+                                          </button>
+                                          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                                            <li role="menuitem" >
+                                              <a class="dropdown-item" (click)="filterValue('jenkins_build_number')">try</a>
+                                            </li>
+                                            <li role="menuitem" >
+                                                <a class="dropdown-item" (click)="filterValue('jenkins_build_number')">mo</a>
+                                              </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                </td>
+                            </tr>
+                            <tr class="t-row">
+                                <td class="filter-go">
+                                    <button type="button" class="btnGo">
+                                        <i class="fa-solid fa-rocket"></i>
+                                    </button>
+                                    <button type="button" class="btnClear">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="board-filtering">
-                <table class="board-filter-table">
-                    <tr class="t-row">
-                        <td class="filter-dropdown">
-                            <div class="filter-dd">
-                                <span class="label-space"><i class="fa-solid fa-filter"></i></span>
-                                <div class="btn-group" dropdown>
-                                  <button id="button-animated" dropdownToggle type="button" class="btnDrop dropdown-toggle" aria-controls="dropdown-animated">
-                                    {{ selectMenuItem || 'Select Element' }} <span class="caret"></span>
-                                  </button>
-                                  <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                                    <li role="menuitem">
-                                      <a class="dropdown-item"  (click)="selectMenuItem('jenkins_build_number')">jenkins_build_number</a>
-                                    </li>
-                                    <li role="menuitem">
-                                      <a class="dropdown-item"  (click)="selectMenuItem('jenkins_trigger')">jenkins_trigger</a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                              
-                        </td>
-                        <td class="filter-dropdown">
-                            <div class="filter-dd">
-                                <span class="label-space"><i class="fa-solid fa-filter"></i></span>
-                                <div class="btn-group" dropdown>
-                                  <button id="button-animated" dropdownToggle type="button" class="btnDrop dropdown-toggle" aria-controls="dropdown-animated">
-                                    {{ selectedMenuItem || 'Select Field' }} <span class="caret"></span>
-                                  </button>
-                                  <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                                    <li role="menuitem" >
-                                      <a class="dropdown-item" href="#"></a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                        </td>
-                        <td class="filter-go">
-                            <button type="button" class="btnGo">
-                                <i class="fa-solid fa-rocket"></i>
-                            </button>
-                            <button type="button" class="btnClear">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            
         </div>
         <div class="board-details">
-            <table class="board-detail-table">
+            <table cellspacing="10" class="board-detail-table">
                 <thead>
                     <tr>
                         <th class="table-head">Job Date</th>
@@ -118,27 +90,26 @@
                         <ng-container *ngIf="board.boot_folder_name === selectedBoard">
                             <td class="table-output">{{board.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
                             <td class="table-output">{{ board.source_adjacency_matrix }}</td>
-                            <td class="table-output">{{ extractNumber(board.jenkins_trigger) }}</td>
+                            <td class="table-output">{{ board.jenkins_trigger | removePrefix }}</td>
                             <td class="table-output">{{ board.hdl_hash }}</td>
                             <td class="table-output">{{ board.linux_hash }}</td>
                             <td class="table-output">{{ board.uboot_reached }}</td>
                             <td class="table-output">{{ board.linux_prompt_reached }}</td>
-                            <td class="table-linuxTest">
+                            <td class="table-output">
                                 <button type="button" class="btnDmesg">
-                                   {{board.dmesg_errors_found}}
+                                   Dmesg Errors
+                                   <span class="badge badge-warning">{{board.dmesg_errors_found}}</span> 
                                   </button>
-                                  <br>
                                   <button type="button" class="btnDriver">
-                                    {{ board.drivers_missing }}
+                                    Drivers missing: {{ board.drivers_missing }}
                                   </button>  
                             </td>
                             <td class="table-output">
                                 <button type="button" class="btnPass">
-                                    3
+                                    {{ board.pytest_test}}
                                   </button>
-                                  <br>
                                   <button type="button" class="btnFail">
-                                    45
+                                    {{ board.errors}}
                                 </button>
                             </td>
                             <td class="table-output">{{ board.jenkins_build_number }}</td>

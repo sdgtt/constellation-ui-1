@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 //models
@@ -16,12 +16,16 @@ import { BoardsService } from 'src/app/services/boards.service';
 })
 
 export class SelectedboardComponent implements OnInit {
+   @ViewChild('dropdownList') dropdownList: ElementRef;
+
 
   selectedBoard: string;
-  selectedMenuItem: string = ''; 
+  selectedField: string = '';
+  selectedValue: string = '';
+
 
   jenkins_project_name: any = [];
-  boot_test_result : any = [];  
+  boot_test_result: any = [];
   source_adjacency_matrix: any = [];
   hdl_hash: any = [];
   linux_hash: any = [];
@@ -34,26 +38,26 @@ export class SelectedboardComponent implements OnInit {
   trigger = '';
   linux_prompt_reached: boolean = true;
   uboot_reached: boolean = true;
-  dmesg_errors_found: number;
-  dmesg_warnings_found: number;
-  drivers_enumerated: number;
-  drivers_missing: number;
+  dmesg_errors_found: string;
+  dmesg_warnings_found: string;
+  drivers_enumerated: string;
+  drivers_missing: string;
   last_failing_stage: any;
   last_failing_stage_failure: any;
-  matlab_errors: number;
-  matlab_failures: number;
-  matlab_skipped: number;
-  matlab_tests: number;
-  pytest_errors: number;
-  pytest_failures: number;
-  pytest_skipped: number;
-  pytest_tests: number;
+  matlab_errors: string;
+  matlab_failures: string;
+  matlab_skipped: string;
+  matlab_tests: string;
+  pytest_errors: string;
+  pytest_failures: string;
+  pytest_skipped: string;
+  pytest_tests: string;
   currentLatestBuildNumber: number;
 
   boardDetails: any = [];
   boardModel: Boards;
   boardDetailModel: BoardDetails;
-  
+
   constructor(
     private boardsService: BoardsService,
     private route: ActivatedRoute) { }
@@ -67,52 +71,27 @@ export class SelectedboardComponent implements OnInit {
       this.selectedBoard = params['boardName'];
     });
   }
-  removeNextText(h: string): string {
-    
-    this.hash = h.split(' ');
-    if (this.hash.length > 0) {
-      var firstText = this.hash[0];
-      return firstText;
-    }
-    else {
-      return '';
-    }
-  }
 
-  // extractNumber(trigger: string): string {
-  //   if (!trigger) {
-  //     return ''; // Handle the case where trigger is undefined or null
-  //   } else if (trigger === 'manual') {
-  //     return trigger;
-  //   } else if (trigger.length >= 4) {
-  //     return trigger.slice(-4);
-  //   } else {
-  //     return trigger;
-  //   }
-  // }
-  
   fetchBoardDetails() {
     this.boardsService.getBoardDetails(this.selectedBoard).subscribe(data => {
       this.boardDetails = data;
-      
+
       const selectedBoard = this.boardDetails['hits'].map((bselect: { boot_folder_name: string; }) => bselect.boot_folder_name === this.selectedBoard);
-      
-      selectedBoard.jenkins_trigger = this.extractNumber(this.jenkins_trigger);
-      selectedBoard.hdl_hash = this.removeNextText(this.hdl_hash);
-      selectedBoard.linux_hash = this.removeNextText(this.linux_hash);
+
+      selectedBoard.jenkins_trigger = this.jenkins_trigger;
+      selectedBoard.hdl_hash = this.hdl_hash;
+      selectedBoard.linux_hash = this.linux_hash;
 
       selectedBoard.dmesg_errors_found = this.dmesg_errors_found;
       selectedBoard.drivers_missing = this.drivers_missing;
 
       const sums = this.calculateSums();
       console.log('Sums:', sums);
-    }, error => {
-      console.error('Error fetching board details:', error);
     });
   }
 
   calculateSums() {
-    const sums: { [jenkinsBuildNumber: string]: { pytest_errors: number, pytest_skipped: number, pytest_failures: number } } = {};
+    const sums: { [jenkinsBuildNumber: string]: { pytest_errors: string, pytest_skipped: string, pytest_failures: string } } = {};
 
     if (this.boardDetails && this.boardDetails.hits) {
       for (const board of this.boardDetails.hits) {
@@ -120,13 +99,13 @@ export class SelectedboardComponent implements OnInit {
 
         if (!sums[jenkinsBuildNumber]) {
           sums[jenkinsBuildNumber] = {
-            pytest_errors: 0,
-            pytest_failures: 0,
-            pytest_skipped: 0,
+            pytest_errors: '0',
+            pytest_failures: '0',
+            pytest_skipped: '0',
           };
         }
 
-      
+
         sums[jenkinsBuildNumber].pytest_errors += parseInt(board.pytest_errors, 10) || 0;
         sums[jenkinsBuildNumber].pytest_failures += parseInt(board.pytest_failures, 10) || 0;
         sums[jenkinsBuildNumber].pytest_failures += parseInt(board.pytest_failures, 10) || 0;
@@ -136,25 +115,28 @@ export class SelectedboardComponent implements OnInit {
     return sums;
   }
 
-  
+  filterField(field: string): void {
+    this.selectedField = field;
 
-  selectMenuItem(item: string): void {
-    this.selectedMenuItem = item;
   }
-  extractNumber(trigger: string): string {
-    // this.trigger = trigger.split(':');
-    if (trigger === undefined) {
-      throw new Error('Input is undefined');
-    }
-  
-    if (trigger === "manual") {
-      return trigger;
-    } else if (typeof trigger === 'string' && trigger.length >= 4) {
-      return trigger.slice(-4);
-    } else {
-      return trigger;
-    }
-}
+  filterValue(value: string){
+    this.selectedValue = value;
+
+  }
+
+  // extractNumber(trigger: string): string {
+  //   // this.trigger = trigger.split(':');
+  //   // if (trigger === undefined) {
+  //   //   throw new Error('Input is undefined');
+  //   // }
+  //   if (trigger == "manual") {
+  //     return trigger;
+  //   } else if (trigger.length >= 4) {
+  //     return trigger.slice(-4);
+  //   } else {
+  //     return trigger;
+  //   }
+  // }
 }
 
 

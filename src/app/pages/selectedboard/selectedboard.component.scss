@@ -7,109 +7,41 @@ $dmesg: #e52a33;
 $driv: #c9a22b;
 $p: #50aa1b;
 $f: #8e3737e0;
-.btnDmesg{
-    outline: none;
-    border-style: none;
-    background-color: $dmesg;
-    color: $labelColor;
-    border-radius: $rad;
-    margin-bottom: $marbot;
-}
-.btnDriver{
-    outline: none;
-    border-style: none;
-    background-color: $driv;
-    color: $labelColor;
-    border-radius: $rad;
+//  
+// .btnDriver{
+//     outline: none;
+//     border-style: none;
+//     background-color: $driv;
+//     color: $labelColor;
+//     border-radius: $rad;
 
-}
-.btnPass{
-    outline: none;
-    border-style: none;
-    background-color: $p;
-    color: $labelColor;
-    border-radius: $rad;
-    margin-bottom: $marbot;
+// }
+// .btnPass{
+//     outline: none;
+//     border-style: none;
+//     background-color: $p;
+//     color: $labelColor;
+//     border-radius: $rad;
+//     margin-bottom: $marbot;
 
 
-}
-.btnFail{
-    outline: none;
-    border-style: none;
-    background-color: $f;
-    color: $labelColor;
-    border-radius: $rad;
+// }
+// .btnFail{
+//     outline: none;
+//     border-style: none;
+//     background-color: $f;
+//     color: $labelColor;
+//     border-radius: $rad;
 
-}
-.badgeNumber{
-    color:$labelColor;
-    vertical-align: middle;
+// }
+// .badgeNumber{
+//     color:$labelColor;
+//     vertical-align: middle;
 
-}
+// }
 .arti{
     margin-right: 10px;
     font-size: 12px;
 }
-.test-labels{
-    font-size: 11px;
-    .legacy-label{
-        font-size: 13px;
-        font-weight: 500;
-    }
-        .icons{
-            padding: 3px;
-            .d-error{
-                height: 25px;
-                width: 25px;
-                background-color: $dmesg;
-                border-radius: 50%;
-                display: inline-block;
-                margin-left: 25px;
-            }
-            .d-miss{
-                height: 25px;
-                width: 25px;
-                background-color: $driv;
-                border-radius: 50%;
-                display: inline-block;
-                margin-left: 65px;
-            }
-        }
-        .iconpy{
-            padding: 3px;
-            .pass{
-                height: 25px;
-                width: 25px;
-                background-color: $p;
-                border-radius: 50%;
-                display: inline-block;
-                margin-left: 25px;
-            }
-            .fail{
-                height: 25px;
-                width: 25px;
-                background-color: $f;
-                border-radius: 50%;
-                display: inline-block;
-                margin-left: 65px;
-            }
-        }
-            
-        
-        .text-icons{
-            padding: 3px;
-            .d-text{
-                margin-right: 20px;
-                width: 100%;
-            }
-                .pass-text{
-                    margin: 0 25px;                
-                }
-                .fail-text{
-                    margin: 0 44px;                
-                }
-            
-            
-        }
-    }
+
 
