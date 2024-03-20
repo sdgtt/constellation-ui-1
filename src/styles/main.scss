@@ -332,7 +332,7 @@ body {
 
 .boardHead-container {
     position: relative;
-    width: 100%;
+    width:auto;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.3);
     padding: 0 10px 0 10px;
@@ -348,6 +348,7 @@ body {
             .board-name {
                 font-size: 20px;
                 font-weight: 600;
+                
             }
         
             .board-filtering{
@@ -359,6 +360,7 @@ body {
                     .filter-dropdown{
                         font-size: 14px;
                         .label-space{
+                            color: #3e3e3e;
                             padding-right: 14px;
                             font-size: 14px;
                             vertical-align: middle;
@@ -401,16 +403,17 @@ body {
         .board-details{
             font-size: 12px;
             text-align: left;
-            
+            padding: 20px;
             box-shadow: 12px 0px 28px #d4d4d4e1;
-
-            .board-detail-table{
-                border-top: 1px solid #E5E5E5;
-                height: 540px;
-            width: 100%;
             overflow: auto;
             display: inline-block;
-            max-height: 540px;
+            border-top: 1px solid #E5E5E5;
+            height: 790px;
+            width: 100%;
+           
+            max-height: 800px;
+            .board-detail-table{
+           
 
                 .table-head{
                     border-bottom: 1px solid #7070703B;
@@ -419,8 +422,9 @@ body {
                     
                 }
                 
-                .table-output {
-                        padding: 9px 10px;
+                .table-output,a {
+                        color: #3e3e3e;
+
                 }
             }
         }

@@ -14,6 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NavigationComponent } from './templates/navigation/navigation.component';
 import { ScorecardComponent } from './pages/scorecard/scorecard.component';
 import { KuiperlinuxciComponent } from './pages/kuiperlinuxci/kuiperlinuxci.component';
+import { SelectedboardComponent } from './pages/selectedboard/selectedboard.component';
 
 //Modules
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -21,7 +22,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { PlugandtestComponent } from './pages/plugandtest/plugandtest.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { SelectedboardComponent } from './pages/selectedboard/selectedboard.component';
+import { DataTablesModule } from 'angular-datatables';
 
 //Pipeline
 import { RemovePrefixPipe } from './pipelines/remove-prefix.pipe'
@@ -48,7 +49,8 @@ import { RemovePrefixPipe } from './pipelines/remove-prefix.pipe'
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     PopoverModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    DataTablesModule
 
   ],
   providers: [DatePipe],

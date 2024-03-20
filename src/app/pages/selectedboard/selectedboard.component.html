@@ -10,65 +10,14 @@
                     </div>
                     <div class="board-label">Board Name</div>
                     <div class="board-filtering">
-                        <table class="board-filter-table">
-                            <tr class="t-row">
-                                <td class="filter-dropdown">
-                                    <div class="filter-dd">
-                                        <span class="label-space"><i class="fa-solid fa-filter"></i></span>
-                                    
-                                        <!-- <div class="btn-group" dropdown>
-                                            <button id="button-animated" dropdownToggle type="button" class="btnDrop dropdown-toggle" aria-controls="dropdown-animated">
-                                              {{ filterField || 'Select Field' }} 
-                                              <span class="caret"></span>
-                                            </button>
-                                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                                              <li role="menuitem" >
-                                                <a class="dropdown-item" (click)="filterField('jenkins_build_number')">jenkins_build_number</a>
-                                              </li>
-                                              <li role="menuitem" >
-                                                  <a class="dropdown-item" (click)="filterField('jenkins_build_number')">jenkins_build_number</a>
-                                                </li>
-                                            </ul>
-                                          </div> -->
-                                    </div>
-                                      
-                                </td>
-                                <td class="filter-dropdown">
-                                    <div class="filter-dd">
-                                        <div class="btn-group" dropdown>
-                                          <button id="button-animated" dropdownToggle type="button" class="btnDrop dropdown-toggle" aria-controls="dropdown-animated">
-                                            {{ filterValue || 'Select Value' }} <span class="caret"></span>
-                                          </button>
-                                          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                                            <li role="menuitem" >
-                                              <a class="dropdown-item" (click)="filterValue('jenkins_build_number')">try</a>
-                                            </li>
-                                            <li role="menuitem" >
-                                                <a class="dropdown-item" (click)="filterValue('jenkins_build_number')">mo</a>
-                                              </li>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                </td>
-                            </tr>
-                            <tr class="t-row">
-                                <td class="filter-go">
-                                    <button type="button" class="btnGo">
-                                        <i class="fa-solid fa-rocket"></i>
-                                    </button>
-                                    <button type="button" class="btnClear">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
+                    
                     </div>
                 </div>
             </div>
             
         </div>
         <div class="board-details">
-            <table cellspacing="10" class="board-detail-table">
+            <table datatable cellspacing="10" class="board-detail-table">
                 <thead>
                     <tr>
                         <th class="table-head">Job Date</th>
