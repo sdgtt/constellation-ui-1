@@ -1,1 +1,59 @@
-<p>selectedboard works!</p>
+<section class="boardHead-container">
+    <div class="board-head">
+        <div class="board-top custom-margin">
+            <div class="row ">
+                <div class="col-12">
+                    <div class="board-name">
+                        <a class="back" routerLink="/kuiperlinuxci">
+                            <span class="label-space"><i class="fa-solid fa-caret-left"></i></span>
+                        </a>{{this.selectedBoard}}
+                    </div>
+                    <div class="board-label">Board Name</div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="board-details">
+            <table  datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="table-head">Job Date</th>
+                        <th class="table-head">Artifactory source branch</th>
+                        <th class="table-head">Trigger</th>
+                        <th class="table-head">HDL Commit</th>
+                        <th class="table-head">Linux Commit</th>
+                        <th class="table-head">U-boot Reached</th>
+                        <th class="table-head">Linux Booted </th>
+                        <th class="table-head">Linux Tests</th>
+                        <th class="table-head">Pyadi Tests</th>
+                        <th class="table-head">Build Number</th>
+                        <th class="table-head">Artifacts</th>
+                        <th class="table-head">Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let board of boardDetails.hits">
+                        <ng-container *ngIf="board.boot_folder_name === selectedBoard">
+                            <td class="table-output col">{{board.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
+                            <td class="table-output col">{{ board.source_adjacency_matrix }}</td>
+                            <td class="table-output col" > 
+                                <a [href]="board.trigger_url" target="_blank">  {{ board.jenkins_trigger | removePrefix }} </a>
+                            </td>
+                            <td class="table-output col">{{ board.hdl_hash }}</td>
+                            <td class="table-output col">{{ board.linux_hash }}</td>
+                            <td class="table-output col">{{ board.uboot_reached }}</td>
+                            <td class="table-output col">{{ board.linux_prompt_reached }}</td>
+                            <td class="table-output col"></td>
+                            <td class="table-output col"></td>
+                            <td class="table-output col"></td>
+                            <td class="table-output col">{{ board.jenkins_build_number }}</td>
+                            <td class="table-output col">{{board.boot_test_result}}</td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- <div class="card" style="width: 1200px"> -->
+
+    </div>
+</section>

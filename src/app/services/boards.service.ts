@@ -23,17 +23,22 @@ export class BoardsService {
       map((response: any) => response.aggregates_top)
     );
   }
+  getLinksFromDataAggregates(): Observable<any[]> {
+    var httpUrl = environment.apiUrl + '/api/boards' ; 
+    // Replace with your actual API URL
   
-  getBootFolder(boardname: string, ): Observable<any>{
-    var httpUrl = environment.apiUrl + '/api/board/' + boardname;
-    return this.http.get<Boards>(httpUrl);
+    return this.http.get<Boards[]>(httpUrl).pipe(
+      map((response: any) => response.aggregates_top)
+    );
   }
-  getAll(jenkinpname: any): Observable<any>{
-    var httpUrl = environment.apiUrl + '/api/?jenkins_project_name='+ jenkinpname + '&size=50';
-    return this.http.get<Boards>(httpUrl);
+  
+  getBoardDetails(boardname: string ): Observable<any>{
+    var httpUrl = `${environment.apiUrl + '/api/board/' + boardname}`;
+    return this.http.get<Boards[]>(httpUrl);
   }
-  getBoards(): Observable<any>{
-    var httpUrl = environment.apiUrl + '/api/boards';
+  // Add a new method to fetch filtered board details
+  getFilteredBoardDetails(boardname: string, element: string, value: string): Observable<Boards> {
+    const httpUrl = `${environment.apiUrl}/api/board/${boardname}?element=${element}&value=${value}`;
     return this.http.get<Boards>(httpUrl);
   }
 

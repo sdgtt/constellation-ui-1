@@ -1,3 +1,5 @@
+<!-- Copyright (C) 2022 Analog Devices Inc. All Rights Reserved-->
+
 # ConstellationUi
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.2.

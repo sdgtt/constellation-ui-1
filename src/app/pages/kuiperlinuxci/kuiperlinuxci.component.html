@@ -1,15 +1,15 @@
-<div class="kuiperlinuxci-container">
-    <div class="first-section">
+<div class="kuiperlinuxci-container ">
+    <div class="first-section  custom-margin">
         <div class="row">
             <div class="col-2">
                 <div class="page-title">Kuiper Linux CI</div>
             </div>
             <div class="col-10">
-                <div class="page-desc">{{kuiperlinux}}</div>
+                <div class="page-desc">{{kuiperlinuxci}}</div>
             </div>
         </div>
     </div>
-    <div class="second-section">
+    <div class="second-section  custom-margin">
         <div class="row">
             <div class="col-12">
                 <div class="latest-summary">Latest Build Summary</div>
@@ -19,35 +19,39 @@
             <table class="jenkins-table-details">
                 <tr class="t-row">
                     <td class="field">Jenkins Project Name</td>
-                    <td class="output">{{ this.jenkins_project_name }}
+                    <td class="output">{{ latestData.jenkins_project_name }}
                     </td>
                     <td class="spacer"></td>
                     <td class="field">Artifactory source branch</td>
-                    <td class="output">{{ this.source_adjacency_matrix }}</td>
+                    <td class="output">{{ latestData.source_adjacency_matrix }}</td>
                 </tr>
                 <tr class="t-row">
-                    <td class="field">Jenkins Build No.</td>
-                    <td class="output">{{ this.jenkins_build_number }}</td>
+                    <td class="field">Latest Jenkins Build No.</td>
+                    <td class="output">{{ latestData.jenkins_build_number }}</td>
                     <td class="spacer"></td>
-                    <td class="field">Passing</td>
-                    <td class="output">{{ this.passingBoards }}</td>
-                    
+                    <td class="field">Linux Commit</td>
+                    <td class="output">{{ latestData.linux_hash }}</td>
+                    <td class="field">Status <span class="info-icon" [popover]="statusDetails"
+                            [placement]="'right top'"><i class="fas fa-info-circle"></i></span></td>
                 </tr>
                 <tr class="t-row">
                     <td class="field">HDL Commit</td>
-                    <td class="output">{{ this.hdl_hash }}</td>
+                    <td class="output">{{ latestData.hdl_hash }}</td>
                     <td class="spacer"></td>
-                    <td class="field">Linux Commit</td>
-                    <td class="output">{{ this.linux_hash }}</td>
-                    <td class="field">Status <span class="info-icon" [popover]="statusDetails"
-                            [placement]="'bottom left'" triggers="mouseenter:mouseleave"><i
-                                class="fas fa-info-circle"></i></span></td>
-                </tr>
-                <tr class="t-row">
                     <td class="field">Online</td>
-                    <td class="output">{{ this.onlineBoards }}</td>
-                    <td class="spacer"></td>
+                    <td class="output">{{ this.onlineBoardsCount }}</td>
                     
+                                        
+                </tr>
+                <tr class="t-row" style="border-top: 1px solid rgba(199, 199, 199, 0.5);">
+                    <td class="field-pass">Passed</td>
+                    <td class="output">{{ this.passingBoardsCount }}</td>
+                    <td class="spacer"></td>
+                    <td class="field-fail">Pytest Failed</td>
+                    <td class="output">{{ this.pytestBoardsCount }}</td>
+                    <td class="field-fail">Linux Failed</td>
+                    <td class="output">{{ this.linuxBoardsCount }}</td>
+
                 </tr>
             </table>
         </div>
@@ -55,39 +59,96 @@
             <table class="jenkins-result-table">
                 <thead>
                     <tr>
-                        <th class="table-head">Job Date</th>
+                        <th class="table-head">Job Date
+                            <span class="status-icon">
+                                <a type="button" class="sort-btn" (click)="toggleSortOrder()">
+                                    <i *ngIf="sortOrder === 'desc'" class="fas fa-sort-down"></i>
+                                    <i *ngIf="sortOrder === 'asc'" class="fas fa-sort-up"></i>
+                                </a>
+                            </span>
+                        </th>
                         <th class="table-head">Board</th>
                         <th class="table-head">Status</th>
-                        <th class="table-head">Power</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                        <!-- <tr *ngFor="let boot of boot_folder_name; let i = index" > -->
-                            <tr *ngFor="let bd of this.dataAggregates" >
-                            <td class="table-output" >{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
-                            <td class="table-output" routerLink="/selectedboard" style="cursor: pointer;">
-                              {{ bd.boot_folder_name }}</td>
-                            <td class="table-output" >{{ bd.linux_prompt_reached }} {{ bd.uboot_reached }}</td>
-                            <td class="table-output"> 
-                               {{ this.pstatus }} {{bstatus}} {{ bdstatus}}
-                               <ng-container *ngIf="isBoardOnline()">
-                                <a type="button" containerClass="customClass" [tooltip]="onlinePassedTooltip">
-                                    <span class="status-icon">
-                                        <img [src]="this.picon" />
+                    <tr *ngFor="let bd of this.dataAggregates" (click)="navigateToBoardPage(bd.boot_folder_name)">
+                        <td class="table-output col-date">{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss' }}</td>
+                        <td class="table-output col" routerLink="/kuiperlinuxci" style="cursor: pointer;">
+                            {{ bd.boot_folder_name }} 
+                            <!-- {{ bd.jenkins_build_number }} -->
+                        </td>
+                        <td class="table-output-icon">
+                            <ng-container>
+                                <a type="button" containerClass="customClass" [tooltip]="powerTooltip">
+                                    <span class="status-icon" *ngIf="isBoardOnline(bd).status">
+                                        <img [src]="isBoardOnline(bd).icon" />
                                     </span>
                                 </a>
-                               </ng-container>
-                                
-                               <ng-template *ngIf="this.bstatusArrayToDisplay[2] ;  '' " >
-                                <span class="status-icon">
-                                    <img [src]="this.bdicon" />
-                                </span>
-                                </ng-template> 
+                            </ng-container>
+                            <ng-container>
+                                <a type="button" containerClass="customClass" [tooltip]="testTooltip">
+                                    <span class="status-icon" >
+                                        <img class="stat-icon" *ngFor="let icon of isBoardPassed(bd); let i=index" [src]="bd.icon[i]"  alt="Image" [hidden]="isBoardOnline(bd).status == 'Offline'"/>
+                                    </span>
+                                </a>
+                            </ng-container>
                       
-                            </td>
-                         </tr>
-     
+                        </td>
+                        <ng-template #powerTooltip>
+                            <div class="board-tooltip">
+                                <div class="row" style="font-weight: 500;">
+                                    <div class="col-12">
+                                        <div class="board-power">
+                                            Power
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="board-result">
+                                            {{ isBoardOnline(bd).status }}
+                                            <ng-container *ngIf="isBoardOnline(bd).status == 'Offline'">
+                                                <br>
+                                                <div class="board-tooltip">
+                                                    <div class="row" style="font-weight: 500;">
+                                                        <div class="col-12">
+                                                            <div class="power">
+                                                                Test Result
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-12" [innerHTML]="statusMessages[0]" style="word-wrap: break-word; white-space: pre">
+                                                            •    {{ bd.statusMessages }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #testTooltip>
+                            <div class="board-tooltip">
+                                <div class="row" style="font-weight: 500;">
+                                    <div class="col-12">
+                                        <div class="power">
+                                            Test Result
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" [innerHTML]="statusMessages[0]">
+                                            {{ bd.statusMessages }}
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -95,267 +156,87 @@
     </div>
 </div>
 <!-- templates -->
-<ng-template #onlinePassedTooltip>
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Board Details:</h4>
-            </div>
-            <div class="modal-body">
-                <div class="board-details">
-                    <div class="board-power" *ngFor="let i of this.pstatusArrayToDisplay">
-                        {{ i }}
-                    </div>
-                    <div class="board-stat">
-                      Status: {{ this.boot_folder_name}}
-                    </div>
-                    <div class="board-reason">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</ng-template>
-<ng-template #onlineFailedTooltip>
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Board Details:</h4>
-            </div>
-            <div class="modal-body">
-                <div class="board-details">
-                    <div class="board-title">
-                        Board: <b>{{sampleboard}}</b>
-                    </div>
-                    <div class="board-power">
-                        Power: On
-                    </div>
-                    <div class="board-stat">
-                        Status: Failed
-                    </div>
-                    <div class="board-reason">
-                        Reason: Pytest failure 4
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</ng-template>
-<ng-template #offlineTooltip>
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Board Details:</h4>
-            </div>
-            <div class="modal-body">
-                <div class="board-details">
-                    <div class="board-title">
-                        Board: <b>{{sampleboard}}</b>
-                    </div>
-                    <div class="board-power">
-                        Power: Offline
-                    </div>
-                    <div class="board-stat">
-                        Status: Failed
-                    </div>
-                    <div class="board-reason">
-                        Reason: Exception: u-boot not reached
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</ng-template>
-<ng-template #onlineDmesgTooltip>
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Board Details:</h4>
-            </div>
-            <div class="modal-body">
-                <div class="board-details">
-                    <div class="board-power">
-                    </div>
-                    <div class="board-stat">
-                        Status: Failed
-                    </div>
-                    <div class="board-reason">
-                        Reason: Linux dmesg error 2
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</ng-template>
 
 <ng-template #statusDetails>
     <div class="status-details">
-        <table class="status-details-table">
-            <thead>
+        <div class="row">
+            <div class="col-4">
+                <div class="status-head">Online</div>
+            </div>
+            <div class="col-4">
+                <div class="status-head">Offline</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="status-icon-table"><img src="assets/Online.png" /></div>
+            </div>
+            <div class="col-4">
+                <div class="status-icon-table"><img src="assets/Offline.png" /></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="status-head">Pass</div>
+            </div>
+            <div class="col-4">
+                <div class="status-head">Nebula Error</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="status-icon-table"><img src="assets/Passed.png" /></div>
+            </div>
+            <div class="col-4">
+                <div class="status-icon-table"><img src="assets/nebula.svg" /></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="status-head">Linux Dmesg Error</div>
+            </div>
+            <div class="col-4">
+                <div class="status-head">Pytest Failure</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="status-icon-table"><img src="assets/linux.svg" /></div>
+            </div>
+            <div class="col-4">
+                <div class="status-icon-table"><img src="assets/python.svg" /></div>
+            </div>
+        </div>
+        <!-- <table class="status-details-table">
+            <tbody>
+                <tr>
+                    <th class="status-title">Power</th>
+                </tr>
                 <tr>
                     <th class="status-head">Online</th>
                     <th class="status-head">Offline</th>
-                    <th class="status-head">Dmesg</th>
-                    <th class="status-head">Passed</th>
-                    <th class="status-head">Failed</th>
                 </tr>
-            </thead>
-            <tbody>
                 <tr>
                     <td class="status-icon-table"><img src="assets/Online.png" /></td>
                     <td class="status-icon-table"><img src="assets/Offline.png" /></td>
+                </tr>
+                <tr>
+                    <th class="status-title">Test</th>
+                </tr>
+                <tr>
+                    <th class="status-head">Passed</th>
+                    <th class="status-head">Nebula Error</th>
+                    <th class="status-head">Linux Dmesg Error</th>
+                    <th class="status-head">Pytest Failure</th>
+                </tr>
+                <tr>
                     <td class="status-icon-table"><img src="assets/Passed.png" /></td>
-                    <td class="status-icon-table"><img src="assets/Failed.png" /></td>
-                    <td class="status-icon-table"><img src="assets/Dmesg.png" /></td>
+                    <td class="status-icon-table"><img src="assets/nebula_error.png" /></td>
+                    <td class="status-icon-table"><img src="assets/linux_dmesg_errors.png" /></td>
+                    <td class="status-icon-table"><img src="assets/pytest_failure.png" /></td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
     </div>
-
 </ng-template>
-
-<!-- <bsModals> -->
-<!-- <div bsModal #onlinePassedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="dialog-sizes-name2">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Board Details:</h4>
-                <button type="button" class="btn-close close pull-right" aria-label="Close"
-                    (click)="onlinePassedModal.hide()">
-                    <span aria-hidden="true" class="visually-hidden">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="board-details">
-                    <div class="board-title">
-                        Board: <b>{{board}}</b>
-                    </div>
-                    <div class="board-power">
-                        Power: On
-                    </div>
-                    <div class="board-stat">
-                        Status: Passed
-                    </div>
-                    <div class="board-reason">
-                        No Failure encountered
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div bsModal #offlineModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="dialog-sizes-name2">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Board Details:</h4>
-                <button type="button" class="btn-close close pull-right" aria-label="Close"
-                    (click)="onlinePassedModal.hide()">
-                    <span aria-hidden="true" class="visually-hidden">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="board-details">
-                    <div class="board-title">
-                        Board: <b>{{board}}</b>
-                    </div>
-                    <div class="board-power">
-                        Power: Off
-                    </div>
-                    <div class="board-stat">
-                        Status: Failed
-                    </div>
-                    <div class="board-reason">
-                        Reason: Exception: u-boot not reached
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div bsModal #passedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="dialog-sizes-name2">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Board Details:</h4>
-                <button type="button" class="btn-close close pull-right" aria-label="Close"
-                    (click)="passedModal.hide()">
-                    <span aria-hidden="true" class="visually-hidden">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="board-details">
-                    <div class="board-title">
-                        Board: <b>{{board}}</b>
-                    </div>
-                    <div class="board-stat">
-                        Status: Passed
-                    </div>
-                    <div class="board-reason">
-                        No Failure encountered
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div bsModal #failedModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="dialog-sizes-name2">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Board Details:</h4>
-                <button type="button" class="btn-close close pull-right" aria-label="Close"
-                    (click)="passedModal.hide()">
-                    <span aria-hidden="true" class="visually-hidden">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="board-details">
-                    <div class="board-title">
-                        Board: <b>{{board}}</b>
-                    </div>
-                    <div class="board-stat">
-                        Status: Failed
-                    </div>
-                    <div class="board-reason">
-                        Failure reason: Pytest failure 4
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div bsModal #dmesgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name2">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Board Details:</h4>
-                <button type="button" class="btn-close close pull-right" aria-label="Close"
-                    (click)="passedModal.hide()">
-                    <span aria-hidden="true" class="visually-hidden">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="board-details">
-                    <div class="board-title">
-                        Board: <b>{{board}}</b>
-                    </div>
-                    <div class="board-stat">
-                        Status: Failed
-                    </div>
-                    <div class="board-reason">
-                        Failure reason: Linux dmesg error 2
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-<script src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1561436720/particles.js"></script>
-<script src="https://res.cloudinary.com/dxfq3iotg/raw/upload/v1561436735/app.js"></script>
