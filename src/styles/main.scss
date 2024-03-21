@@ -278,15 +278,15 @@ body {
                     outline: none;
                     cursor: pointer;
                 }
-                .table-output {
+                .table-output col {
                     padding: 15px 20px;
                     text-align: left;
 
                 }  
-                .table-output-date{
+                .table-output col-date{
                     text-align: center;
                 }  
-                    .table-output-icon {
+                    .table-output col-icon {
                         padding: 10px 10px 10px 85px;
                         display: flex;
                         flex-wrap: nowrap;
@@ -422,7 +422,7 @@ body {
                     
                 }
                 
-                .table-output,a {
+                .table-output col,a {
                         color: #3e3e3e;
 
                 }

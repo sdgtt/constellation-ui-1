@@ -74,8 +74,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let bd of this.dataAggregates" (click)="navigateToBoardPage(bd.boot_folder_name)">
-                        <td class="table-output-date">{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss' }}</td>
-                        <td class="table-output" routerLink="/kuiperlinuxci" style="cursor: pointer;">
+                        <td class="table-output col-date">{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss' }}</td>
+                        <td class="table-output col" routerLink="/kuiperlinuxci" style="cursor: pointer;">
                             {{ bd.boot_folder_name }} 
                             <!-- {{ bd.jenkins_build_number }} -->
                         </td>

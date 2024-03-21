@@ -9,15 +9,12 @@
                         </a>{{this.selectedBoard}}
                     </div>
                     <div class="board-label">Board Name</div>
-                    <div class="board-filtering">
-                    
-                    </div>
                 </div>
             </div>
             
         </div>
         <div class="board-details">
-            <table datatable cellspacing="10" class="board-detail-table">
+            <table  datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered">
                 <thead>
                     <tr>
                         <th class="table-head">Job Date</th>
@@ -37,62 +34,26 @@
                 <tbody>
                     <tr *ngFor="let board of boardDetails.hits">
                         <ng-container *ngIf="board.boot_folder_name === selectedBoard">
-                            <td class="table-output">{{board.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
-                            <td class="table-output">{{ board.source_adjacency_matrix }}</td>
-                            <td class="table-output">{{ board.jenkins_trigger | removePrefix }}</td>
-                            <td class="table-output">{{ board.hdl_hash }}</td>
-                            <td class="table-output">{{ board.linux_hash }}</td>
-                            <td class="table-output">{{ board.uboot_reached }}</td>
-                            <td class="table-output">{{ board.linux_prompt_reached }}</td>
-                            <td class="table-output">
-                                <button type="button" class="btnDmesg">
-                                   Dmesg Errors
-                                   <span class="badge badge-warning">{{board.dmesg_errors_found}}</span> 
-                                  </button>
-                                  <button type="button" class="btnDriver">
-                                    Drivers missing: {{ board.drivers_missing }}
-                                  </button>  
+                            <td class="table-output col">{{board.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
+                            <td class="table-output col">{{ board.source_adjacency_matrix }}</td>
+                            <td class="table-output col" > 
+                                <a [href]="board.trigger_url" target="_blank">  {{ board.jenkins_trigger | removePrefix }} </a>
                             </td>
-                            <td class="table-output">
-                                <button type="button" class="btnPass">
-                                    {{ board.pytest_test}}
-                                  </button>
-                                  <button type="button" class="btnFail">
-                                    {{ board.errors}}
-                                </button>
-                            </td>
-                            <td class="table-output">{{ board.jenkins_build_number }}</td>
-                            <td class="table-output">
-                                <span class="arti"><a type="button" containerClass="customClass" [tooltip]="uartTooltip"><i class="fa-solid fa-chart-line"></i></a></span>
-                                <span class="arti"><a type="button" containerClass="customClass" [tooltip]="diagnosticTooltip"><i class="fa-solid fa-file-pen"></i></a></span>
-                            </td> 
-                            <td class="table-output">{{board.boot_test_result}}</td>
+                            <td class="table-output col">{{ board.hdl_hash }}</td>
+                            <td class="table-output col">{{ board.linux_hash }}</td>
+                            <td class="table-output col">{{ board.uboot_reached }}</td>
+                            <td class="table-output col">{{ board.linux_prompt_reached }}</td>
+                            <td class="table-output col"></td>
+                            <td class="table-output col"></td>
+                            <td class="table-output col"></td>
+                            <td class="table-output col">{{ board.jenkins_build_number }}</td>
+                            <td class="table-output col">{{board.boot_test_result}}</td>
                         </ng-container>
-                        <ng-template #uartTooltip>
-                            <div class="board-tooltip" style="font-weight: 500;">
-                                <div class="row" >
-                                    <div class="col-12">
-                                        <div class="power">
-                                            UART BOOT LOG
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-template #diagnosticTooltip>
-                            <div class="board-tooltip" style="font-weight: 500;">
-                                <div class="row" >
-                                    <div class="col-12">
-                                        <div class="power">
-                                            ADI DIAGNOSTIC REPORT
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-template>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <!-- <div class="card" style="width: 1200px"> -->
+
     </div>
 </section>

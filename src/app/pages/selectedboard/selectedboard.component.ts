@@ -1,5 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+
 
 //models
 import { Boards } from 'src/app/models/boards.model';
@@ -52,6 +54,8 @@ export class SelectedboardComponent implements OnInit {
   pytest_failures: string;
   pytest_skipped: string;
   pytest_tests: string;
+  trigger_url: string;
+
   currentLatestBuildNumber: number;
 
   boardDetails: any = [];
@@ -62,8 +66,27 @@ export class SelectedboardComponent implements OnInit {
     private boardsService: BoardsService,
     private route: ActivatedRoute) { }
 
+    dtoptions: DataTables.Settings = {};
+    dtTrigger:Subject<any>=new Subject<any>();
+  
   ngOnInit(): void {
     this.fetchSelectedBoard();
+    this.dtoptions = {
+      pagingType: 'full_numbers',
+      searching:true,
+      paging:true,
+      pageLength: 10,
+      lengthChange:true,
+      columnDefs: [
+        { width: '200px', targets: [0] }, // Adjust the width of the first column
+        { width: '150px', targets: [1] }, // Adjust the width of the second column
+        // Adjust the width of other columns as needed
+      ],
+    language:{
+      searchPlaceholder:'Search here'
+    }
+
+    };
     this.fetchBoardDetails();
   }
   fetchSelectedBoard() {
@@ -84,9 +107,9 @@ export class SelectedboardComponent implements OnInit {
 
       selectedBoard.dmesg_errors_found = this.dmesg_errors_found;
       selectedBoard.drivers_missing = this.drivers_missing;
+      selectedBoard.jenkins_trigger = this.trigger_url;
 
-      const sums = this.calculateSums();
-      console.log('Sums:', sums);
+      this.dtTrigger.next(null);
     });
   }
 
