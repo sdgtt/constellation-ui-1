@@ -1,47 +1,46 @@
 
-$labelColor: #fff;
-$badgeColor: #e3e3e3;
-$rad: 5px;
-$marbot: 5px;
-$dmesg: #e52a33;
-$driv: #c9a22b;
-$p: #50aa1b;
-$f: #8e3737e0;
-//  
-// .btnDriver{
-//     outline: none;
-//     border-style: none;
-//     background-color: $driv;
-//     color: $labelColor;
-//     border-radius: $rad;
+$labelTxt: #3e3e3e;
 
-// }
-// .btnPass{
-//     outline: none;
-//     border-style: none;
-//     background-color: $p;
-//     color: $labelColor;
-//     border-radius: $rad;
-//     margin-bottom: $marbot;
+.backBtn {
+    color: $labelTxt;
+}
 
+a {
+    color: $labelTxt;
+    text-decoration: none;
+}
 
-// }
-// .btnFail{
-//     outline: none;
-//     border-style: none;
-//     background-color: $f;
-//     color: $labelColor;
-//     border-radius: $rad;
-
-// }
-// .badgeNumber{
-//     color:$labelColor;
-//     vertical-align: middle;
-
-// }
-.arti{
+.arti {
     margin-right: 10px;
     font-size: 12px;
 }
+.boardHead-container .board-head .board-details {
+    font-size: 15px;
+    text-align: left;
+    padding: 20px 5px;
+    box-shadow: 12px 0px 28px #d4d4d4e1;
+    overflow: auto;
+    display: inline-block;
+    border-top: 1px solid #E5E5E5;
+    height: 960px;
+    width: 100%;
+    max-height: 1500px;
 
 
+}
+
+table.dataTable tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
+    font-weight: normal !important;
+    background-color: rgba(255, 255, 255, 0.4);
+    
+}
+tr:hover{
+    border: none;
+    background-color: rgba(255, 255, 255, 0.4);
+
+}

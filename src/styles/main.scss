@@ -223,15 +223,15 @@ body {
                         cursor: pointer;
                     }
                 }
-                .field-fail{
-                    color: #c02626;
-                    font-weight: 500;
 
-                }
-                .field-pass{
-                    color: #35e34f;
+                .field-stat{
                     font-weight: 500;
+                    font-size: 35px;
 
+                    .icons{
+                        width: 70px;
+                        
+                    }
                 }
 
                 .select-dropdown {
@@ -253,23 +253,25 @@ body {
         .jenkins-table {
             font-size: 17px;
             // text-align: left;
-            height: 540px;
+            height: 700px;
             width: 100%;
             overflow: auto;
             display: inline-block;
-            max-height: 540px;
+            max-height: 800px;
             box-shadow: 7px 0px 10px #d4d4d4e1;
-
-            .jenkins-result-table {
+           
+            .table {
                 border-top: 1px solid #E5E5E5;
                 width: 100%;
+                .table-head{
+                    font-weight: normal!important;
+                    padding: 0;
 
-
+                }
                 .table-head, .head-hover {
                     border-bottom: 1px solid #7070703B;
                     padding: 20px 80px;
                     font-weight: 400;
-                    
                 }
                
                 tbody>tr:hover {
@@ -278,15 +280,15 @@ body {
                     outline: none;
                     cursor: pointer;
                 }
-                .table-output col {
+                .table-output-folder  {
                     padding: 15px 20px;
                     text-align: left;
 
                 }  
-                .table-output col-date{
-                    text-align: center;
+                .table-output-date{
+                    padding: 15px 20px;
                 }  
-                    .table-output col-icon {
+                    .table-output-icon {
                         padding: 10px 10px 10px 85px;
                         display: flex;
                         flex-wrap: nowrap;
@@ -294,20 +296,35 @@ body {
                         justify-content: left;
 
                         .status-icon {
-                            padding-right: 5px;
+                            padding-right: 10px;
                             cursor: pointer;
     
                             .stat-icon {
-                                margin-right: 5px;
+                                margin-right: 10px;
 
                             }
                         }
                     }
-                
             }
         }
     }
 }
+.status-icon {
+    padding-right: 10px;
+    cursor: pointer;
+
+    .stat-icon {
+        margin-right: 10px;
+
+    }
+}
+.icons{
+    width: 30px;
+}
+.spacer {
+    padding-left: 20px;
+}
+
 .loading {
   position: absolute;
   top: 0px;
@@ -401,20 +418,18 @@ body {
         }
 
         .board-details{
-            font-size: 12px;
+            font-size: 15px;
             text-align: left;
-            padding: 20px;
+            padding: 20px 5px;
             box-shadow: 12px 0px 28px #d4d4d4e1;
             overflow: auto;
             display: inline-block;
             border-top: 1px solid #E5E5E5;
-            height: 790px;
+            height: 800px;
             width: 100%;
-           
-            max-height: 800px;
+            max-height: 900px;
             .board-detail-table{
            
-
                 .table-head{
                     border-bottom: 1px solid #7070703B;
                     padding: 5px 10px;

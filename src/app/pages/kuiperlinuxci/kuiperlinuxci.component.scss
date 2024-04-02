@@ -1,13 +1,13 @@
 :host ::ng-deep .popover {
   font-family: 'Poppins', sans-serif;
-  background-color: rgba(0, 0, 0, 0.9);
-  color: #F0F0F0;
+  background-color:#F0F0F0;
+  color: #3e3e3e;
   width: auto;
   // max-width: 24vw;
   height: auto;
   // transform: translate3d(119px, 47px, 0px) !important;
   // width: 525px;
-  // transform: translate3d(1350px, 225px, 0px) !important;
+  transform: translate3d((1470px, 185px, 0px)) !important;
   // width: 643px;
   border: 1px solid #E5E5E5;
   border-radius: 5px;
@@ -27,10 +27,10 @@
 }
 
 .status-details {
-  width: 380px;
+  width: 340px;
   font-size: 14px;
-  color: #ffffff !important;
-  padding: 10px 0;
+  color: #3e3e3e !important;
+  // padding: 10px 0;
 
   .power-status {
     text-align: center;
@@ -42,8 +42,8 @@
     width: 100%;
     text-align: center;
     padding: 10px 0;
-    font-weight: 300;
-    color: #ffffff !important;
+    font-weight: 400;
+    color: #3e3e3e!important;
 
   }
 

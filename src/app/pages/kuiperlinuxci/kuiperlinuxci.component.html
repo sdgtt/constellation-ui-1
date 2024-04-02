@@ -40,23 +40,22 @@
                     <td class="spacer"></td>
                     <td class="field">Online</td>
                     <td class="output">{{ this.onlineBoardsCount }}</td>
-                    
-                                        
+
+
                 </tr>
                 <tr class="t-row" style="border-top: 1px solid rgba(199, 199, 199, 0.5);">
-                    <td class="field-pass">Passed</td>
-                    <td class="output">{{ this.passingBoardsCount }}</td>
-                    <td class="spacer"></td>
-                    <td class="field-fail">Pytest Failed</td>
-                    <td class="output">{{ this.pytestBoardsCount }}</td>
-                    <td class="field-fail">Linux Failed</td>
-                    <td class="output">{{ this.linuxBoardsCount }}</td>
-
+                    <td class="field-stat">
+                        <img src="assets/passed_icon.svg" class="icons" /> {{ this.passingBoardsCount }}
+                        <span class="spacer"></span>
+                        <img src="assets/pytestFailed.svg" class="icons" /> {{ this.pytestBoardsCount }}
+                        <span class="spacer"></span>
+                        <img src="assets/dmesgerr.svg" class="icons" /> {{ this.linuxBoardsCount }}
+                    </td>
                 </tr>
             </table>
         </div>
         <div class="jenkins-table">
-            <table class="jenkins-result-table">
+            <table class="table">
                 <thead>
                     <tr>
                         <th class="table-head">Job Date
@@ -74,10 +73,9 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let bd of this.dataAggregates" (click)="navigateToBoardPage(bd.boot_folder_name)">
-                        <td class="table-output col-date">{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss' }}</td>
-                        <td class="table-output col" routerLink="/kuiperlinuxci" style="cursor: pointer;">
-                            {{ bd.boot_folder_name }} 
-                            <!-- {{ bd.jenkins_build_number }} -->
+                        <td class="table-output-date">{{ bd.jenkins_job_date | date:'y-M-d HH:mm:ss' }}</td>
+                        <td class="table-output-folder" routerLink="/kuiperlinuxci" style="cursor: pointer;">
+                            {{ bd.boot_folder_name }}
                         </td>
                         <td class="table-output-icon">
                             <ng-container>
@@ -89,12 +87,13 @@
                             </ng-container>
                             <ng-container>
                                 <a type="button" containerClass="customClass" [tooltip]="testTooltip">
-                                    <span class="status-icon" >
-                                        <img class="stat-icon" *ngFor="let icon of isBoardPassed(bd); let i=index" [src]="bd.icon[i]"  alt="Image" [hidden]="isBoardOnline(bd).status == 'Offline'"/>
+                                    <span class="status-icon">
+                                        <img class="stat-icon" *ngFor="let icon of isBoardPassed(bd); let i=index"
+                                            [src]="bd.icon[i]" alt="Image"
+                                            [hidden]="isBoardOnline(bd).status == 'Offline'" />
                                     </span>
                                 </a>
                             </ng-container>
-                      
                         </td>
                         <ng-template #powerTooltip>
                             <div class="board-tooltip">
@@ -120,8 +119,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-12" [innerHTML]="statusMessages[0]" style="word-wrap: break-word; white-space: pre">
-                                                            •    {{ bd.statusMessages }}
+                                                        <div class="col-12" [innerHTML]="statusMessages[0]"
+                                                            style="word-wrap: break-word; white-space: pre">
+                                                            • {{ bd.statusMessages }}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -142,12 +142,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12" [innerHTML]="statusMessages[0]">
-                                            {{ bd.statusMessages }}
+                                        {{ bd.statusMessages }}
                                     </div>
                                 </div>
                             </div>
                         </ng-template>
-                        
+
                     </tr>
                 </tbody>
             </table>
@@ -183,7 +183,6 @@
                 <div class="status-head">Nebula Error</div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-4">
                 <div class="status-icon-table"><img src="assets/Passed.png" /></div>
@@ -208,35 +207,5 @@
                 <div class="status-icon-table"><img src="assets/python.svg" /></div>
             </div>
         </div>
-        <!-- <table class="status-details-table">
-            <tbody>
-                <tr>
-                    <th class="status-title">Power</th>
-                </tr>
-                <tr>
-                    <th class="status-head">Online</th>
-                    <th class="status-head">Offline</th>
-                </tr>
-                <tr>
-                    <td class="status-icon-table"><img src="assets/Online.png" /></td>
-                    <td class="status-icon-table"><img src="assets/Offline.png" /></td>
-                </tr>
-                <tr>
-                    <th class="status-title">Test</th>
-                </tr>
-                <tr>
-                    <th class="status-head">Passed</th>
-                    <th class="status-head">Nebula Error</th>
-                    <th class="status-head">Linux Dmesg Error</th>
-                    <th class="status-head">Pytest Failure</th>
-                </tr>
-                <tr>
-                    <td class="status-icon-table"><img src="assets/Passed.png" /></td>
-                    <td class="status-icon-table"><img src="assets/nebula_error.png" /></td>
-                    <td class="status-icon-table"><img src="assets/linux_dmesg_errors.png" /></td>
-                    <td class="status-icon-table"><img src="assets/pytest_failure.png" /></td>
-                </tr>
-            </tbody>
-        </table> -->
     </div>
 </ng-template>

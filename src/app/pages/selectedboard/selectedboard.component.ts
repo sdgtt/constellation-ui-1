@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 
@@ -18,7 +18,7 @@ import { BoardsService } from 'src/app/services/boards.service';
 })
 
 export class SelectedboardComponent implements OnInit {
-   @ViewChild('dropdownList') dropdownList: ElementRef;
+  @ViewChild('dropdownList') dropdownList: ElementRef;
 
 
   selectedBoard: string;
@@ -59,36 +59,44 @@ export class SelectedboardComponent implements OnInit {
   currentLatestBuildNumber: number;
 
   boardDetails: any = [];
+  defaultData: any = [];
+
   boardModel: Boards;
   boardDetailModel: BoardDetails;
+  dataAggregates: any[] = [];
 
   constructor(
     private boardsService: BoardsService,
     private route: ActivatedRoute) { }
 
-    dtoptions: DataTables.Settings = {};
-    dtTrigger:Subject<any>=new Subject<any>();
-  
+  dtoptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+
   ngOnInit(): void {
     this.fetchSelectedBoard();
     this.dtoptions = {
       pagingType: 'full_numbers',
-      searching:true,
-      paging:true,
+      searching: true,
+      paging: true,
       pageLength: 10,
-      lengthChange:true,
+      lengthChange: true,
+      ordering: true,
+      order: [[0, 'desc']],
       columnDefs: [
         { width: '200px', targets: [0] }, // Adjust the width of the first column
         { width: '150px', targets: [1] }, // Adjust the width of the second column
+
+
         // Adjust the width of other columns as needed
       ],
-    language:{
-      searchPlaceholder:'Search here'
-    }
+      language: {
+        searchPlaceholder: 'Search here'
+      }
 
     };
     this.fetchBoardDetails();
   }
+
   fetchSelectedBoard() {
     this.route.params.subscribe((params) => {
       this.selectedBoard = params['boardName'];
@@ -99,67 +107,30 @@ export class SelectedboardComponent implements OnInit {
     this.boardsService.getBoardDetails(this.selectedBoard).subscribe(data => {
       this.boardDetails = data;
 
+      // Now you have the latest job date stored in latestJobDate
       const selectedBoard = this.boardDetails['hits'].map((bselect: { boot_folder_name: string; }) => bselect.boot_folder_name === this.selectedBoard);
 
       selectedBoard.jenkins_trigger = this.jenkins_trigger;
       selectedBoard.hdl_hash = this.hdl_hash;
       selectedBoard.linux_hash = this.linux_hash;
-
       selectedBoard.dmesg_errors_found = this.dmesg_errors_found;
       selectedBoard.drivers_missing = this.drivers_missing;
       selectedBoard.jenkins_trigger = this.trigger_url;
+      selectedBoard.source_adjacency_matrix = this.source_adjacency_matrix;
 
       this.dtTrigger.next(null);
+
     });
   }
 
-  calculateSums() {
-    const sums: { [jenkinsBuildNumber: string]: { pytest_errors: string, pytest_skipped: string, pytest_failures: string } } = {};
 
-    if (this.boardDetails && this.boardDetails.hits) {
-      for (const board of this.boardDetails.hits) {
-        const jenkinsBuildNumber = board.jenkins_build_number;
-
-        if (!sums[jenkinsBuildNumber]) {
-          sums[jenkinsBuildNumber] = {
-            pytest_errors: '0',
-            pytest_failures: '0',
-            pytest_skipped: '0',
-          };
-        }
-
-
-        sums[jenkinsBuildNumber].pytest_errors += parseInt(board.pytest_errors, 10) || 0;
-        sums[jenkinsBuildNumber].pytest_failures += parseInt(board.pytest_failures, 10) || 0;
-        sums[jenkinsBuildNumber].pytest_failures += parseInt(board.pytest_failures, 10) || 0;
-      }
-    }
-    console.log(sums);
-    return sums;
+  getDefaultArtifactoryBranch(): string {
+    // Set default value for source_adjacency_matrix
+    this.source_adjacency_matrix = 'boot_partition_2022_r2';
+    // Return the default artifactory branch
+    return this.source_adjacency_matrix;
   }
 
-  filterField(field: string): void {
-    this.selectedField = field;
-
-  }
-  filterValue(value: string){
-    this.selectedValue = value;
-
-  }
-
-  // extractNumber(trigger: string): string {
-  //   // this.trigger = trigger.split(':');
-  //   // if (trigger === undefined) {
-  //   //   throw new Error('Input is undefined');
-  //   // }
-  //   if (trigger == "manual") {
-  //     return trigger;
-  //   } else if (trigger.length >= 4) {
-  //     return trigger.slice(-4);
-  //   } else {
-  //     return trigger;
-  //   }
-  // }
 }
 
 

@@ -4,17 +4,17 @@
             <div class="row ">
                 <div class="col-12">
                     <div class="board-name">
-                        <a class="back" routerLink="/kuiperlinuxci">
+                        <a class="backBtn" routerLink="/kuiperlinuxci">
                             <span class="label-space"><i class="fa-solid fa-caret-left"></i></span>
                         </a>{{this.selectedBoard}}
                     </div>
                     <div class="board-label">Board Name</div>
                 </div>
             </div>
-            
+
         </div>
         <div class="board-details">
-            <table  datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="table table-bordered">
+            <table datatable [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" class="row-border" style="width:100%">
                 <thead>
                     <tr>
                         <th class="table-head">Job Date</th>
@@ -24,7 +24,8 @@
                         <th class="table-head">Linux Commit</th>
                         <th class="table-head">U-boot Reached</th>
                         <th class="table-head">Linux Booted </th>
-                        <th class="table-head">Linux Tests</th>
+                        <th class="table-head">Dmesg Error Tests</th>
+                        <th class="table-head">Drivers Missing Tests</th>
                         <th class="table-head">Pyadi Tests</th>
                         <th class="table-head">Build Number</th>
                         <th class="table-head">Artifacts</th>
@@ -34,26 +35,76 @@
                 <tbody>
                     <tr *ngFor="let board of boardDetails.hits">
                         <ng-container *ngIf="board.boot_folder_name === selectedBoard">
-                            <td class="table-output col">{{board.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
-                            <td class="table-output col">{{ board.source_adjacency_matrix }}</td>
-                            <td class="table-output col" > 
-                                <a [href]="board.trigger_url" target="_blank">  {{ board.jenkins_trigger | removePrefix }} </a>
+                            <td class="table-output col-1">{{board.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
+                            <td class="table-output col-1">{{ board.source_adjacency_matrix }}</td>
+                            <td class="table-output col-1">
+                                <a [href]="board.trigger_url" target="_blank"> {{ board.jenkins_trigger | removePrefix }} </a>
                             </td>
-                            <td class="table-output col">{{ board.hdl_hash }}</td>
-                            <td class="table-output col">{{ board.linux_hash }}</td>
-                            <td class="table-output col">{{ board.uboot_reached }}</td>
-                            <td class="table-output col">{{ board.linux_prompt_reached }}</td>
-                            <td class="table-output col"></td>
-                            <td class="table-output col"></td>
-                            <td class="table-output col"></td>
-                            <td class="table-output col">{{ board.jenkins_build_number }}</td>
-                            <td class="table-output col">{{board.boot_test_result}}</td>
+                            <td class="table-output col-1">
+                                <a [href]="board.hdl_commit_url" target="_blank"> {{ board.hdl_hash }} </a>
+                            </td>
+
+                            <td class="table-output col-1">
+                                <a [href]="board.linux_commit_url" target="_blank"> {{ board.linux_hash }} </a>
+                            </td>
+                            <td class="table-output col-1">
+                                <ng-container *ngIf="board.linux_prompt_reached == true">
+                                    <img src="assets/thumbs-up.svg" class="icons">
+                                </ng-container>
+                                <ng-container *ngIf="board.linux_prompt_reached == false">
+                                    <img src="assets/thumbs-down.svg" class="icons">
+                                </ng-container>
+                            </td>
+                            <td class="table-output col-1">
+                                <ng-container *ngIf="board.linux_prompt_reached == true">
+                                    <img src="assets/thumbs-up.svg" class="icons">
+                                </ng-container>
+                                <ng-container *ngIf="board.linux_prompt_reached == false">
+                                    <img src="assets/thumbs-down.svg" class="icons">
+                                </ng-container>
+                            </td>
+                            <td class="table-output col-1">
+                                <a [href]="board.linux_tests_dmesg_url" target="_blank"> <img src="assets/dmesg.svg"
+                                        class="icons"> {{ board.dmesg_errors_found }} </a>
+                            </td>
+                            <td class="table-output col-1">
+                                <a [href]="board.linux_tests_drivers_url" target="_blank"> <img
+                                        src="assets/driver_missing.svg" class="icons"> {{ board.drivers_missing }} </a>
+                            </td>
+                            <td class="table-output col-1">
+                                <div class="a" *ngFor="let key of ['pyadi_tests_url'] ">
+                                    <a [href]="board[key]" target="_blank"><img src="assets/passed_icon.svg"
+                                            class="icons"> {{ board.pytest_tests }}</a>
+                                    <br>
+                                    <a [href]="board[key]" target="_blank"><img src="assets/failed_icon.svg"
+                                            class="icons"> {{ board.pytest_failures }}</a>
+                                </div>
+                            </td>
+                            <td class="table-output col-1">
+                                <div class="a" *ngFor="let key of ['jenkins_build_number_url'] ">
+                                    <a [href]="board[key]" target="_blank">{{ board.jenkins_build_number }}</a>
+                                </div>
+                            </td>
+                            <td class="table-output col-1">
+                                <span class="a" *ngFor="let key of ['adi_diagnostic_report_url'] ">
+                                    <a [href]="board[key]" target="_blank"> <img src="assets/uart.svg" class="icons">
+                                    </a>
+                                </span>
+                                <span class="spacer"></span>
+                                <span class="a" *ngFor="let key of ['uart_boot_log_url'] ">
+                                    <a [href]="board[key]" target="_blank"> <img src="assets/diagnostic.svg"
+                                            class="icons"></a>
+                                </span>
+                            </td>
+                            <td class="table-output col-1">
+                                <div class="a" *ngFor="let key of ['linux_tests_drivers_url'] ">
+                                    <a [href]="board[key]" target="_blank">{{ board.boot_test_result }}</a>
+                                </div>
+                            </td>
                         </ng-container>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <!-- <div class="card" style="width: 1200px"> -->
-
     </div>
 </section>

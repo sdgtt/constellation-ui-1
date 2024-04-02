@@ -260,7 +260,7 @@ export class KuiperlinuxciComponent implements OnInit {
       if (bd.drivers_missing != 0 || bd.dmesg_errors_found != 0 || bd.drivers_enumerated == 0) {
         linuxBoards++;
         boardL = bd.boot_folder_name;
-        // console.log("Linux " + linuxBoards +" - " + boardL);
+        console.log("Linux " + linuxBoards +" - " + boardL);
 
       }
     }
