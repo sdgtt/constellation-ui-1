@@ -18,7 +18,7 @@ body {
     width: 100%;
     height: 100vh;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     // background-image:url(../assets/cons_bg.png);
 
 }
@@ -177,7 +177,7 @@ body {
     height: 100%;
     background-color: rgba(255, 255, 255, 0.3);
     padding: 0 10px 0 10px;
-    overflow: hidden;
+    overflow: auto;
 
     
     .first-section {
@@ -286,7 +286,7 @@ body {
 
                 }  
                 .table-output-date{
-                    padding: 15px 20px;
+                    padding: 15px 0px;
                 }  
                     .table-output-icon {
                         padding: 10px 10px 10px 85px;
@@ -363,7 +363,7 @@ body {
                 padding-left: 15px;
             } 
             .board-name {
-                font-size: 20px;
+                font-size: 30px;
                 font-weight: 600;
                 
             }

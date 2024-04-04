@@ -27,7 +27,7 @@
                 </tr>
                 <tr class="t-row">
                     <td class="field">Latest Jenkins Build No.</td>
-                    <td class="output">{{ latestData.jenkins_build_number }}</td>
+                    <td class="output">{{ latestData.jenkins_build_number }} (lastest)</td>
                     <td class="spacer"></td>
                     <td class="field">Linux Commit</td>
                     <td class="output">{{ latestData.linux_hash }}</td>
@@ -45,11 +45,45 @@
                 </tr>
                 <tr class="t-row" style="border-top: 1px solid rgba(199, 199, 199, 0.5);">
                     <td class="field-stat">
-                        <img src="assets/passed_icon.svg" class="icons" /> {{ this.passingBoardsCount }}
+                        <img src="assets/passed_icon.svg" class="icons" [tooltip]="passedlogo"/> {{ this.passingBoardsCount }}
                         <span class="spacer"></span>
-                        <img src="assets/pytestFailed.svg" class="icons" /> {{ this.pytestBoardsCount }}
+                        <img src="assets/pytestFailed.svg" class="icons" [tooltip]="pytestlogo"/> {{ this.pytestBoardsCount }}
                         <span class="spacer"></span>
-                        <img src="assets/dmesgerr.svg" class="icons" /> {{ this.linuxBoardsCount }}
+                        <img src="assets/dmesgerr.svg" class="icons" [tooltip]="linuxlogo"/> {{ this.linuxBoardsCount }}
+
+                        <ng-template #passedlogo>
+                            <div class="board-tooltip">
+                                <div class="row" style="font-weight: 500;">
+                                    <div class="col-12">
+                                        <div class="board-power">
+                                                Passed
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #linuxlogo>
+                            <div class="board-tooltip">
+                                <div class="row" style="font-weight: 500;">
+                                    <div class="col-12">
+                                        <div class="board-power">
+                                            Linux Dmesg error/s / Drivers missing
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #pytestlogo>
+                            <div class="board-tooltip">
+                                <div class="row" style="font-weight: 500;">
+                                    <div class="col-12">
+                                        <div class="board-power">
+                                            Pytest errors
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
                     </td>
                 </tr>
             </table>
@@ -67,6 +101,14 @@
                             </span>
                         </th>
                         <th class="table-head">Board</th>
+                        <th class="table-head">Build
+                            <span class="status-icon">
+                                <a type="button" class="sort-btn" (click)="toggleSortOrder()">
+                                    <i *ngIf="sortOrder === 'desc'" class="fas fa-sort-down"></i>
+                                    <i *ngIf="sortOrder === 'asc'" class="fas fa-sort-up"></i>
+                                </a>
+                            </span>
+                        </th>
                         <th class="table-head">Status</th>
 
                     </tr>
@@ -77,6 +119,8 @@
                         <td class="table-output-folder" routerLink="/kuiperlinuxci" style="cursor: pointer;">
                             {{ bd.boot_folder_name }}
                         </td>
+                        <td class="table-output-date">{{ bd.jenkins_build_number }}</td>
+
                         <td class="table-output-icon">
                             <ng-container>
                                 <a type="button" containerClass="customClass" [tooltip]="powerTooltip">
@@ -147,6 +191,7 @@
                                 </div>
                             </div>
                         </ng-template>
+                       
 
                     </tr>
                 </tbody>

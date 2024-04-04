@@ -28,8 +28,19 @@
                         <th class="table-head">Drivers Missing Tests</th>
                         <th class="table-head">Pyadi Tests</th>
                         <th class="table-head">Build Number</th>
-                        <th class="table-head">Artifacts</th>
+                        <th class="table-head" [tooltip]="dllogs">Artifacts</th>
                         <th class="table-head">Result</th>
+                        <ng-template #dllogs>
+                            <div class="board-tooltip">
+                                <div class="row" style="font-weight: 500;">
+                                    <div class="col-12">
+                                        <div class="board-power">
+                                            Click the icons <br>to download the logs
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,14 +98,36 @@
                             </td>
                             <td class="table-output col-1">
                                 <span class="a" *ngFor="let key of ['adi_diagnostic_report_url'] ">
-                                    <a [href]="board[key]" target="_blank"> <img src="assets/uart.svg" class="icons">
+                                    <a [href]="board[key]" target="_blank" [tooltip]="uartlogo"> <img src="assets/uart.svg" class="icons" >
                                     </a>
                                 </span>
                                 <span class="spacer"></span>
                                 <span class="a" *ngFor="let key of ['uart_boot_log_url'] ">
-                                    <a [href]="board[key]" target="_blank"> <img src="assets/diagnostic.svg"
+                                    <a [href]="board[key]" target="_blank" [tooltip]="diagnosticlogo"> <img src="assets/diagnostic.svg"
                                             class="icons"></a>
                                 </span>
+                                <ng-template #uartlogo>
+                                    <div class="board-tooltip">
+                                        <div class="row" style="font-weight: 500;">
+                                            <div class="col-12">
+                                                <div class="board-power">
+                                                    UART logs
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template #diagnosticlogo>
+                                    <div class="board-tooltip">
+                                        <div class="row" style="font-weight: 500;">
+                                            <div class="col-12">
+                                                <div class="board-power">
+                                                        ADI Diagnostic logs
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-template>
                             </td>
                             <td class="table-output col-1">
                                 <div class="a" *ngFor="let key of ['linux_tests_drivers_url'] ">

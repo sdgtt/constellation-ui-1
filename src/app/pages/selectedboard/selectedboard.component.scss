@@ -9,6 +9,9 @@ a {
     color: $labelTxt;
     text-decoration: none;
 }
+a:hover {
+    font-weight: 500;
+}
 
 .arti {
     margin-right: 10px;
