@@ -76,10 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "constellation-ui:build:production"
+              "buildTarget": "constellation-ui:build:production"
             },
             "development": {
-              "browserTarget": "constellation-ui:build:development"
+              "buildTarget": "constellation-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
