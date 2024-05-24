@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+
 //Components
 import { NavigationComponent } from './templates/navigation/navigation.component';
 import { ScorecardComponent } from './pages/scorecard/scorecard.component';
@@ -26,6 +27,7 @@ import { DataTablesModule } from 'angular-datatables';
 
 //Pipeline
 import { RemovePrefixPipe } from './pipelines/remove-prefix.pipe'
+import { SafePrefixPipe } from './pipelines/safe-url.pipe'
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { RemovePrefixPipe } from './pipelines/remove-prefix.pipe'
     PlugandtestComponent,
     KuiperlinuxciComponent,
     SelectedboardComponent,
-    RemovePrefixPipe
+    RemovePrefixPipe,
+    SafePrefixPipe
   ],
   imports: [
     BrowserModule,

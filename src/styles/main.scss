@@ -2,6 +2,7 @@
 // @import "~bootstrap/scss/bootstrap";
 @import './_mixins';
 
+$box-shadow-sm: 0 .125rem .25rem rgba(#000000, .075);
 
 body-dark {
     font-family: 'Poppins', sans-serif;
@@ -14,12 +15,13 @@ body-dark {
 body {
     font-family: 'Poppins', sans-serif;
     color: #3e3e3e;
-    background-color: #F0F0F0;
+    // background-color: #F0F0F0;
     width: 100%;
     height: 100vh;
     position: relative;
     overflow: auto;
     // background-image:url(../assets/cons_bg.png);
+    background-color: #e6ebed;
 
 }
 
@@ -146,8 +148,9 @@ body {
         .nav .open>a:after
          {
             border-radius: 5px;
-            background-color: rgba(162, 157, 157, 0.25);
+            // background-color: rgba(162, 157, 157, 0.25);
             outline: none;
+            animation: glow-animation 1s infinite alternate;
         }
 
         .nav .open>a,
@@ -156,8 +159,9 @@ body {
         .nav .open>a:active
         .nav .open>a:after {
             border-radius: 5px;
-            background-color: rgba(162, 157, 157, 0.25);
+            // background-color: rgba(162, 157, 157, 0.25);
             outline: none;
+            animation: glow-animation 1s infinite alternate;
         }
 
         .dropdown-menu>li>a {
@@ -175,18 +179,22 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.3);
-    padding: 0 10px 0 10px;
+    // background-color: rgba(255, 255, 255, 0.3);
     overflow: auto;
 
     
     .first-section {
         text-align: left;
-        margin-bottom: 20px;
+        background-color: #fafbfd;
+        padding: 30px;
+        border-radius: 20px 20px 0 0;
+        box-shadow: $box-shadow-sm;
+
 
         .page-title {
-            font-size: 24px;
+            font-size: 25px;
             font-weight: 600;
+            color: #FFC20E;
 
         }
 
@@ -194,25 +202,19 @@ body {
             font-size: 14px;
 
         }
-    }
-
-    .second-section {
-        text-align: left;
-
         .latest-summary {
-            font-size: 23px;
+            font-size: 20px;
             font-weight: 500;
         }
 
         .jenkins-details {
-            padding: 10px 40px;
             font-size: 16px;
 
             .jenkins-table-details {
                 width: 100%;
                 
                 td {
-                    padding: 7px;
+                    padding: 7px 0;
                 }
 
                 .field {
@@ -226,10 +228,11 @@ body {
 
                 .field-stat{
                     font-weight: 500;
-                    font-size: 35px;
+                    font-size: 31px;
 
                     .icons{
                         width: 70px;
+                        padding-top: 8px;
                         
                     }
                 }
@@ -249,8 +252,13 @@ body {
             }
 
         }
+    }
+
+        
 
         .jenkins-table {
+            box-shadow: $box-shadow-sm;
+
             font-size: 17px;
             // text-align: left;
             height: 700px;
@@ -258,27 +266,35 @@ body {
             overflow: auto;
             display: inline-block;
             max-height: 800px;
-            box-shadow: 7px 0px 10px #d4d4d4e1;
+            background-color: #ffffff;
+            border-radius: 0 0 20px 20px ;
+            // box-shadow: 7px 0px 10px #d4d4d4e1;
            
             .table {
-                border-top: 1px solid #E5E5E5;
+                // border-top: 1px solid #E5E5E5;
                 width: 100%;
-                .table-head{
+                thead>th {
+                   border: none;
+                }
+                .table-head, thead{
                     font-weight: normal!important;
                     padding: 0;
+                    border-top:none;
 
                 }
                 .table-head, .head-hover {
-                    border-bottom: 1px solid #7070703B;
+                    // border-bottom: 1px solid #7070703B;
                     padding: 20px 80px;
                     font-weight: 400;
                 }
                
                 tbody>tr:hover {
                     // border-radius: 20px;
-                    background-color: rgba(141, 141, 141, 0.166);
+                    background-color: #3e3e3e;
                     outline: none;
                     cursor: pointer;
+                    border-radius: 10px;
+                    color: #ffffff;
                 }
                 .table-output-folder  {
                     padding: 15px 20px;
@@ -286,14 +302,14 @@ body {
 
                 }  
                 .table-output-date{
-                    padding: 15px 0px;
+                    padding: 16px 79px;
                 }  
                     .table-output-icon {
                         padding: 10px 10px 10px 85px;
-                        display: flex;
-                        flex-wrap: nowrap;
-                        align-items: left;
-                        justify-content: left;
+                        // display: flex;
+                        // flex-wrap: nowrap;
+                        // align-items: left;
+                        // justify-content: left;
 
                         .status-icon {
                             padding-right: 10px;
@@ -307,7 +323,7 @@ body {
                     }
             }
         }
-    }
+    
 }
 .status-icon {
     padding-right: 10px;
@@ -351,20 +367,26 @@ body {
     position: relative;
     width:auto;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.3);
-    padding: 0 10px 0 10px;
+    background-color: #fafbfd;
+    
     color: #3e3e3e;
+    border-radius: 20px;
     .board-head{   
+        padding: 30px;
         .board-top{
-            padding-bottom: 15px;
             .board-label {
                 font-size: 14px;
-                font-weight: 400;
+                font-weight: 400; 
                 padding-left: 15px;
             } 
             .board-name {
                 font-size: 30px;
                 font-weight: 600;
+                color: #FFC20E;
+
+                a.backBtn{
+                    color: #3e3e3e33;
+                }
                 
             }
         
@@ -417,32 +439,45 @@ body {
             }
         }
 
-        .board-details{
-            font-size: 15px;
-            text-align: left;
-            padding: 20px 5px;
-            box-shadow: 12px 0px 28px #d4d4d4e1;
-            overflow: auto;
-            display: inline-block;
-            border-top: 1px solid #E5E5E5;
-            height: 800px;
-            width: 100%;
-            max-height: 900px;
-            .board-detail-table{
-           
-                .table-head{
-                    border-bottom: 1px solid #7070703B;
-                    padding: 5px 10px;
-                    font-weight: 400;
-                    
-                }
+    }
+    .board-details{
+        font-size: 15px;
+        text-align: left;
+        padding: 30px;
+        overflow: auto;
+        display: inline-block;
+        height: 800px;
+        width: 100%;
+        max-height: 900px;
+        background-color: #ffffff;
+        .board-detail-table{
+       
+            .table-head{
+                border-bottom: 1px solid #7070703B;
+                padding: 5px 10px;
+                font-weight: 400;
                 
-                .table-output col,a {
-                        color: #3e3e3e;
+            }
+            
+            .table-output col,a {
+                    color: #3e3e3e;
 
-                }
             }
         }
+    }
+}
+
+@keyframes glow-animation {
+    0% {
+        text-shadow: 0 0 5px #FFC20E, 0 0 5px #FFC20E, 0 0 15px #FFC20E, 0 0 20px #FFC20E;
+    }
+
+    50% {
+        text-shadow: 0 0 10px #FFC20E, 0 0 10px #FFC20E, 0 0 30px #FFC20E, 0 0 40px #FFC20E;
+    }
+
+    100% {
+        text-shadow: 0 0 10px #FFC20E, 0 0 5px #FFC20E, 0 0 15px #ff6200#FFC20E, 0 0 20px#FFC20E;
     }
 }
 .tooltip .tooltip-inner {

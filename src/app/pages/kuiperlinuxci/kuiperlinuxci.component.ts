@@ -2,6 +2,7 @@ import { Component, OnInit, } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 //models
 import { Boards } from 'src/app/models/boards.model';
@@ -22,7 +23,7 @@ export class KuiperlinuxciComponent implements OnInit {
   modalRef: BsModalRef;
   modalTempRef: BsModalRef;
 
-  kuiperlinuxci = "Kuiper Linux CI is a CI for continuous testing of Kuiper Linux on hardware. It is automatically triggered once a new boot partition is built and uploaded to artifactory. This page shows the latest test results summary of Kuiper Linux test stages.";
+  kuiperlinuxci = "Kuiper Linux CI is a CI for continuous testing of Kuiper Linux on hardware. It is automatically triggered once a new boot partition is built and uploaded to artifactory.\n page shows the latest test results summary of Kuiper Linux test stages.";
 
   boards: Boards;
   jenkins_project_name: any;
@@ -78,6 +79,7 @@ export class KuiperlinuxciComponent implements OnInit {
   constructor(
     private boardsService: BoardsService,
     private router: Router,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -107,6 +109,9 @@ export class KuiperlinuxciComponent implements OnInit {
       this.linuxBoardsCount = this.countLinuxErrors(this.dataAggregates);
       this.pytestBoardsCount = this.countPytestErrors(this.dataAggregates);
     });
+  }
+  pytestHTML(){
+    
   }
   
   removeNextText(h: string): string {

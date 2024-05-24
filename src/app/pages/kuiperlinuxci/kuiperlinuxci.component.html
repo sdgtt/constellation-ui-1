@@ -1,5 +1,5 @@
 <div class="kuiperlinuxci-container ">
-    <div class="first-section  custom-margin">
+    <div class="first-section custom-margin">
         <div class="row">
             <div class="col-2">
                 <div class="page-title">Kuiper Linux CI</div>
@@ -8,86 +8,91 @@
                 <div class="page-desc">{{kuiperlinuxci}}</div>
             </div>
         </div>
-    </div>
-    <div class="second-section  custom-margin">
         <div class="row">
             <div class="col-12">
                 <div class="latest-summary">Latest Build Summary</div>
             </div>
         </div>
-        <div class="jenkins-details">
-            <table class="jenkins-table-details">
-                <tr class="t-row">
-                    <td class="field">Jenkins Project Name</td>
-                    <td class="output">{{ latestData.jenkins_project_name }}
-                    </td>
-                    <td class="spacer"></td>
-                    <td class="field">Artifactory source branch</td>
-                    <td class="output">{{ latestData.source_adjacency_matrix }}</td>
-                </tr>
-                <tr class="t-row">
-                    <td class="field">Latest Jenkins Build No.</td>
-                    <td class="output">{{ latestData.jenkins_build_number }} (lastest)</td>
-                    <td class="spacer"></td>
-                    <td class="field">Linux Commit</td>
-                    <td class="output">{{ latestData.linux_hash }}</td>
-                    <td class="field">Status <span class="info-icon" [popover]="statusDetails"
-                            [placement]="'right top'"><i class="fas fa-info-circle"></i></span></td>
-                </tr>
-                <tr class="t-row">
-                    <td class="field">HDL Commit</td>
-                    <td class="output">{{ latestData.hdl_hash }}</td>
-                    <td class="spacer"></td>
-                    <td class="field">Online</td>
-                    <td class="output">{{ this.onlineBoardsCount }}</td>
-
-
-                </tr>
-                <tr class="t-row" style="border-top: 1px solid rgba(199, 199, 199, 0.5);">
-                    <td class="field-stat">
-                        <img src="assets/passed_icon.svg" class="icons" [tooltip]="passedlogo"/> {{ this.passingBoardsCount }}
-                        <span class="spacer"></span>
-                        <img src="assets/pytestFailed.svg" class="icons" [tooltip]="pytestlogo"/> {{ this.pytestBoardsCount }}
-                        <span class="spacer"></span>
-                        <img src="assets/dmesgerr.svg" class="icons" [tooltip]="linuxlogo"/> {{ this.linuxBoardsCount }}
-
-                        <ng-template #passedlogo>
-                            <div class="board-tooltip">
-                                <div class="row" style="font-weight: 500;">
-                                    <div class="col-12">
-                                        <div class="board-power">
-                                                Passed
+        <div class="row">
+            <div class="col-12">
+                <div class="jenkins-details">
+                    <table class="jenkins-table-details">
+                        <tr class="t-row">
+                            <td class="field">Jenkins Project Name</td>
+                            <td class="output">{{ latestData.jenkins_project_name }}
+                            </td>
+                            <td class="spacer"></td>
+                            <td class="field">Artifactory source branch</td>
+                            <td class="output">{{ latestData.source_adjacency_matrix }}</td>
+                        </tr>
+                        <tr class="t-row">
+                            <td class="field">Latest Jenkins Build No.</td>
+                            <td class="output">{{ latestData.jenkins_build_number }} (lastest)</td>
+                            <td class="spacer"></td>
+                            <td class="field">Linux Commit</td>
+                            <td class="output">{{ latestData.linux_hash }}</td>
+                            <td class="field">Status <span class="info-icon" [popover]="statusDetails"
+                                    [placement]="'right top'"><i class="fas fa-info-circle"></i></span></td>
+                        </tr>
+                        <tr class="t-row">
+                            <td class="field">HDL Commit</td>
+                            <td class="output">{{ latestData.hdl_hash }}</td>
+                            <td class="spacer"></td>
+                            <td class="field">Online</td>
+                            <td class="output">{{ this.onlineBoardsCount }}</td>
+        
+        
+                        </tr>
+                        <tr class="t-row">
+                            <td class="field-stat">
+                                <img src="assets/passed_icon.svg" class="icons" [tooltip]="passedlogo"/> {{ this.passingBoardsCount }}
+                                <span class="spacer"></span>
+                                <img src="assets/pytestFailed.svg" class="icons" [tooltip]="pytestlogo"/> {{ this.pytestBoardsCount }}
+                                <span class="spacer"></span>
+                                <img src="assets/dmesgerr.svg" class="icons" [tooltip]="linuxlogo"/> {{ this.linuxBoardsCount }}
+        
+                                <ng-template #passedlogo>
+                                    <div class="board-tooltip">
+                                        <div class="row" style="font-weight: 500;">
+                                            <div class="col-12">
+                                                <div class="board-power">
+                                                        Passed
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-template #linuxlogo>
-                            <div class="board-tooltip">
-                                <div class="row" style="font-weight: 500;">
-                                    <div class="col-12">
-                                        <div class="board-power">
-                                            Linux Dmesg error/s / Drivers missing
+                                </ng-template>
+                                <ng-template #linuxlogo>
+                                    <div class="board-tooltip">
+                                        <div class="row" style="font-weight: 500;">
+                                            <div class="col-12">
+                                                <div class="board-power">
+                                                    Linux Dmesg error / Drivers missing
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-template #pytestlogo>
-                            <div class="board-tooltip">
-                                <div class="row" style="font-weight: 500;">
-                                    <div class="col-12">
-                                        <div class="board-power">
-                                            Pytest errors
+                                </ng-template>
+                                <ng-template #pytestlogo>
+                                    <div class="board-tooltip">
+                                        <div class="row" style="font-weight: 500;">
+                                            <div class="col-12">
+                                                <div class="board-power">
+                                                    Pytest errors
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </ng-template>
-                    </td>
-                </tr>
-            </table>
+                                </ng-template>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
+        
+    </div>
+    <div class="second-section custom-margin">
         <div class="jenkins-table">
             <table class="table">
                 <thead>

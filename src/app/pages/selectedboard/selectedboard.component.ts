@@ -54,7 +54,9 @@ export class SelectedboardComponent implements OnInit {
   pytest_failures: string;
   pytest_skipped: string;
   pytest_tests: string;
+  pyadi_tests_url: string;
   trigger_url: string;
+  ptestHtml_iframe: any;
 
   currentLatestBuildNumber: number;
 
@@ -64,6 +66,7 @@ export class SelectedboardComponent implements OnInit {
   boardModel: Boards;
   boardDetailModel: BoardDetails;
   dataAggregates: any[] = [];
+  showMenu: any;
 
   constructor(
     private boardsService: BoardsService,
@@ -118,10 +121,14 @@ export class SelectedboardComponent implements OnInit {
       selectedBoard.jenkins_trigger = this.trigger_url;
       selectedBoard.source_adjacency_matrix = this.source_adjacency_matrix;
 
+      selectedBoard.pyadi_tests_url = this.pyadi_tests_url;
+
+
       this.dtTrigger.next(null);
 
     });
   }
+
 
 
   getDefaultArtifactoryBranch(): string {

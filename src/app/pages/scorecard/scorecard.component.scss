@@ -2,23 +2,20 @@
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.3);
-    padding: 0 10px 0 10px;
     overflow: hidden;
     top: 0;
-    
-    // overflow-y: hidden;
-    /* Hide vertical scrollbar */
-
 
     .first-section {
         text-align: left;
-        margin-bottom: 20px;
-        padding-top: 50px ;
+        background-color: #fafbfd;
+        padding: 30px;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 
         .page-title {
-            font-size: 26px;
+            font-size: 25px;
             font-weight: 600;
+            color: #FFC20E;
 
         }
 
@@ -28,6 +25,9 @@
 
         }
     }
-   
+    .second-section{
+        border-radius: 0 0 20px 20px ;
+    }
 }
+
 

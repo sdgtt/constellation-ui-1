@@ -1,5 +1,5 @@
 {
-  "name": "constellation-ui",
+  "name": "constellation",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -30,7 +30,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.3.2",
+    "@angular-devkit/build-angular": "^18.0.1",
     "@angular/cli": "^17.3.0",
     "@angular/compiler-cli": "~13.3.0",
     "@types/datatables.net": "^1.10.21",
