@@ -31,12 +31,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles/main.scss",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.min.css"
+              "src/styles/main.scss"
+
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/datatables.net/js/jquery.dataTables.min.js"
+         
             ]
           },
           "configurations": {
@@ -76,10 +75,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "constellation-ui:build:production"
+              "browserTarget": "constellation-ui:build:production"
             },
             "development": {
-              "buildTarget": "constellation-ui:build:development"
+              "browserTarget": "constellation-ui:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -23,7 +23,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { PlugandtestComponent } from './pages/plugandtest/plugandtest.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { DataTablesModule } from 'angular-datatables';
+// import { DataTablesModule } from 'angular-datatables';
 
 //Pipeline
 import { RemovePrefixPipe } from './pipelines/remove-prefix.pipe'
@@ -53,7 +53,7 @@ import { SafePrefixPipe } from './pipelines/safe-url.pipe'
     TooltipModule.forRoot(),
     PopoverModule.forRoot(),
     ModalModule.forRoot(),
-    DataTablesModule
+    // DataTablesModule
 
   ],
   providers: [DatePipe],

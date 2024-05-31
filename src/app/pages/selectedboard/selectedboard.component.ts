@@ -9,6 +9,7 @@ import { BoardDetails } from 'src/app/models/boarddetails.model';
 
 //services
 import { BoardsService } from 'src/app/services/boards.service';
+import DataTables from 'datatables.net';
 
 
 @Component({
@@ -72,31 +73,31 @@ export class SelectedboardComponent implements OnInit {
     private boardsService: BoardsService,
     private route: ActivatedRoute) { }
 
-  dtoptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+  // dtoptions: DataTables.Settings = {};
+  // dtTrigger: Subject<any> = new Subject<any>();
 
   ngOnInit(): void {
     this.fetchSelectedBoard();
-    this.dtoptions = {
-      pagingType: 'full_numbers',
-      searching: true,
-      paging: true,
-      pageLength: 10,
-      lengthChange: true,
-      ordering: true,
-      order: [[0, 'desc']],
-      columnDefs: [
-        { width: '200px', targets: [0] }, // Adjust the width of the first column
-        { width: '150px', targets: [1] }, // Adjust the width of the second column
+    // this.dtoptions = {
+    //   pagingType: 'full_numbers',
+    //   searching: true,
+    //   paging: true,
+    //   pageLength: 10,
+    //   lengthChange: true,
+    //   ordering: true,
+    //   order: [[0, 'desc']],
+    //   columnDefs: [
+    //     { width: '200px', targets: [0] }, // Adjust the width of the first column
+    //     { width: '150px', targets: [1] }, // Adjust the width of the second column
 
 
-        // Adjust the width of other columns as needed
-      ],
-      language: {
-        searchPlaceholder: 'Search here'
-      }
+    //     // Adjust the width of other columns as needed
+    //   ],
+    //   language: {
+    //     searchPlaceholder: 'Search here'
+    //   }
 
-    };
+    // };
     this.fetchBoardDetails();
   }
 
@@ -124,7 +125,7 @@ export class SelectedboardComponent implements OnInit {
       selectedBoard.pyadi_tests_url = this.pyadi_tests_url;
 
 
-      this.dtTrigger.next(null);
+      // this.dtTrigger.next(null);
 
     });
   }
