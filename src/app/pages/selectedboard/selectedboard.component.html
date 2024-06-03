@@ -17,22 +17,41 @@
         
     </div>
     <div class="board-details">
+        <div class="container">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search...">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
         <table class="row-border" style="width:100%">
             <thead>
                 <tr>
-                    <th class="table-head">Job Date</th>
-                    <th class="table-head">Artifactory source branch</th>
+                    <th class="table-head" *ngFor="let tableheader of tableheaders; let i = index">
+                        {{tableheader}}
+                        <ng-container  >
+                            <th class="col" *ngIf="tableheader == 'Artifactory'" [tooltip]="dllogs">
+                                Artifacts
+                            </th>
+                        </ng-container>
+                    </th>
+                    
+                    
+                    <!-- <th class="table-head">Artifactory source branch</th>
                     <th class="table-head">Trigger</th>
                     <th class="table-head">HDL Commit</th>
                     <th class="table-head">Linux Commit</th>
                     <th class="table-head">Build Number</th>
                     <th class="table-head">U-boot Reached</th>
-                    <th class="table-head">Linux Booted </th>
+                    <th class="table-head">Linux Booted</th>
                     <th class="table-head">Dmesg Error Tests</th>
                     <th class="table-head">Drivers Missing Tests</th>
                     <th class="table-head">Pyadi Tests</th>
                     <th class="table-head" [tooltip]="dllogs">Artifacts</th>
-                    <th class="table-head">Result</th>
+                    <th class="table-head">Result</th> -->
                     <ng-template #dllogs>
                         <div class="board-tooltip">
                             <div class="row" style="font-weight: 500;">
@@ -49,24 +68,24 @@
             <tbody>
                 <tr *ngFor="let board of boardDetails.hits">
                     <ng-container *ngIf="board.boot_folder_name === selectedBoard">
-                        <td class="table-output col-1">{{board.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
-                        <td class="table-output col-1">{{ board.source_adjacency_matrix }}</td>
-                        <td class="table-output col-1">
+                        <td class="col">{{board.jenkins_job_date | date:'y-M-d HH:mm:ss'}}</td>
+                        <td class="col">{{ board.source_adjacency_matrix }}</td>
+                        <td class="small">
                             <a [href]="board.trigger_url" target="_blank"> {{ board.jenkins_trigger | removePrefix }} </a>
                         </td>
-                        <td class="table-output col-1">
+                        <td class="col">
                             <a [href]="board.hdl_commit_url" target="_blank"> {{ board.hdl_hash }} </a>
                         </td>
 
-                        <td class="table-output col-1">
+                        <td class="col">
                             <a [href]="board.linux_commit_url" target="_blank"> {{ board.linux_hash }} </a>
                         </td>
-                        <td class="table-output col-1">
+                        <td class="col">
                             <div class="a" *ngFor="let key of ['jenkins_build_number_url'] ">
                                 <a [href]="board[key]" target="_blank">{{ board.jenkins_build_number }}</a>
                             </div>
                         </td>
-                        <td class="table-output col-1">
+                        <td class="col">
                             <ng-container *ngIf="board.linux_prompt_reached == true">
                                 <img src="assets/thumbs-up.svg" class="icons">
                             </ng-container>
@@ -74,7 +93,7 @@
                                 <img src="assets/thumbs-down.svg" class="icons">
                             </ng-container>
                         </td>
-                        <td class="table-output col-1">
+                        <td class="col">
                             <ng-container *ngIf="board.linux_prompt_reached == true">
                                 <img src="assets/thumbs-up.svg" class="icons">
                             </ng-container>
@@ -82,15 +101,15 @@
                                 <img src="assets/thumbs-down.svg" class="icons">
                             </ng-container>
                         </td>
-                        <td class="table-output col-1">
+                        <td class="col">
                             <a [href]="board.linux_tests_dmesg_url" target="_blank"> <img src="assets/dmesg.svg"
                                     class="icons"> {{ board.dmesg_errors_found }} </a>
                         </td>
-                        <td class="table-output col-1">
+                        <td class="col">
                             <a [href]="board.linux_tests_drivers_url" target="_blank"> <img
                                     src="assets/driver_missing.svg" class="icons"> {{ board.drivers_missing }} </a>
                         </td>
-                        <td class="table-output col-1">
+                        <td class="col">
                             <div class="a" *ngFor="let key of ['pyadi_tests_url'] ">
                                 <a [href]="board[key]" target="_blank">
                                     <img src="assets/passed_icon.svg" class="icons">
@@ -106,13 +125,13 @@
                                 </button> -->
                             </div>
                         </td>
-                        <td class="table-output col-1">
-                            <span class="a" *ngFor="let key of ['adi_diagnostic_report_url'] ">
+                        <td class="col">
+                            <span class="a" *ngFor="let key of ['uart_boot_log_url'] ">
                                 <a [href]="board[key]" target="_blank" [tooltip]="uartlogo"> <img src="assets/uart.svg" class="icons" >
                                 </a>
                             </span>
                             <span class="spacer"></span>
-                            <span class="a" *ngFor="let key of ['uart_boot_log_url'] ">
+                            <span class="a" *ngFor="let key of ['adi_diagnostic_report_url'] ">
                                 <a [href]="board[key]" target="_blank" [tooltip]="diagnosticlogo"> <img src="assets/diagnostic.svg"
                                         class="icons"></a>
                             </span>
@@ -139,7 +158,7 @@
                                 </div>
                             </ng-template>
                         </td>
-                        <td class="table-output col-1">
+                        <td class="col">
                             <div class="a" *ngFor="let key of ['linux_tests_drivers_url'] ">
                                 <a [href]="board[key]" target="_blank">{{ board.boot_test_result }}</a>
                             </div>
@@ -149,6 +168,23 @@
                 <!-- <div class="container"  id="demo" class="collapse" [ngClass]="{'show': showMenu}"> try</div> -->
                 
             </tbody>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                </ul>
+              </nav>
         </table>
     </div>
     <div class="footer">

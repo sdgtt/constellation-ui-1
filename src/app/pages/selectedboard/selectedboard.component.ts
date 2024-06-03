@@ -1,6 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+
 
 
 //models
@@ -9,7 +11,6 @@ import { BoardDetails } from 'src/app/models/boarddetails.model';
 
 //services
 import { BoardsService } from 'src/app/services/boards.service';
-import DataTables from 'datatables.net';
 
 
 @Component({
@@ -25,7 +26,6 @@ export class SelectedboardComponent implements OnInit {
   selectedBoard: string;
   selectedField: string = '';
   selectedValue: string = '';
-
 
   jenkins_project_name: any = [];
   boot_test_result: any = [];
@@ -68,10 +68,13 @@ export class SelectedboardComponent implements OnInit {
   boardDetailModel: BoardDetails;
   dataAggregates: any[] = [];
   showMenu: any;
+  tableheaders: string[] = ['Job Date', 'Artifactory source branch', 'Trigger', 'HDL Commit', 'Linux Commit', 'Build Number', 'U-boot Reached', 'Linux Booted', 'Dmesg Error Tests', 'Drivers Missing Tests', 'Pyadi Tests', 'Artifacts', 'Result'];
+
 
   constructor(
     private boardsService: BoardsService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer) { }
 
   // dtoptions: DataTables.Settings = {};
   // dtTrigger: Subject<any> = new Subject<any>();
@@ -114,15 +117,14 @@ export class SelectedboardComponent implements OnInit {
       // Now you have the latest job date stored in latestJobDate
       const selectedBoard = this.boardDetails['hits'].map((bselect: { boot_folder_name: string; }) => bselect.boot_folder_name === this.selectedBoard);
 
-      selectedBoard.jenkins_trigger = this.jenkins_trigger;
-      selectedBoard.hdl_hash = this.hdl_hash;
-      selectedBoard.linux_hash = this.linux_hash;
-      selectedBoard.dmesg_errors_found = this.dmesg_errors_found;
-      selectedBoard.drivers_missing = this.drivers_missing;
-      selectedBoard.jenkins_trigger = this.trigger_url;
-      selectedBoard.source_adjacency_matrix = this.source_adjacency_matrix;
-
-      selectedBoard.pyadi_tests_url = this.pyadi_tests_url;
+      selectedBoard.jenkins_trigger = this.sanitizer.bypassSecurityTrustUrl(this.jenkins_trigger);
+      selectedBoard.hdl_hash = this.sanitizer.bypassSecurityTrustUrl(this.hdl_hash);
+      selectedBoard.linux_hash = this.sanitizer.bypassSecurityTrustUrl(this.linux_hash);
+      selectedBoard.dmesg_errors_found = this.sanitizer.bypassSecurityTrustUrl(this.dmesg_errors_found);
+      selectedBoard.drivers_missing = this.sanitizer.bypassSecurityTrustUrl(this.drivers_missing);
+      selectedBoard.jenkins_trigger = this.sanitizer.bypassSecurityTrustUrl(this.trigger_url);
+      selectedBoard.source_adjacency_matrix = this.sanitizer.bypassSecurityTrustUrl(this.source_adjacency_matrix);
+      selectedBoard.pyadi_tests_url = this.sanitizer.bypassSecurityTrustUrl(this.pyadi_tests_url);
 
 
       // this.dtTrigger.next(null);
