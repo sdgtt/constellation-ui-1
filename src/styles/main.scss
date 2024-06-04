@@ -20,7 +20,6 @@ body {
     height: 100vh;
     position: relative;
     overflow: auto;
-    // background-image:url(../assets/cons_bg.png);
     background-color: #e6ebed;
 
 }
@@ -297,13 +296,14 @@ body {
                     color: #ffffff;
                 }
                 .table-output-folder  {
-                    padding: 15px 20px;
+                    padding: 15px 80px;
                     text-align: left;
 
                 }  
                 .table-output-date{
-                    padding: 16px 79px;
-                }  
+                    text-align: left;
+                    padding-left: 80px;
+                                }  
                     .table-output-icon {
                         padding: 10px 10px 10px 85px;
                         // display: flex;
@@ -453,7 +453,6 @@ body {
         .board-detail-table{
        
             .table-head{
-                border-bottom: 1px solid #7070703B;
                 padding: 5px 10px;
                 font-weight: 400;
                 

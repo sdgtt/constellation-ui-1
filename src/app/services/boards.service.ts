@@ -26,7 +26,7 @@ export class BoardsService {
   getLinksFromDataAggregates(): Observable<any[]> {
     var httpUrl = environment.apiUrl + '/api/boards' ; 
     // Replace with your actual API URL
-  
+
     return this.http.get<Boards[]>(httpUrl).pipe(
       map((response: any) => response.aggregates_top)
     );

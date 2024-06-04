@@ -1,13 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-
-
-
-//models
-import { Boards } from 'src/app/models/boards.model';
-import { BoardDetails } from 'src/app/models/boarddetails.model';
 
 //services
 import { BoardsService } from 'src/app/services/boards.service';
@@ -19,14 +13,11 @@ import { BoardsService } from 'src/app/services/boards.service';
   styleUrls: ['./selectedboard.component.scss']
 })
 
-export class SelectedboardComponent implements OnInit {
-  @ViewChild('dropdownList') dropdownList: ElementRef;
+export class SelectedboardComponent implements OnInit, OnDestroy  {
 
 
   selectedBoard: string;
-  selectedField: string = '';
-  selectedValue: string = '';
-
+  
   jenkins_project_name: any = [];
   boot_test_result: any = [];
   source_adjacency_matrix: any = [];
@@ -36,9 +27,6 @@ export class SelectedboardComponent implements OnInit {
   boot_folder_name: any = [];
   jenkins_job_date: Date;
   jenkins_trigger: string;
-
-  hash: any;
-  trigger = '';
   linux_prompt_reached: boolean = true;
   uboot_reached: boolean = true;
   dmesg_errors_found: string;
@@ -57,50 +45,46 @@ export class SelectedboardComponent implements OnInit {
   pytest_tests: string;
   pyadi_tests_url: string;
   trigger_url: string;
-  ptestHtml_iframe: any;
-
-  currentLatestBuildNumber: number;
 
   boardDetails: any = [];
-  defaultData: any = [];
-
-  boardModel: Boards;
-  boardDetailModel: BoardDetails;
   dataAggregates: any[] = [];
-  showMenu: any;
-  tableheaders: string[] = ['Job Date', 'Artifactory source branch', 'Trigger', 'HDL Commit', 'Linux Commit', 'Build Number', 'U-boot Reached', 'Linux Booted', 'Dmesg Error Tests', 'Drivers Missing Tests', 'Pyadi Tests', 'Artifacts', 'Result'];
+  tableheaders: string[] = ['Job Date', 'Artifactory source branch', 'Trigger', 'HDL Commit', 'Linux Commit',
+   'Build Number', 'U-boot Reached', 'Linux Booted', 'Dmesg Error Tests', 'Drivers Missing Tests',
+    'Pyadi Tests', 'Artifacts', 'Result'];
+  loading: boolean = true;
 
-
+  isArtifactsHeaderPresent(): boolean {
+    return this.tableheaders.includes('Artifacts');
+  }
   constructor(
     private boardsService: BoardsService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer) { }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
 
-  // dtoptions: DataTables.Settings = {};
-  // dtTrigger: Subject<any> = new Subject<any>();
+   dtOptions: DataTables.Settings = {};
+   dtTrigger: Subject<any> = new Subject<any>();
 
   ngOnInit(): void {
     this.fetchSelectedBoard();
-    // this.dtoptions = {
-    //   pagingType: 'full_numbers',
-    //   searching: true,
-    //   paging: true,
-    //   pageLength: 10,
-    //   lengthChange: true,
-    //   ordering: true,
-    //   order: [[0, 'desc']],
-    //   columnDefs: [
-    //     { width: '200px', targets: [0] }, // Adjust the width of the first column
-    //     { width: '150px', targets: [1] }, // Adjust the width of the second column
-
-
-    //     // Adjust the width of other columns as needed
-    //   ],
-    //   language: {
-    //     searchPlaceholder: 'Search here'
-    //   }
-
-    // };
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      searching: true,
+      paging: true,
+      pageLength: 5,
+      lengthChange: true,
+      ordering: true,
+      order: [[0, 'desc']],
+      columnDefs: [
+        { width: '200px', targets: [0] }, // Adjust the width of the first column
+        { width: '150px', targets: [1] }, // Adjust the width of the second column
+      ],
+      language: {
+        searchPlaceholder: 'Search here'
+      }
+    };
     this.fetchBoardDetails();
   }
 
@@ -126,13 +110,10 @@ export class SelectedboardComponent implements OnInit {
       selectedBoard.source_adjacency_matrix = this.sanitizer.bypassSecurityTrustUrl(this.source_adjacency_matrix);
       selectedBoard.pyadi_tests_url = this.sanitizer.bypassSecurityTrustUrl(this.pyadi_tests_url);
 
-
-      // this.dtTrigger.next(null);
-
+      this.dtTrigger.next(null);
     });
+    this.loading = false;
   }
-
-
 
   getDefaultArtifactoryBranch(): string {
     // Set default value for source_adjacency_matrix
