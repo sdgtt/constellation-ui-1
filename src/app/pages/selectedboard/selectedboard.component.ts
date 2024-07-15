@@ -64,27 +64,27 @@ export class SelectedboardComponent implements OnInit, OnDestroy  {
     throw new Error('Method not implemented.');
   }
 
-   dtOptions: DataTables.Settings = {};
+  //  dtOptions: DataTables.Settings = {};
    dtTrigger: Subject<any> = new Subject<any>();
 
   ngOnInit(): void {
     this.fetchSelectedBoard();
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      searching: true,
-      paging: true,
-      pageLength: 5,
-      lengthChange: true,
-      ordering: true,
-      order: [[0, 'desc']],
-      columnDefs: [
-        { width: '200px', targets: [0] }, // Adjust the width of the first column
-        { width: '150px', targets: [1] }, // Adjust the width of the second column
-      ],
-      language: {
-        searchPlaceholder: 'Search here'
-      }
-    };
+    // this.dtOptions = {
+    //   pagingType: 'full_numbers',
+    //   searching: true,
+    //   paging: true,
+    //   pageLength: 5,
+    //   lengthChange: true,
+    //   ordering: true,
+    //   order: [[0, 'desc']],
+    //   columnDefs: [
+    //     { width: '200px', targets: [0] }, // Adjust the width of the first column
+    //     { width: '150px', targets: [1] }, // Adjust the width of the second column
+    //   ],
+    //   language: {
+    //     searchPlaceholder: 'Search here'
+    //   }
+    // };
     this.fetchBoardDetails();
   }
 
@@ -110,7 +110,7 @@ export class SelectedboardComponent implements OnInit, OnDestroy  {
       selectedBoard.source_adjacency_matrix = this.sanitizer.bypassSecurityTrustUrl(this.source_adjacency_matrix);
       selectedBoard.pyadi_tests_url = this.sanitizer.bypassSecurityTrustUrl(this.pyadi_tests_url);
 
-      this.dtTrigger.next(null);
+      // this.dtTrigger.next(null);
     });
     this.loading = false;
   }
