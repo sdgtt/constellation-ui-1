@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+// import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-plugandtest',
@@ -10,17 +10,17 @@ export class PlugandtestComponent implements OnInit {
   plugandtest="In order to maximize test harness capabilities, Plug-and-Test pipeline was created to help Kuiper Linux Release Candidate testing. This page displays the test result summary of every release candidate test.";
   websiteList: any = ['HW_tests/HW_test_multiconfig', 'Test Harness', 'SQA']
   
-  form = new UntypedFormGroup({
-    website: new UntypedFormControl('', Validators.required)
-  });
+  // form = new UntypedFormGroup({
+  //   website: new UntypedFormControl('', Validators.required)
+  // });
   
-  get f(){
-    return this.form.controls;
-  }
+  // get f(){
+  //   return this.form.controls;
+  // }
   
-  submit(){
-    console.log(this.form.value);
-  }
+  // submit(){
+  //   console.log(this.form.value);
+  // }
   constructor() { }
 
   ngOnInit(): void {

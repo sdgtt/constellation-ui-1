@@ -205,6 +205,7 @@ body {
         .latest-summary {
             font-size: 20px;
             font-weight: 500;
+            padding-top: 5px;
         }
 
         .jenkins-details {
@@ -226,6 +227,9 @@ body {
                     }
                 }
 
+                
+            }
+            .jenkins-table-testlogo{
                 .field-stat{
                     font-weight: 500;
                     font-size: 31px;

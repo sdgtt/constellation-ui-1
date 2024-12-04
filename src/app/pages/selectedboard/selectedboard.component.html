@@ -107,12 +107,12 @@
                             </div>
                         </td>
                         <td class="table-output col-1">
-                            <span class="a" *ngFor="let key of ['adi_diagnostic_report_url'] ">
+                            <span class="a" *ngFor="let key of ['uart_boot_log_url'] ">
                                 <a [href]="board[key]" target="_blank" [tooltip]="uartlogo"> <img src="assets/uart.svg" class="icons" >
                                 </a>
                             </span>
                             <span class="spacer"></span>
-                            <span class="a" *ngFor="let key of ['uart_boot_log_url'] ">
+                            <span class="a" *ngFor="let key of ['adi_diagnostic_report_url'] ">
                                 <a [href]="board[key]" target="_blank" [tooltip]="diagnosticlogo"> <img src="assets/diagnostic.svg"
                                         class="icons"></a>
                             </span>

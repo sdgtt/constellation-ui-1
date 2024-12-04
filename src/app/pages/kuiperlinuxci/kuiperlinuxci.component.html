@@ -27,7 +27,7 @@
                         </tr>
                         <tr class="t-row">
                             <td class="field">Latest Jenkins Build No.</td>
-                            <td class="output">{{ latestData.jenkins_build_number }} (lastest)</td>
+                            <td class="output">{{ latestData.jenkins_build_number }} (Latest)</td>
                             <td class="spacer"></td>
                             <td class="field">Linux Commit</td>
                             <td class="output">{{ latestData.linux_hash }}</td>
@@ -39,18 +39,21 @@
                             <td class="output">{{ latestData.hdl_hash }}</td>
                             <td class="spacer"></td>
                             <td class="field">Online</td>
-                            <td class="output">{{ this.onlineBoardsCount }}</td>
-        
-        
+                            <td class="output">{{ this.onlineBoardsCount }}</td>        
                         </tr>
+                        
+                    </table>
+                    <table class="jenkins-table-testlogo">
                         <tr class="t-row">
                             <td class="field-stat">
                                 <img src="assets/passed_icon.svg" class="icons" [tooltip]="passedlogo"/> {{ this.passingBoardsCount }}
+                                <span class="unit">Passing board</span> 
                                 <span class="spacer"></span>
                                 <img src="assets/pytestFailed.svg" class="icons" [tooltip]="pytestlogo"/> {{ this.pytestBoardsCount }}
+                                <span class="unit">Pytest Error</span> 
                                 <span class="spacer"></span>
                                 <img src="assets/dmesgerr.svg" class="icons" [tooltip]="linuxlogo"/> {{ this.linuxBoardsCount }}
-        
+                                <span class="unit">Dmesg Error/ Driver Missing</span> 
                                 <ng-template #passedlogo>
                                     <div class="board-tooltip">
                                         <div class="row" style="font-weight: 500;">
@@ -211,14 +214,6 @@
     <div class="status-details">
         <div class="row">
             <div class="col-4">
-                <div class="status-head">Online</div>
-            </div>
-            <div class="col-4">
-                <div class="status-head">Offline</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-4">
                 <div class="status-icon-table"><img src="assets/Online.png" /></div>
             </div>
             <div class="col-4">
@@ -227,10 +222,10 @@
         </div>
         <div class="row">
             <div class="col-4">
-                <div class="status-head">Pass</div>
+                <div class="status-head">Online</div>
             </div>
             <div class="col-4">
-                <div class="status-head">Nebula Error</div>
+                <div class="status-head">Offline</div>
             </div>
         </div>
         <div class="row">
@@ -243,10 +238,10 @@
         </div>
         <div class="row">
             <div class="col-4">
-                <div class="status-head">Linux Dmesg Error</div>
+                <div class="status-head">Pass</div>
             </div>
             <div class="col-4">
-                <div class="status-head">Pytest Failure</div>
+                <div class="status-head">Nebula Error</div>
             </div>
         </div>
         <div class="row">
@@ -255,6 +250,14 @@
             </div>
             <div class="col-4">
                 <div class="status-icon-table"><img src="assets/python.svg" /></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="status-head">Linux Dmesg Error</div>
+            </div>
+            <div class="col-4">
+                <div class="status-head">Pytest Failure</div>
             </div>
         </div>
     </div>
